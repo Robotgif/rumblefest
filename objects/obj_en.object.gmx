@@ -38,13 +38,13 @@ WAKE_UP = 4
 ELIMINATED = 5
 ENTERING = 6
 GHOST = 7
+KNOCKED_BACK = 8
 image_speed = .1
 
 state = MOVING
 // if he's colliding with someone, he goes ghost
 if (!place_free(x,y)){
     solid = false
-    show_debug_message("GHOST");
     other.state = GHOST
 }
 
@@ -280,7 +280,8 @@ checkSprite();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state != GHOST &amp;&amp; obj_player.state != GHOST) {
+            <string>if (state != GHOST &amp;&amp; obj_player.state != GHOST 
+    &amp;&amp; obj_player.state != KNOCKED_BACK) {
     if (state == TIRED || state == IS_HURT) {
     
         // This is not precise enough, we want to push them out just enough using

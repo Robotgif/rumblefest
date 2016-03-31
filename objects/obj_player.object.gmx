@@ -38,6 +38,8 @@ WAKE_UP = 4
 ELIMINATED = 5
 ENTERING = 6
 GHOST = 7
+KNOCKED_BACK = 8
+STILL = 9
 
 // Set initial state to MOVING
 state = MOVING
@@ -112,8 +114,7 @@ if (moveBackAmount &gt; 0) {
     
     if (obj_heart_cont.hasHearts) {
         // Set character sprite to being hurt
-        sprite_index = spr_punched;
-        state = GHOST
+        state = KNOCKED_BACK
     } else {
         state = TIRED
     }
@@ -126,8 +127,7 @@ if (moveBackAmount &gt; 0) {
 } else {
     // When moveBackAmount is at 0, set speed to normal if we still have hearts
      if (obj_heart_cont.hasHearts) {
-        sprite_index = spr_still
-        speed = 0
+        state = STILL
     }
     
     // Set state back to moving after an amount of time
@@ -155,7 +155,19 @@ if (moveBackAmount &gt; 0) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
+            <string>// Override sprite indices set previously if we're being knocked back
+if (state == KNOCKED_BACK) {
+    sprite_index = spr_punched;
+    exit;
+}
+
+if (state == STILL) {
+    sprite_index = spr_still
+    speed = 0
+    exit
+}
+
+
 if (keyboard_check(vk_down)){
     direction = 270
     sprite_index = spr_down
@@ -252,6 +264,30 @@ if (keyboard_check(vk_right)){
           <argument>
             <kind>0</kind>
             <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (state == KNOCKED_BACK || state == STILL) {
+    // TODO: Make sure this doesn't break the step function
+    instance_change(obj_en_eliminated, true);
+}
+</string>
           </argument>
         </arguments>
       </action>
