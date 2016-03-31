@@ -4,6 +4,8 @@ if (state == GHOST || obj_player.state == GHOST) {
     exit;
 }
 
+// GOIN DOWN FOR REAL !!!!!
+
 
 
 // Always use your enemy object that is not MOVING as argument[0]
