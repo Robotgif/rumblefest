@@ -176,7 +176,7 @@ if (state != IS_HURT &amp;&amp; state != PUNCHING_PLAYER) {
 }
 
 // Randomly get time until state changes to moving 
-randomNum = round(random_range (1,4)) * room_speed;
+randomNum = round(random_range (3,5)) * room_speed;
 alarm[0] = randomNum;
 </string>
           </argument>
@@ -207,7 +207,7 @@ alarm[0] = randomNum;
         state = MOVING;
     }
     // Randomly get time until state changes to tired 
-    randomNum = round(random_range (1,2)) * room_speed;
+    randomNum = round(random_range (6,8)) * room_speed;
     alarm[1] = randomNum;
 } else {
     alarm[0] = room_speed * 1 /// try to de-GHOST in 3 seconds

@@ -43,6 +43,9 @@ STILL = 9
 
 // Set initial state to MOVING
 state = MOVING
+
+// This just makes sure random numbers are different every game
+randomize();
 </string>
           </argument>
         </arguments>
@@ -283,9 +286,8 @@ if (keyboard_check(vk_right)){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state == KNOCKED_BACK || state == STILL) {
-    // TODO: Make sure this doesn't break the step function
-    instance_change(obj_en_eliminated, true);
+            <string>if (state != MOVING &amp;&amp; state != PUNCHING_PLAYER) {
+    instance_change(obj_player_eliminated, true);
 }
 </string>
           </argument>

@@ -1,3 +1,8 @@
+// Don't do anything if player gets eliminated
+if (!instance_exists(obj_player)) {
+    exit;
+}
+
 // If player or enemy is ghostin', we're not colliding
 if (state == GHOST || obj_player.state == GHOST) {
     argument[0].isColliding = false;

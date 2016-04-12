@@ -1,3 +1,9 @@
+// Don't do anything if player gets eliminated
+if (!instance_exists(obj_player)) {
+    exit;
+}
+
+
 if (state == TIRED) {
     speed = 0;
     sprite_index = spr_en_tired
