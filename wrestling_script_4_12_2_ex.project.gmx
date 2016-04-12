@@ -70,6 +70,12 @@
     </sprites>
     <sprite>sprites\sprite38</sprite>
     <sprite>sprites\sprite40</sprite>
+    <sprites name="control">
+      <sprite>sprites\spr_cont_up</sprite>
+      <sprite>sprites\spr_cont_right</sprite>
+      <sprite>sprites\spr_cont_down</sprite>
+      <sprite>sprites\spr_cont_left</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -125,6 +131,12 @@
       <object>objects\obj_side_rope_r</object>
     </objects>
     <object>objects\score_manager</object>
+    <objects name="control">
+      <object>objects\obj_cont_up</object>
+      <object>objects\obj_cont_right</object>
+      <object>objects\obj_cont_down</object>
+      <object>objects\obj_cont_left</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>
