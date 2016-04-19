@@ -1,6 +1,5 @@
 // Don't do anything if player gets eliminated
 if (!instance_exists(obj_player)) {
-    show_debug_message("no player")
     exit;
 }
 

@@ -301,8 +301,8 @@ checkSprite();
             
     } else {
         // If we collide when not tired, trigger hurt animation in player and lose a life
-        
         with (obj_player) {
+            collisionDirection = point_direction(x,y, other.x, other.y)
             event_user(0)
         }
         

@@ -96,22 +96,35 @@ randomize();
             <string>/// Alarm for moving player back after being hit
 // moveBackAmount will decrease as this is called to slide the player back
 
+
+moveDirection = 0;
+// collisionDirection is rounded, so find closest arrow direction to move in
+if (collisionDirection &gt; 45 &amp;&amp; collisionDirection &lt; 135) {
+    moveDirection = 90;
+} else if (collisionDirection &gt;= 135 &amp;&amp; collisionDirection &lt; 225) {
+    moveDirection = 180;
+} else if (collisionDirection &gt;= 225 &amp;&amp; collisionDirection &lt; 305) {
+    moveDirection = 270;
+} else {
+    moveDirection = 0;
+}
+
 if (moveBackAmount &gt; 0) {
     
     // Turn off normal player speed while getting knocked back
     speed = 0;
     
     // Move player depending on which way they are facing
-    if (direction == 0) {
+    if (moveDirection == 0) {
         x = x - 7
     }
-    if (direction == 90) {
+    if (moveDirection == 90) {
         y = y + 7
     }
-    if (direction == 180) {
+    if (moveDirection == 180) {
         x = x + 7
     }
-    if (direction == 270) {
+    if (moveDirection == 270) {
         y = y - 7
     }
     
@@ -287,6 +300,16 @@ if (keyboard_check(vk_right)){
           <argument>
             <kind>1</kind>
             <string>if (state != MOVING &amp;&amp; state != PUNCHING_PLAYER) {
+    // collisionDirection is rounded, so find closest arrow direction to move in
+    if (collisionDirection &gt; 45 &amp;&amp; collisionDirection &lt; 135) {
+        direction = 180;
+    } else if (collisionDirection &gt;= 135 &amp;&amp; collisionDirection &lt; 225) {
+        direction = 90;
+    } else if (collisionDirection &gt;= 225 &amp;&amp; collisionDirection &lt; 305) {
+        direction = 0;
+    } else {
+        direction = 270;
+    }
     instance_change(obj_player_eliminated, true);
 }
 </string>
