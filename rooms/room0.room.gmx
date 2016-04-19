@@ -64,7 +64,7 @@
     <instance objName="obj_wall_player" x="705" y="416" name="inst_76AF76C9" locked="0" code="" scaleX="1.5" scaleY="19.5" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_player" x="63" y="416" name="inst_0BB1B0B1" locked="0" code="" scaleX="1.5" scaleY="18.5" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_player" x="380" y="102" name="inst_CA17D703" locked="0" code="" scaleX="22.4516124725342" scaleY="1.80645155906677" colour="4294967295" rotation="0"/>
-    <instance objName="manager_obj" x="512" y="752" name="inst_A5B1B0A8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="manager_obj" x="512" y="754" name="inst_A5B1B0A8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_post_left" x="69" y="658" name="inst_25E11EC3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_post_right" x="699" y="658" name="inst_85F8F6AD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_side_rope_l" x="85" y="408" name="inst_34CE543F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
