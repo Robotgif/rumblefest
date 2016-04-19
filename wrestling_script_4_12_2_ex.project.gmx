@@ -62,6 +62,13 @@
     </sprites>
     <sprites name="manager">
       <sprite>sprites\spr_manager</sprite>
+      <sprite>sprites\spr_mang_kiss</sprite>
+      <sprite>sprites\spr_mang_highclap</sprite>
+      <sprite>sprites\spr_mang_walk_down</sprite>
+      <sprite>sprites\spr_mang_walk_right</sprite>
+      <sprite>sprites\spr_mang_walk_left</sprite>
+      <sprite>sprites\spr_mang_lowclap</sprite>
+      <sprite>sprites\spr_mang_panic</sprite>
     </sprites>
     <sprites name="health">
       <sprite>sprites\spr_heart</sprite>
