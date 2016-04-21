@@ -105,6 +105,7 @@
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_Arial40</font>
+    <font>fonts\myFont</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_wall_en</object>
@@ -145,6 +146,7 @@
       <object>objects\obj_cont_down</object>
       <object>objects\obj_cont_left</object>
     </objects>
+    <object>objects\timer</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>
