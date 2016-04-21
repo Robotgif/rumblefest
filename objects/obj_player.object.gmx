@@ -301,14 +301,19 @@ if (keyboard_check(vk_right)){
             <kind>1</kind>
             <string>if (state != MOVING &amp;&amp; state != PUNCHING_PLAYER) {
     // collisionDirection is rounded, so find closest arrow direction to move in
+    // need to go in opposite direction than coming from
     if (collisionDirection &gt; 45 &amp;&amp; collisionDirection &lt; 135) {
-        direction = 180;
+        // coming from direction = 90;
+        direction = 270
     } else if (collisionDirection &gt;= 135 &amp;&amp; collisionDirection &lt; 225) {
-        direction = 90;
+        // coming from direction = 180;
+        direction = 0
     } else if (collisionDirection &gt;= 225 &amp;&amp; collisionDirection &lt; 305) {
-        direction = 0;
+        // coming from direction = 270;
+        direction = 90
     } else {
-        direction = 270;
+        // coming from direction = 0;
+        direction = 180
     }
     instance_change(obj_player_eliminated, true);
 }
