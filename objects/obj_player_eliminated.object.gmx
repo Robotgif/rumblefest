@@ -28,7 +28,7 @@
             <string>// Load sprite
 sprite_index = (spr_player_l_out)
 // Delete instance after a second
-alarm[0] = 60
+alarm[0] = room_speed * 2
 
 // For some reason speed isn't inherited like it is from enemy...
 speed = 4;
@@ -68,6 +68,7 @@ if (direction == 270){
           <argument>
             <kind>1</kind>
             <string>instance_destroy()
+room_goto(room1)
 </string>
           </argument>
         </arguments>
