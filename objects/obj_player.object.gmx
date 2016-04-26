@@ -147,7 +147,8 @@ if (moveBackAmount &gt; 0) {
     }
     
     // Set state back to moving after an amount of time
-    alarm[1] = 50
+    // Note that we've turned this off for now so it fires right away
+    alarm[1] = 1
 }
 </string>
           </argument>
@@ -342,7 +343,7 @@ if (keyboard_check(vk_right)){
             <string>
 // Get knocked back based on which direction we're facing
 // moveBackAmount is how many times we will call alarm[0] to push the player back
-moveBackAmount = 10
+moveBackAmount = 18
 
 alarm[0] = 1
 </string>

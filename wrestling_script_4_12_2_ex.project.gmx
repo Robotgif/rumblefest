@@ -131,6 +131,7 @@
     <objects name="health">
       <object>objects\obj_heart</object>
       <object>objects\obj_heart_cont</object>
+      <object>objects\obj_blown_heart</object>
     </objects>
     <objects name="manager">
       <object>objects\manager_obj</object>
