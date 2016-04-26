@@ -6,10 +6,14 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
+    <sprites name="end_screen">
+      <sprite>sprites\spr_end_screen</sprite>
+      <sprite>sprites\spr_elim</sprite>
+    </sprites>
     <sprites name="player">
-      <sprite>sprites\spr_still</sprite>
       <sprites name="punching">
         <sprite>sprites\spr_right</sprite>
+        <sprite>sprites\spr_still</sprite>
         <sprite>sprites\spr_down</sprite>
         <sprite>sprites\spr_up</sprite>
         <sprite>sprites\spr_left</sprite>
@@ -108,10 +112,11 @@
     <font>fonts\myFont</font>
   </fonts>
   <objects name="objects">
-    <object>objects\obj_wall_en</object>
-    <object>objects\obj_wall_player</object>
-    <object>objects\obj_entrance_wall</object>
-    <object>objects\obj_crowd</object>
+    <objects name="invisible_objects">
+      <object>objects\obj_wall_player</object>
+      <object>objects\obj_wall_en</object>
+      <object>objects\obj_entrance_wall</object>
+    </objects>
     <objects name="player">
       <object>objects\obj_player</object>
       <object>objects\obj_player_eliminated</object>
@@ -138,15 +143,22 @@
       <object>objects\obj_post_right</object>
       <object>objects\obj_side_rope_l</object>
       <object>objects\obj_side_rope_r</object>
+      <object>objects\obj_crowd</object>
     </objects>
-    <object>objects\score_manager</object>
     <objects name="control">
       <object>objects\obj_cont_up</object>
       <object>objects\obj_cont_right</object>
       <object>objects\obj_cont_down</object>
       <object>objects\obj_cont_left</object>
     </objects>
-    <object>objects\timer</object>
+    <objects name="hud">
+      <object>objects\timer</object>
+      <object>objects\score_manager</object>
+    </objects>
+    <objects name="end_screen">
+      <object>objects\obj_elim_text</object>
+      <object>objects\obj_end_player</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>
