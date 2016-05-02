@@ -128,12 +128,10 @@ if (moveBackAmount &gt; 0) {
         y = y - 7
     }
     
-    if (obj_heart_cont.hasHearts) {
-        // Set character sprite to being hurt
-        state = KNOCKED_BACK
-    } else {
-        state = TIRED
-    }
+
+    // Set character sprite to being hurt
+    state = KNOCKED_BACK
+
     
     
     // Decrease our move back amount so we know when to stop (when it gets to 0)
@@ -142,8 +140,11 @@ if (moveBackAmount &gt; 0) {
     alarm[0] = 1
 } else {
     // When moveBackAmount is at 0, set speed to normal if we still have hearts
-     if (obj_heart_cont.hasHearts) {
+    if (obj_heart_cont.hasHearts) {
+        // Set character sprite to being hurt
         state = STILL
+    } else {
+        state = TIRED
     }
     
     // Set state back to moving after an amount of time
@@ -184,50 +185,38 @@ if (state == STILL) {
     exit
 }
 
-
+// Change direction when hitting keyboard buttons
 if (keyboard_check(vk_down)){
     direction = 270
-    sprite_index = spr_down
-    speed = 4
-    image_speed = .2
-    
-    if (state == TIRED) {
-        sprite_index = spr_tired
-        speed = 2
-    }
-    
 }
 if (keyboard_check(vk_up)){
     direction = 90
-    sprite_index = spr_up
-    speed = 4
-    image_speed = .2
-    
-    if (state == TIRED) {
-        sprite_index = spr_tired
-        speed = 2
-    }
 }
 if (keyboard_check(vk_left)){
     direction = 180
-    sprite_index = spr_left
-    speed = 4
-    image_speed = .2
-    
-    if (state == TIRED) {
-        sprite_index = spr_tired
-        speed = 2
-    }
 }
 if (keyboard_check(vk_right)){
     direction = 0
-    sprite_index = spr_right
+}
+
+if (state == TIRED) {
+    sprite_index = spr_tired
+    speed = 2
+}
+
+// Change sprite based on direction when moving
+if (state == MOVING) {
     speed = 4
     image_speed = .2
     
-    if (state == TIRED) {
-        sprite_index = spr_tired
-        speed = 2
+    if (direction == 0) {
+        sprite_index = spr_right;
+    } else if (direction == 90) {
+        sprite_index = spr_up;
+    } else if (direction == 180) {
+        sprite_index = spr_left;
+    } else {
+        sprite_index = spr_down;
     }
 }
 </string>
@@ -317,6 +306,33 @@ if (keyboard_check(vk_right)){
         direction = 180
     }
     instance_change(obj_player_eliminated, true);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Event triggered by collecting a heart, set state back to moving instead of tired
+
+if (state == TIRED) {
+    state = MOVING;
 }
 </string>
           </argument>
