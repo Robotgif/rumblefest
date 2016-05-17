@@ -3,7 +3,7 @@
   <spriteName>heart_container</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>4</depth>
+  <depth>751</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>

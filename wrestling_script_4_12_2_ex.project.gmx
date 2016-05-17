@@ -20,9 +20,10 @@
       </sprites>
       <sprites name="damage">
         <sprite>sprites\spr_tired</sprite>
-        <sprite>sprites\spr_punched</sprite>
+        <sprite>sprites\spr_punched_old</sprite>
         <sprite>sprites\spr_player_l_out</sprite>
         <sprite>sprites\sprite41</sprite>
+        <sprite>sprites\spr_punched</sprite>
       </sprites>
       <sprites name="tired">
         <sprite>sprites\spr_tired_up</sprite>
@@ -33,6 +34,7 @@
     </sprites>
     <sprites name="background">
       <sprite>sprites\spr_canvas</sprite>
+      <sprite>sprites\spr_floor</sprite>
       <sprite>sprites\spr_back_ropes</sprite>
       <sprite>sprites\spr_wall</sprite>
       <sprite>sprites\spr_wall_player</sprite>
@@ -46,6 +48,8 @@
       <sprite>sprites\spr_side_rope_wiggle</sprite>
       <sprite>sprites\spr_side_rope_wiggle_r</sprite>
       <sprite>sprites\spr_wall_walking</sprite>
+      <sprite>sprites\spr_front_crowd</sprite>
+      <sprite>sprites\spr_arena_shade</sprite>
     </sprites>
     <sprites name="red_enemy">
       <sprite>sprites\spr_en</sprite>
@@ -79,8 +83,6 @@
       <sprite>sprites\spr_empty_heart</sprite>
       <sprite>sprites\heart_container</sprite>
     </sprites>
-    <sprite>sprites\sprite38</sprite>
-    <sprite>sprites\sprite40</sprite>
     <sprites name="control">
       <sprite>sprites\spr_cont_up</sprite>
       <sprite>sprites\spr_cont_right</sprite>
@@ -140,11 +142,14 @@
       <object>objects\obj_ropes</object>
       <object>objects\obj_back_ropes</object>
       <object>objects\obj_ring</object>
+      <object>objects\obj_floor</object>
       <object>objects\obj_post_left</object>
       <object>objects\obj_post_right</object>
       <object>objects\obj_side_rope_l</object>
       <object>objects\obj_side_rope_r</object>
       <object>objects\obj_crowd</object>
+      <object>objects\obj_front_crowd</object>
+      <object>objects\obj_arena_light</object>
     </objects>
     <objects name="control">
       <object>objects\obj_cont_up</object>
