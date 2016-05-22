@@ -289,6 +289,13 @@ if (!isColliding &amp;&amp; state == IS_HURT) {
     alarm[0] = randomNum;
 }
 
+// Change depth based on position relative to player
+if (instance_exists(obj_player) &amp;&amp; obj_player.y &lt; y) {
+    depth = -501
+} else {
+    depth = -500
+}
+
 // Check sprite on every step
 checkSprite();
 </string>

@@ -313,6 +313,21 @@ if (state == MOVING) {
         direction = 180
     }
     instance_change(obj_player_eliminated, true);
+    // bounce off ropes
+    if (direction == 0) {
+        global.lastKeyPressed = "left"
+        wiggly_ropes("right")
+    } else if (direction == 90) {
+        global.lastKeyPressed = "down"
+        wiggly_ropes("back")
+    } else if (direction == 180) {
+        global.lastKeyPressed = "right"
+        wiggly_ropes("left")
+    } else if (direction == 270) {
+        global.lastKeyPressed = "up"
+        wiggly_ropes("front")
+    }
+
 }
 </string>
           </argument>
