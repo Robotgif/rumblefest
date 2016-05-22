@@ -156,6 +156,7 @@
       <object>objects\obj_cont_right</object>
       <object>objects\obj_cont_down</object>
       <object>objects\obj_cont_left</object>
+      <object>objects\keyboardManager</object>
     </objects>
     <objects name="hud">
       <object>objects\timer</object>

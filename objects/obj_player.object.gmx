@@ -42,7 +42,7 @@ KNOCKED_BACK = 8
 STILL = 9
 
 // Set initial state to MOVING
-state = MOVING
+state = STILL
 
 // When hit, set flashing to true which makes player invincible for short time
 flashing = false
@@ -226,21 +226,32 @@ if (state == KNOCKED_BACK) {
 if (state == STILL) {
     sprite_index = spr_still
     speed = 0
-    exit
 }
 
 // Change direction when hitting keyboard buttons
-if (keyboard_check(vk_down)){
+if (global.lastKeyPressed == "down"){
     direction = 270
+    if (state == STILL) {
+        state = MOVING
+    }
 }
-if (keyboard_check(vk_up)){
+if (global.lastKeyPressed == "up"){
     direction = 90
+    if (state == STILL) {
+        state = MOVING
+    }
 }
-if (keyboard_check(vk_left)){
+if (global.lastKeyPressed == "left"){
     direction = 180
+    if (state == STILL) {
+        state = MOVING
+    }
 }
-if (keyboard_check(vk_right)){
+if (global.lastKeyPressed == "right"){
     direction = 0
+    if (state == STILL) {
+        state = MOVING
+    }
 }
 
 if (state == TIRED) {
