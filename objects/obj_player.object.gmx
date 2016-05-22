@@ -313,6 +313,7 @@ if (state == MOVING) {
         direction = 180
     }
     instance_change(obj_player_eliminated, true);
+} else if (state == MOVING || state == TIRED) {
     // bounce off ropes
     if (direction == 0) {
         global.lastKeyPressed = "left"
