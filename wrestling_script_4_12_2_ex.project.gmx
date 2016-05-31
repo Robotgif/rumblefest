@@ -92,9 +92,9 @@
       <sprite>sprites\spr_cont_left</sprite>
     </sprites>
     <sprites name="green_enemy">
-      <sprite>sprites\spr_green_reg</sprite>
+      <sprite>sprites\spr_g</sprite>
       <sprite>sprites\spr_g_damage</sprite>
-      <sprite>sprites\spr_g_flex</sprite>
+      <sprite>sprites\spr_g_tired</sprite>
       <sprite>sprites\spr_g_down</sprite>
       <sprite>sprites\spr_g_up</sprite>
       <sprite>sprites\spr_g_left</sprite>
@@ -177,6 +177,11 @@
     <objects name="end_screen">
       <object>objects\obj_elim_text</object>
       <object>objects\obj_end_player</object>
+    </objects>
+    <objects name="green_enemy_obj">
+      <object>objects\obj_g_en</object>
+      <object>objects\obj_g_ring_walkin</object>
+      <object>objects\obj_g_ring_entrance</object>
     </objects>
   </objects>
   <rooms name="rooms">

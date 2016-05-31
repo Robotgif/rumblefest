@@ -29,6 +29,9 @@
 sprite_index = spr_en
 randomize()
 
+// For setting correct sprites
+spritePrefix = "spr_en_"
+
 
 MOVING = 0
 IS_HURT = 1
@@ -59,94 +62,6 @@ changeDirection();
 
 alarm[0] = room_speed * 1 ///int alarm to 3 seconds
 
-/*
-tired alarm
-///Tired alarm
-
-if (!isGettingPunched) {
-
-    if (state == MOVING) {
-        state = TIRED;
-        ///this triggers the alarm again randomly between 1 and 2 seconds
-        alarm[0] = room_speed * round (random_range (1,2))
-    } else if (state == TIRED) {
-        state = MOVING;
-        newDirection = direction  //line 3-7 makes sure enemy never moves in same direction 
-        while (newDirection == direction){
-            randomNum = round(random_range (0,3))
-            newDirection = randomNum * 90;
-        }
-        direction = newDirection;
-        show_debug_message(newDirection);
-        ///this triggers the alarm again randomly between 10 and 15 seconds
-        alarm[0] = room_speed * round (random_range (1,2))
-    }
-}
-
-isGettingPunched = false;
-
-moving alarm
-///moving alarm
-direction = round (random_range (0,3)) * 90;
-
-// moving state between 
-alarm[1] = room_speed * round (random_range (10,15))
-
-
-step
-if (state == TIRED) {
-    speed = 0;
-    sprite_index = spr_en_tired
-    image_speed = .1
-} else {
-    speed = 4;
-    if (direction == 0) {
-        sprite_index = spr_en_right
-    }
-    if (direction == 90) {
-        sprite_index = spr_en_up
-    }
-    if (direction == 180) {
-        sprite_index = spr_en_left
-    }
-    if (direction == 270) {
-        sprite_index = spr_en_down
-    }
-}
-
-
-wall
-
-
-newDirection = direction  //line 3-7 makes sure enemy never moves in same direction 
-while (newDirection == direction){
-    randomNum = round(random_range (0,3))
-    newDirection = randomNum * 90;
-}
-
-direction = newDirection;
-
-
-player 
-//Collision with player
-
-if state == TIRED {
-    if place_meeting (x+4,y,obj_player){x-=4} //left     
-    if place_meeting (x-4,y,obj_player){x+=4} //right  
-    if place_meeting (x,y+4,obj_player){y-=4} //up
-    if place_meeting (x,y-4,obj_player){y+=4} //down
-    sprite_index = spr_en_damage
-    image_speed = .2;
-    isGettingPunched = true;
-}
-else {
-    isGettingPunched = false;
-}
-
-
-
-
-*/
 </string>
           </argument>
         </arguments>
