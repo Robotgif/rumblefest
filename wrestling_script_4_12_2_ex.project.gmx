@@ -6,10 +6,6 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprites name="end_screen">
-      <sprite>sprites\spr_end_screen</sprite>
-      <sprite>sprites\spr_elim</sprite>
-    </sprites>
     <sprites name="player">
       <sprites name="punching">
         <sprite>sprites\spr_right</sprite>
@@ -32,6 +28,29 @@
         <sprite>sprites\spr_tired_left</sprite>
       </sprites>
     </sprites>
+    <sprites name="red_enemy">
+      <sprite>sprites\spr_en</sprite>
+      <sprite>sprites\spr_en_damage</sprite>
+      <sprite>sprites\spr_en_tired</sprite>
+      <sprite>sprites\spr_en_down</sprite>
+      <sprite>sprites\spr_en_up</sprite>
+      <sprite>sprites\spr_en_left</sprite>
+      <sprite>sprites\spr_en_right</sprite>
+      <sprite>sprites\spr_en_damage_d</sprite>
+      <sprites name="ring_entrance">
+        <sprite>sprites\spr_ring_entrance</sprite>
+        <sprite>sprites\spr_ring_walkin</sprite>
+      </sprites>
+      <sprites name="eliminated">
+        <sprite>sprites\spr_en_l_out</sprite>
+        <sprite>sprites\spr_en_back_out</sprite>
+        <sprite>sprites\spr_en_front_out</sprite>
+      </sprites>
+    </sprites>
+    <sprites name="end_screen">
+      <sprite>sprites\spr_end_screen</sprite>
+      <sprite>sprites\spr_elim</sprite>
+    </sprites>
     <sprites name="background">
       <sprite>sprites\spr_canvas</sprite>
       <sprite>sprites\spr_floor</sprite>
@@ -50,23 +69,6 @@
       <sprite>sprites\spr_wall_walking</sprite>
       <sprite>sprites\spr_front_crowd</sprite>
       <sprite>sprites\spr_arena_shade</sprite>
-    </sprites>
-    <sprites name="red_enemy">
-      <sprite>sprites\spr_en</sprite>
-      <sprite>sprites\spr_en_damage</sprite>
-      <sprite>sprites\spr_en_tired</sprite>
-      <sprite>sprites\spr_en_down</sprite>
-      <sprite>sprites\spr_en_up</sprite>
-      <sprite>sprites\spr_en_left</sprite>
-      <sprite>sprites\spr_en_right</sprite>
-      <sprite>sprites\spr_en_damage_d</sprite>
-      <sprite>sprites\spr_en_front_out</sprite>
-      <sprite>sprites\spr_en_l_out</sprite>
-      <sprite>sprites\spr_en_back_out</sprite>
-      <sprites name="ring_entrance">
-        <sprite>sprites\spr_ring_entrance</sprite>
-        <sprite>sprites\spr_ring_walkin</sprite>
-      </sprites>
     </sprites>
     <sprites name="manager">
       <sprite>sprites\spr_manager</sprite>
@@ -88,6 +90,16 @@
       <sprite>sprites\spr_cont_right</sprite>
       <sprite>sprites\spr_cont_down</sprite>
       <sprite>sprites\spr_cont_left</sprite>
+    </sprites>
+    <sprites name="green_enemy">
+      <sprite>sprites\spr_green_reg</sprite>
+      <sprite>sprites\spr_g_damage</sprite>
+      <sprite>sprites\spr_g_flex</sprite>
+      <sprite>sprites\spr_g_down</sprite>
+      <sprite>sprites\spr_g_up</sprite>
+      <sprite>sprites\spr_g_left</sprite>
+      <sprite>sprites\spr_g_right</sprite>
+      <sprite>sprites\spr_g_damage_d</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background"/>
