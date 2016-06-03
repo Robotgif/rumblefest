@@ -100,6 +100,9 @@
       <sprite>sprites\spr_g_left</sprite>
       <sprite>sprites\spr_g_right</sprite>
       <sprite>sprites\spr_g_damage_d</sprite>
+      <sprites name="eliminated">
+        <sprite>sprites\spr_g_l_out</sprite>
+      </sprites>
     </sprites>
   </sprites>
   <backgrounds name="background"/>

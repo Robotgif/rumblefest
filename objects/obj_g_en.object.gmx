@@ -6,6 +6,7 @@
   <depth>-500</depth>
   <persistent>0</persistent>
   <parentName>obj_en</parentName>
+  <maskName>spr_en_tired</maskName>
   <events>
     <event eventtype="0" enumb="0">
       <action>
@@ -24,6 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>event_inherited();
+spritePrefix = "spr_g_"
 </string>
           </argument>
         </arguments>
