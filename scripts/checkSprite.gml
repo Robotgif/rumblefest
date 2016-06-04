@@ -6,28 +6,28 @@ if (!instance_exists(obj_player)) {
 
 if (state == TIRED) {
     speed = 0;
-    sprite_index = spr_en_tired
+    sprite_index = asset_get_index(spritePrefix + "tired")
     image_speed = .1
 } else if (state == MOVING){
     speed = 4;
     image_speed = .1
     if (direction == 0) {
-        sprite_index = spr_en_right
+        sprite_index = asset_get_index(spritePrefix + "right")
     }
     if (direction == 90) {
-        sprite_index = spr_en_up
+        sprite_index = asset_get_index(spritePrefix + "up")
     }
     if (direction == 180) {
-        sprite_index = spr_en_left
+        sprite_index = asset_get_index(spritePrefix + "left")
     }
     if (direction == 270) {
-        sprite_index = spr_en_down
+        sprite_index = asset_get_index(spritePrefix + "down")
     }
 } else if (state == IS_HURT) {
     // speed = obj_player.speed;
     direction = obj_player.direction;
     speed = 0;
-    sprite_index = spr_en_damage
+    sprite_index = asset_get_index(spritePrefix + "damage")
     image_speed = .2;
 } else if (state == ELIMINATED) {
     speed = 0;

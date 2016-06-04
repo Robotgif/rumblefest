@@ -3,7 +3,7 @@
   <spriteName>spr_ring_entrance</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>3</depth>
+  <depth>600</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -31,6 +31,8 @@ image_speed = .1;
 
 // This is used to check whether we should change to a enemy object or skip a step
 skipRemove = true
+
+enemyObjString = "obj_en"
 </string>
           </argument>
         </arguments>
@@ -66,7 +68,9 @@ if (image_index == 0.1) {
         skipRemove = false;
     } else {
         speed = 4
-        instance_change(obj_en, true)
+        show_debug_message("changing to ")
+        show_debug_message(enemyObjString)
+        instance_change(asset_get_index(enemyObjString), true)
     }
 }
 </string>

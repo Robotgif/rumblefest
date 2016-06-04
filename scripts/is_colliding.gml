@@ -1,3 +1,5 @@
+// TODO: Remove this if not being used anymore
+
 // Don't do anything if player gets eliminated
 if (!instance_exists(obj_player)) {
     exit;
