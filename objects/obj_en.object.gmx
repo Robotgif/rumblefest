@@ -29,9 +29,15 @@
 sprite_index = spr_en
 randomize()
 
+// Debug stuff
+debugParticles = false;
+
 // For setting correct sprites
 spritePrefix = "spr_en_"
 objPrefix = "obj_en_"
+
+// For spit particle
+firstHit = false;
 
 
 MOVING = 0
@@ -63,6 +69,56 @@ changeDirection();
 
 alarm[0] = room_speed * 1 ///int alarm to 3 seconds
 
+// Set up particle effects
+// Define and name the emitters
+
+particleSystem = part_system_create();
+
+global.Particle1 = part_type_create();
+part_system_depth( particleSystem, -1001 );
+
+part_type_shape(global.Particle1,pt_shape_square);            //This defines the particles shape
+part_type_size(global.Particle1,0.1,0.1,0,0);                    //This is for the size
+part_type_scale(global.Particle1,1,1);                       //This is for scaling
+part_type_color1(global.Particle1,c_white);                  //This sets its colour. There are three different codes for this
+part_type_alpha2(global.Particle1,1, .6);                        //This is its alpha. There are three different codes for this
+part_type_speed(global.Particle1, 4, 6, 0, 0);            //The particles speed
+part_type_direction(global.Particle1,1,360,0,0);            //The direction
+part_type_orientation(global.Particle1,0,0,0,0,1);           //This changes the rotation of the particle
+part_type_blend(global.Particle1,0);                         //This is the blend mode, either additive or normal
+part_type_life(global.Particle1,1,15);                       //this is its lifespan in steps
+//part_type_gravity(global.Particle1, 0.9, 270);
+
+particleEmitter = part_emitter_create(particleSystem);
+part_emitter_region(particleSystem, particleEmitter, x - 5, x + 5, y - 30, y - 35, ps_shape_line, ps_distr_linear);
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Burst of spit!
+if (state == IS_HURT || debugParticles) {
+    part_emitter_burst(particleSystem, particleEmitter, global.Particle1, 30);
+    alarm[2] = room_speed * 0.25;   
+}
 </string>
           </argument>
         </arguments>
@@ -236,6 +292,13 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.y &lt; y) {
 
 // Check sprite on every step
 checkSprite();
+
+// Particles for getting hit, with alarm to set bursts
+part_emitter_region(particleSystem, particleEmitter, x - 5, x + 5, y - 30, y - 35, ps_shape_ellipse, ps_distr_linear);
+if ((debugParticles &amp;&amp; alarm[2] &lt; 0 ) || state == IS_HURT &amp;&amp; alarm[2] &lt; 0) {
+    show_debug_message("????")
+    alarm[2] = 1
+}
 </string>
           </argument>
         </arguments>
@@ -266,6 +329,36 @@ checkSprite();
     speed = 4
     instance_change(asset_get_index(objPrefix + "eliminated"), true)
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (global.cameraFlashing) {
+    draw_set_blend_mode(bm_add); //(or try experimenting with draw_set_blend_mode_ext)
+    draw_self(); //(or draw_sprite or whatever)
+    draw_set_blend_mode(bm_normal);
+} else {
+    draw_self();
+}
+
 </string>
           </argument>
         </arguments>
