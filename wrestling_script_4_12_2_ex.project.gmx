@@ -20,8 +20,8 @@
         <sprite>sprites\spr_player_l_out</sprite>
         <sprite>sprites\spr_player_back_out</sprite>
         <sprite>sprites\spr_player_front_out</sprite>
-        <sprite>sprites\sprite61</sprite>
-        <sprite>sprites\sprite41</sprite>
+        <sprite>sprites\spr_punched_down</sprite>
+        <sprite>sprites\spr_punched_up</sprite>
         <sprite>sprites\spr_punched</sprite>
       </sprites>
       <sprites name="tired">
