@@ -123,9 +123,7 @@
     </scripts>
     <script>scripts\script7.gml</script>
     <script>scripts\wiggly_ropes.gml</script>
-    <script>scripts\is_colliding.gml</script>
     <script>scripts\script9.gml</script>
-    <script>scripts\object_collide.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_Arial40</font>
@@ -188,6 +186,7 @@
       <object>objects\obj_g_en</object>
       <object>objects\obj_g_ring_walkin</object>
       <object>objects\obj_g_ring_entrance</object>
+      <object>objects\obj_g_en_eliminated</object>
     </objects>
   </objects>
   <rooms name="rooms">

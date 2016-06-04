@@ -26,7 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited();
+sprite_index = spr_en_l_out
 spritePrefix = "spr_g_"
+objPrefix = "obj_g_en_"
 </string>
           </argument>
         </arguments>

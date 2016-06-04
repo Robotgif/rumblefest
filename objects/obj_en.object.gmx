@@ -31,6 +31,7 @@ randomize()
 
 // For setting correct sprites
 spritePrefix = "spr_en_"
+objPrefix = "obj_en_"
 
 
 MOVING = 0
@@ -151,18 +152,41 @@ alarm[0] = randomNum;
             <kind>1</kind>
             <string>if (place_meeting(x, y, obj_player)) {
     isColliding = true
+    
+    // Set original punching direction so we know if we disengage
+    rawCollisionDir = point_direction(x,y, obj_player.x, obj_player.y);
+    
+    // Actually setting inverse of directions here
+    if (rawCollisionDir &gt; 45 &amp;&amp; rawCollisionDir &lt; 135) {
+        originalCollisionDirection = 270;
+    } else if (rawCollisionDir &gt;= 135 &amp;&amp; rawCollisionDir &lt; 225) {
+        originalCollisionDirection = 0;
+    } else if (rawCollisionDir &gt;= 225 &amp;&amp; rawCollisionDir &lt; 305) {
+        originalCollisionDirection = 90;
+    } else {
+        originalCollisionDirection = 180;
+    }
+
 } else {
     isColliding = false
 }
 
 
+
 // Perform functions for collisions 
 if (isColliding &amp;&amp; !obj_player.flashing) {
-
-    if (state == TIRED || state == IS_HURT) {
+        
+        // Multiple checks here for pushing.  First check if enemy is tired or hurt.
+        // Also, if original collision direction isn't the same as current player direction,
+        // that means the player moved direction when pushing, so don't do anything else
+    if ((state == TIRED || 
+        state == IS_HURT)) {
+        
+        if (obj_player.direction != originalCollisionDirection) {
+            exit;
+        }
     
         // Move enemy based on player direction  
-        
         speedToMove = 4
         if (obj_player.state = TIRED) {
             speedToMove = 2
@@ -173,7 +197,6 @@ if (isColliding &amp;&amp; !obj_player.flashing) {
         if obj_player.direction == 90  {y-=speedToMove} //up
         if obj_player.direction == 270 {y+=speedToMove} //down
     
-        //object_collide(obj_player, self, obj_player.direction)
         state = IS_HURT;
         direction = obj_player.direction
         
@@ -241,7 +264,7 @@ checkSprite();
     changeDirection();
 } else {
     speed = 4
-    instance_change(obj_en_eliminated, true);
+    instance_change(asset_get_index(objPrefix + "eliminated"), true)
 }
 </string>
           </argument>
