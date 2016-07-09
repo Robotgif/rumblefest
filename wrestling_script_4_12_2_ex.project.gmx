@@ -53,6 +53,7 @@
     <sprites name="end_screen">
       <sprite>sprites\spr_end_screen</sprite>
       <sprite>sprites\spr_elim</sprite>
+      <sprite>sprites\spr_new_game</sprite>
     </sprites>
     <sprites name="background">
       <sprite>sprites\spr_canvas</sprite>
@@ -93,6 +94,7 @@
       <sprite>sprites\spr_cont_right</sprite>
       <sprite>sprites\spr_cont_down</sprite>
       <sprite>sprites\spr_cont_left</sprite>
+      <sprite>sprites\spr_pause_menu</sprite>
     </sprites>
     <sprites name="green_enemy">
       <sprite>sprites\spr_g</sprite>
@@ -112,18 +114,13 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="red_enemie_state">
-      <script>scripts\red_enemy_idol.gml</script>
       <script>scripts\changeDirection.gml</script>
-      <script>scripts\red_enemy_hurt.gml</script>
       <script>scripts\checkSprite.gml</script>
-      <script>scripts\defeatedAnimation.gml</script>
     </scripts>
     <scripts name="crowd">
       <script>scripts\crowd_flash.gml</script>
     </scripts>
-    <script>scripts\script7.gml</script>
     <script>scripts\wiggly_ropes.gml</script>
-    <script>scripts\script9.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_Arial40</font>
@@ -177,10 +174,12 @@
     <objects name="hud">
       <object>objects\timer</object>
       <object>objects\score_manager</object>
+      <object>objects\pause_menu</object>
     </objects>
     <objects name="end_screen">
       <object>objects\obj_elim_text</object>
       <object>objects\obj_end_player</object>
+      <object>objects\obj_new_game_text</object>
     </objects>
     <objects name="green_enemy_obj">
       <object>objects\obj_g_en</object>
@@ -190,8 +189,8 @@
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room0</room>
-    <room>rooms\room1</room>
+    <room>rooms\main</room>
+    <room>rooms\game_over</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
