@@ -79,6 +79,7 @@ depth = -1001
           <argument>
             <kind>1</kind>
             <string>instance_destroy()
+room_persistent = false;
 room_goto(game_over)
 </string>
           </argument>

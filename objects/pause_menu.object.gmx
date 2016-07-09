@@ -25,13 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>gameIsActive = true
+            <string>global.gameIsPaused = false
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="0">
+    <event eventtype="6" enumb="7">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -48,10 +48,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (gameIsActive) {
-    instance_deactivate_object(obj_en)
+            <string>roomname = room_get_name(room);
+
+if (roomname == "main") {
+    room_persistent = true;
+    room_goto(pause_menu_room)
 } else {
-    instance_activate_all()
+    room_goto(main)
 }
 </string>
           </argument>

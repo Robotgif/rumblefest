@@ -296,9 +296,9 @@ checkSprite();
 // Particles for getting hit, with alarm to set bursts
 part_emitter_region(particleSystem, particleEmitter, x - 5, x + 5, y - 30, y - 35, ps_shape_ellipse, ps_distr_linear);
 if ((debugParticles &amp;&amp; alarm[2] &lt; 0 ) || state == IS_HURT &amp;&amp; alarm[2] &lt; 0) {
-    show_debug_message("????")
     alarm[2] = 1
 }
+
 </string>
           </argument>
         </arguments>
