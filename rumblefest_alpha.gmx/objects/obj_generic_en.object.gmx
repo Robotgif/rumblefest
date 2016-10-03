@@ -127,19 +127,19 @@ case states.ROAMING:
 if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_wall_en)) {
 
     // "Momentum" will take enemy into the colliding object,
-    // so push away pixels based on speed
-    // Middle of ring is roughly 400x 350 y
+    // so push away from ropes (using 400x400 as a general center of the ring)
+    // TODO: Could be improved based on incoming position
     while (!place_free(x, y)) {
         if (y &lt; 400) {
-            y = y + 1;
+            y = y + speed;
         } else {
-            y = y - 1;
+            y = y - speed;
         }
         
         if (x &lt; 400) {
-            x = x + 1;
+            x = x + speed;
         } else {
-            x = x - 1;
+            x = x - speed;
         }
         
     }
