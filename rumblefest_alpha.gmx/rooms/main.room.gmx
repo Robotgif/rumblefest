@@ -70,7 +70,6 @@
     <instance objName="obj_side_rope_l" x="85" y="408" name="inst_34CE543F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_side_rope_r" x="684" y="408" name="inst_B32208CB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_entrance_wall" x="400" y="246" name="inst_7889DAA4" locked="0" code="" scaleX="7.5" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="obj_en_spawn" x="392" y="32" name="inst_463764FD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_heart_cont" x="64" y="64" name="inst_350F18F9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="score_manager" x="608" y="64" name="inst_780BF2F0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_front_crowd" x="384" y="992" name="inst_895A9E4D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -81,8 +80,8 @@
     <instance objName="obj_cont_down" x="384" y="928" name="inst_8E2CAAFA" locked="0" code="" scaleX="1.49230766296387" scaleY="1.49230766296387" colour="4294967295" rotation="0"/>
     <instance objName="timer" x="512" y="64" name="inst_E43726C4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="keyboardManager" x="0" y="0" name="inst_F901B621" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_en" x="608" y="256" name="inst_75B7B70B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="pause_menu" x="672" y="32" name="inst_DFE2E16C" locked="0" code="" scaleX="0.220689654350281" scaleY="0.220689654350281" colour="4294967295" rotation="0"/>
+    <instance objName="game_controller" x="32" y="0" name="inst_BDE22CC2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

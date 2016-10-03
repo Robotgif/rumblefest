@@ -130,6 +130,9 @@
     <font>fonts\myFont</font>
   </fonts>
   <objects name="objects">
+    <objects name="generic_enemy">
+      <object>objects\obj_generic_en</object>
+    </objects>
     <objects name="invisible_objects">
       <object>objects\obj_wall_player</object>
       <object>objects\obj_wall_en</object>
@@ -191,6 +194,7 @@
       <object>objects\obj_g_ring_entrance</object>
       <object>objects\obj_g_en_eliminated</object>
     </objects>
+    <object>objects\game_controller</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\main</room>
