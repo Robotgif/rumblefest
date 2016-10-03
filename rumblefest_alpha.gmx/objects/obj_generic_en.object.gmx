@@ -76,8 +76,7 @@ state = states.WALKING_IN;
             <kind>1</kind>
             <string>/// Handle variables based on state
 
-switch (state)
-{
+switch (state) {
 case states.WALKING_IN:
     direction = directions.DOWN;
     speed = 4;
@@ -92,14 +91,14 @@ case states.ROAMING:
     speed = 4;
     depth = -500;
     // Separate directional sprites
-    if (direction == directions.DOWN) {
-        sprite_index = spr_en_down;
-    } else if (direction == directions.LEFT) {
-        sprite_index = spr_en_left;
-    } else if (direction == directions.UP) {
+    if (direction == directions.UP) {
         sprite_index = spr_en_up;
     } else if (direction == directions.DOWN) {
         sprite_index = spr_en_down;
+    } else if (direction == directions.LEFT) {
+        sprite_index = spr_en_left;
+    } else if (direction == directions.RIGHT) {
+        sprite_index = spr_en_right;
     }
     break;
 }
@@ -125,8 +124,25 @@ case states.ROAMING:
           <argument>
             <kind>1</kind>
             <string>/// Collisions with wall
-if (place_meeting(x, y, obj_wall_en)) {
-    show_debug_message('colliding with wall')
+if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_wall_en)) {
+
+    // "Momentum" will take enemy into the colliding object,
+    // so push away pixels based on speed
+    // Middle of ring is roughly 400x 350 y
+    while (!place_free(x, y)) {
+        if (y &lt; 400) {
+            y = y + 1;
+        } else {
+            y = y - 1;
+        }
+        
+        if (x &lt; 400) {
+            x = x + 1;
+        } else {
+            x = x - 1;
+        }
+        
+    }
     // Call event to change direction
     event_user(1)
 }
@@ -180,13 +196,13 @@ if (!isActive) {
           <argument>
             <kind>1</kind>
             <string>/// Change direction
-newDirection = directions.UP;
+newDirection = direction;
 
-while (newDirection != direction) {
+while (newDirection == direction) {
     newDirection = choose(directions.UP, directions.DOWN, directions.LEFT, directions.RIGHT);
+  
 }
 
-show_debug_message(newDirection)
 direction = newDirection;
 </string>
           </argument>
@@ -212,7 +228,7 @@ direction = newDirection;
             <kind>1</kind>
             <string>/// First time entering ring
 state = states.ROAMING;
-direction = directions.LEFT
+event_user(1)
 </string>
           </argument>
         </arguments>
