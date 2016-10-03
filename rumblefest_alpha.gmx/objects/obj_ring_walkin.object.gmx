@@ -3,7 +3,7 @@
   <spriteName>spr_ring_walkin</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>3</depth>
+  <depth>650</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -31,6 +31,8 @@ image_speed = .1;
 
 speed = 4
 direction = 270
+
+entranceObjString = "obj_ring_entrance"
 </string>
           </argument>
         </arguments>
@@ -55,7 +57,7 @@ direction = 270
             <kind>1</kind>
             <string>speed = 0
 
-instance_change(obj_ring_entrance, true)
+instance_change(asset_get_index(entranceObjString), true)
 </string>
           </argument>
         </arguments>

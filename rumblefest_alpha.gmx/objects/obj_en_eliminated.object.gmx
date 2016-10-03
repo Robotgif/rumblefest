@@ -32,6 +32,8 @@ if (direction == 270){
     wiggly_ropes("front")
 } else if (direction == 0){
     wiggly_ropes("right")
+    // Also reverse sprite
+    image_xscale = -1   
 } else if (direction == 90){
     wiggly_ropes("back")
 } else if (direction == 180){
