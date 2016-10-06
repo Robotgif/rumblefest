@@ -2,15 +2,15 @@
 <sprite>
   <type>0</type>
   <xorig>48</xorig>
-  <yorigin>51</yorigin>
+  <yorigin>54</yorigin>
   <colkind>1</colkind>
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
   <bbox_left>0</bbox_left>
   <bbox_right>95</bbox_right>
-  <bbox_top>0</bbox_top>
-  <bbox_bottom>101</bbox_bottom>
+  <bbox_top>6</bbox_top>
+  <bbox_bottom>107</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
@@ -18,9 +18,9 @@
   </TextureGroups>
   <For3D>0</For3D>
   <width>96</width>
-  <height>102</height>
+  <height>108</height>
   <frames>
-    <frame index="0">images\spr_ring_walkin_0.png</frame>
-    <frame index="1">images\spr_ring_walkin_1.png</frame>
+    <frame index="0">images\spr_g_being_hit_0.png</frame>
+    <frame index="1">images\spr_g_being_hit_1.png</frame>
   </frames>
 </sprite>

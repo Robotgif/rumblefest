@@ -379,8 +379,13 @@ if (state == TIRED) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-/// Get knocked back based on which direction we're facing
+            <string>/// Event when colliding with normal roaming enemy
+
+// If flashing, do nothing
+if (flashing) {
+    exit;
+}
+// Get knocked back based on which direction we're facing
 // moveBackAmount is how many times we will call alarm[0] to push the player back
 moveBackAmount = 18
 
@@ -393,6 +398,11 @@ flashingCount = 0
 
 
 alarm[2] = 1.5 * room_speed
+
+// Lose a heart
+with (obj_heart_cont) {
+    event_user(0)
+}
 </string>
           </argument>
         </arguments>

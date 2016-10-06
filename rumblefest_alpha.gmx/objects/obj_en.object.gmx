@@ -6,7 +6,7 @@
   <depth>-500</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
-  <maskName>spr_en_tired</maskName>
+  <maskName>spr_en_vulnerable</maskName>
   <events>
     <event eventtype="0" enumb="0">
       <action>
