@@ -108,6 +108,10 @@
         <sprite>sprites\spr_g_l_out</sprite>
       </sprites>
       <sprite>sprites\spr_g_test</sprite>
+      <sprites name="ring_entrance">
+        <sprite>sprites\spr_en_entrance_g</sprite>
+        <sprite>sprites\spr_en_walkin_g</sprite>
+      </sprites>
     </sprites>
     <sprites name="pause_menu">
       <sprite>sprites\spr_pause_menu</sprite>
