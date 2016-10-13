@@ -53,6 +53,9 @@ isActive = false;
 // Need a flag instead of a state to avoid race conditions
 isEliminated = false;
 
+// When player hits enemy, keep track of direction of collision. -1 is default or unset.
+playerCollisionDir = -1
+
 // Initialize variables to set direction going down
 // (from above ring), then climb into ring and proceed with normal behavior
 
@@ -95,7 +98,8 @@ case states.CLIMBING_IN:
     depth = 600;
     sprite_index = asset_get_index(spritePrefix + "_entrance");
     // Change depth just on last frame
-    if (image_index == 7) {
+    // Steps are fractions, so need to check upper/lower bounds
+    if ( image_index &gt;= 7 &amp;&amp; image_index &lt; 8) {
         depth = -500
     }
     break;
@@ -251,12 +255,46 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_player)) {
             <kind>1</kind>
             <string>/// Collisions with player when vulnerable
 
-if ((state == states.VULNERABLE || state == states.BEING_HIT) 
-    &amp;&amp; place_meeting(x, y, obj_player)) {   
-    
-    state = states.BEING_HIT
-    
+// Pretty confusing code here, could probably be refactored
+// If we're meeting with player when vulnerable, we want to move back
+// However, if the player breaks away, we want to just go to vulnerable state
+
+// To do this we set the `playerCollisionDir` on first contact (-1 means it's not set)
+// If the playerCollisionDir still matches the player's current direction, keep being punched
+
+// Set up flag if player is knocked back, since that should break collisions
+if (instance_exists(obj_player) &amp;&amp; obj_player.state == player_states.KNOCKED_BACK) {
+    playerKnockedBack = true;
+} else {
+    playerKnockedBack = false;
 }
+
+if (place_meeting(x, y, obj_player)) {
+    
+    if (state == states.VULNERABLE) {
+        if (playerCollisionDir == -1) {
+            playerCollisionDir = obj_player.direction;
+        }
+        
+        if (obj_player.direction == playerCollisionDir &amp;&amp; !playerKnockedBack) {
+            state = states.BEING_HIT;
+        } else {
+            state = states.VULNERABLE;
+        }
+    } else if (state == states.BEING_HIT) {
+    
+        if (obj_player.direction == playerCollisionDir &amp;&amp; !playerKnockedBack) {
+            state = states.BEING_HIT;
+        } else {
+            state = states.VULNERABLE;
+        }
+    }
+
+} else {
+    playerCollisionDir = -1;
+}
+
+
 </string>
           </argument>
         </arguments>
@@ -278,7 +316,16 @@ if ((state == states.VULNERABLE || state == states.BEING_HIT)
           <argument>
             <kind>1</kind>
             <string>/// Change depth based on position relative to player
-if (instance_exists(obj_player) &amp;&amp; obj_player.y &lt; y) {
+
+// Don't run this if we're entering
+if (state == states.WALKING_IN || 
+    state == states.CLIMBING_IN) {
+    
+    exit;   
+}
+
+if (instance_exists(obj_player) &amp;&amp;
+    obj_player.y &lt; y) {
     depth = -501
 } else {
     depth = -500
@@ -310,6 +357,33 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.y &lt; y) {
 if (!isActive) {
     state = states.CLIMBING_IN;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="12">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Alarm to set state to vunerable (tired)
+state = states.VULNERABLE
+
+// After 3 seconds go back to normal if we're not being punched
+alarm[1] = room_speed * 3;
 </string>
           </argument>
         </arguments>
@@ -365,7 +439,9 @@ direction = newDirection;
             <kind>1</kind>
             <string>/// First time entering ring
 state = states.ROAMING;
-event_user(1)
+
+// For now keep going down, could call this to change direction if we wanted
+//event_user(1)
 </string>
           </argument>
         </arguments>
@@ -393,10 +469,8 @@ if (state == states.CLIMBING_IN) {
     state = states.ROAMING;
     isActive = true
     
-    // Move down a bit to avoid wall collision
-    y = y + 15
-    
     // Run event to set up roaming
+    depth = -1001
     event_user(0)
 }
 

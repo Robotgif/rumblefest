@@ -41,6 +41,20 @@ GHOST = 7
 KNOCKED_BACK = 8
 STILL = 9
 
+// TODO: Refactor this to use all enums
+enum player_states {
+    MOVING,
+    IS_HURT,
+    TIRED,
+    PUNCHING_PLAYER,
+    WAKE_UP,
+    ELIMINATED,
+    ENTERING,
+    GHOST,
+    KNOCKED_BACK,
+    STILL
+}
+
 // Set initial state to MOVING
 state = STILL
 
