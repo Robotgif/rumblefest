@@ -20,7 +20,7 @@
   <width>96</width>
   <height>108</height>
   <frames>
-    <frame index="0">images\spr_en_walkin_g_0.png</frame>
-    <frame index="1">images\spr_en_walkin_g_1.png</frame>
+    <frame index="0">images\spr_g_walkin_0.png</frame>
+    <frame index="1">images\spr_g_walkin_1.png</frame>
   </frames>
 </sprite>

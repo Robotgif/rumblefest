@@ -30,6 +30,9 @@
 
 event_inherited()
 
+// TODO: Might want to rename this to spr_en_red
+spritePrefix = "spr_en"
+
 // DEBUG set tired after 4 seconds
 alarm[0] = room_speed * 4
 </string>

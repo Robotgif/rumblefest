@@ -109,8 +109,8 @@
       </sprites>
       <sprite>sprites\spr_g_test</sprite>
       <sprites name="ring_entrance">
-        <sprite>sprites\spr_en_entrance_g</sprite>
-        <sprite>sprites\spr_en_walkin_g</sprite>
+        <sprite>sprites\spr_g_entrance</sprite>
+        <sprite>sprites\spr_g_walkin</sprite>
       </sprites>
     </sprites>
     <sprites name="pause_menu">
