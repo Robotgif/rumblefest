@@ -89,12 +89,14 @@ state = states.WALKING_IN;
 switch (state) {
 case states.WALKING_IN:
     direction = directions.DOWN;
+    image_speed = .1;
     speed = 4;
     sprite_index = asset_get_index(spritePrefix + "_down");
     depth = 600;
     break;
 case states.CLIMBING_IN:
     speed = 0;
+    image_speed = .1;
     depth = 600;
     sprite_index = asset_get_index(spritePrefix + "_entrance");
     // Change depth just on last frame
@@ -105,6 +107,7 @@ case states.CLIMBING_IN:
     break;
 case states.ROAMING:
     speed = 4;
+    image_speed = .1;
     depth = -500;
     // Separate directional sprites
     switch(direction) {
@@ -124,17 +127,20 @@ case states.ROAMING:
     break;
 case states.VULNERABLE:
     speed = 0;
+    image_speed = .1;
     depth = -500;
     sprite_index = asset_get_index(spritePrefix + "_vulnerable");
     break;
 case states.BEING_HIT:
     speed = obj_player.speed;
+    image_speed = .2;
     direction = obj_player.direction;
     sprite_index = asset_get_index(spritePrefix + "_being_hit");
     break; 
 case states.ELIMINATED:
     // Separate directional sprites
     speed = 4;
+    image_speed = .1;
     switch(direction) {
         case directions.UP:
             sprite_index = asset_get_index(spritePrefix + "_back_out");
