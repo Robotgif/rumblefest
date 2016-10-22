@@ -206,7 +206,31 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_wall_en)) {
     // Call event to change direction
     event_user(1)
 } else if (state == states.BEING_HIT &amp;&amp; place_meeting(x, y, obj_wall_en)) {
-    state = states.ELIMINATED
+    
+    // TODO: These numbers seem really weird...
+    // Works for now, but if there are bugs with direction flying out, it's probably here
+    // REAL TODO: Need to split ropes into separate objects for up/down/left/right
+    collisionDirection = point_direction(x, y, obj_wall_en.x, obj_wall_en.y)
+    if (collisionDirection &gt; 180 &amp;&amp; collisionDirection &lt; 215) {
+        moveDirection = "right";
+        expectedDirection = directions.RIGHT
+    } else if (collisionDirection &gt;= 215 &amp;&amp; collisionDirection &lt; 225) {
+        moveDirection = "back";
+        expectedDirection = directions.UP
+    } else if (collisionDirection &gt;= 225 &amp;&amp; collisionDirection &lt; 360) {
+        moveDirection = "left";
+        expectedDirection = directions.LEFT
+    } else {
+        moveDirection = "front";
+        expectedDirection = directions.DOWN
+    }
+    
+    // Only change to eliminated if direction matches actual direction
+    if (direction == expectedDirection) {
+        wiggly_ropes(moveDirection)
+        state = states.ELIMINATED
+    }
+    
 }
 </string>
           </argument>
