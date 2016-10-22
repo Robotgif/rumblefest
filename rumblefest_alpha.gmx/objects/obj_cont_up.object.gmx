@@ -25,14 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Have to manually release any previous virtual keyboard clicks
-keyboard_key_release(vk_up);
-keyboard_key_release(vk_left);
-keyboard_key_release(vk_right);
-keyboard_key_release(vk_down);
-
-// Then perform the actual keyboard down event that we want
-keyboard_key_press(vk_up);
+            <string>global.lastKeyPressed = "up"
 </string>
           </argument>
         </arguments>

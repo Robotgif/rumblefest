@@ -7,18 +7,22 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprites name="player">
-      <sprite>sprites\spr_still</sprite>
       <sprites name="punching">
         <sprite>sprites\spr_right</sprite>
+        <sprite>sprites\spr_still</sprite>
         <sprite>sprites\spr_down</sprite>
         <sprite>sprites\spr_up</sprite>
         <sprite>sprites\spr_left</sprite>
       </sprites>
       <sprites name="damage">
         <sprite>sprites\spr_tired</sprite>
-        <sprite>sprites\spr_punched</sprite>
+        <sprite>sprites\spr_punched_old</sprite>
         <sprite>sprites\spr_player_l_out</sprite>
-        <sprite>sprites\sprite41</sprite>
+        <sprite>sprites\spr_player_back_out</sprite>
+        <sprite>sprites\spr_player_front_out</sprite>
+        <sprite>sprites\spr_punched_down</sprite>
+        <sprite>sprites\spr_punched_up</sprite>
+        <sprite>sprites\spr_punched</sprite>
       </sprites>
       <sprites name="tired">
         <sprite>sprites\spr_tired_up</sprite>
@@ -27,8 +31,33 @@
         <sprite>sprites\spr_tired_left</sprite>
       </sprites>
     </sprites>
+    <sprites name="red_enemy">
+      <sprite>sprites\spr_en</sprite>
+      <sprite>sprites\spr_en_being_hit</sprite>
+      <sprite>sprites\spr_en_vulnerable</sprite>
+      <sprite>sprites\spr_en_down</sprite>
+      <sprite>sprites\spr_en_up</sprite>
+      <sprite>sprites\spr_en_left</sprite>
+      <sprite>sprites\spr_en_right</sprite>
+      <sprite>sprites\spr_en_damage_d</sprite>
+      <sprites name="ring_entrance">
+        <sprite>sprites\spr_en_entrance</sprite>
+        <sprite>sprites\spr_en_walkin</sprite>
+      </sprites>
+      <sprites name="eliminated">
+        <sprite>sprites\spr_en_l_out</sprite>
+        <sprite>sprites\spr_en_back_out</sprite>
+        <sprite>sprites\spr_en_front_out</sprite>
+      </sprites>
+    </sprites>
+    <sprites name="end_screen">
+      <sprite>sprites\spr_end_screen</sprite>
+      <sprite>sprites\spr_elim</sprite>
+      <sprite>sprites\spr_new_game</sprite>
+    </sprites>
     <sprites name="background">
       <sprite>sprites\spr_canvas</sprite>
+      <sprite>sprites\spr_floor</sprite>
       <sprite>sprites\spr_back_ropes</sprite>
       <sprite>sprites\spr_wall</sprite>
       <sprite>sprites\spr_wall_player</sprite>
@@ -42,23 +71,8 @@
       <sprite>sprites\spr_side_rope_wiggle</sprite>
       <sprite>sprites\spr_side_rope_wiggle_r</sprite>
       <sprite>sprites\spr_wall_walking</sprite>
-    </sprites>
-    <sprites name="red_enemy">
-      <sprite>sprites\spr_en</sprite>
-      <sprite>sprites\spr_en_damage</sprite>
-      <sprite>sprites\spr_en_tired</sprite>
-      <sprite>sprites\spr_en_down</sprite>
-      <sprite>sprites\spr_en_up</sprite>
-      <sprite>sprites\spr_en_left</sprite>
-      <sprite>sprites\spr_en_right</sprite>
-      <sprite>sprites\spr_en_damage_d</sprite>
-      <sprite>sprites\spr_en_front_out</sprite>
-      <sprite>sprites\spr_en_l_out</sprite>
-      <sprite>sprites\spr_en_back_out</sprite>
-      <sprites name="ring_entrance">
-        <sprite>sprites\spr_ring_entrance</sprite>
-        <sprite>sprites\spr_ring_walkin</sprite>
-      </sprites>
+      <sprite>sprites\spr_front_crowd</sprite>
+      <sprite>sprites\spr_arena_shade</sprite>
     </sprites>
     <sprites name="manager">
       <sprite>sprites\spr_manager</sprite>
@@ -75,43 +89,62 @@
       <sprite>sprites\spr_empty_heart</sprite>
       <sprite>sprites\heart_container</sprite>
     </sprites>
-    <sprite>sprites\sprite38</sprite>
-    <sprite>sprites\sprite40</sprite>
     <sprites name="control">
       <sprite>sprites\spr_cont_up</sprite>
       <sprite>sprites\spr_cont_right</sprite>
       <sprite>sprites\spr_cont_down</sprite>
       <sprite>sprites\spr_cont_left</sprite>
     </sprites>
+    <sprites name="green_enemy">
+      <sprite>sprites\spr_g</sprite>
+      <sprite>sprites\spr_g_being_hit</sprite>
+      <sprite>sprites\spr_g_vulnerable</sprite>
+      <sprite>sprites\spr_g_down</sprite>
+      <sprite>sprites\spr_g_up</sprite>
+      <sprite>sprites\spr_g_left</sprite>
+      <sprite>sprites\spr_g_right</sprite>
+      <sprite>sprites\spr_g_damage_d</sprite>
+      <sprites name="eliminated">
+        <sprite>sprites\spr_g_l_out</sprite>
+      </sprites>
+      <sprite>sprites\spr_g_test</sprite>
+      <sprites name="ring_entrance">
+        <sprite>sprites\spr_g_entrance</sprite>
+        <sprite>sprites\spr_g_walkin</sprite>
+      </sprites>
+    </sprites>
+    <sprites name="pause_menu">
+      <sprite>sprites\spr_pause_menu</sprite>
+      <sprite>sprites\spr_on_screen_controls</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="red_enemie_state">
-      <script>scripts\red_enemy_idol.gml</script>
       <script>scripts\changeDirection.gml</script>
-      <script>scripts\red_enemy_hurt.gml</script>
       <script>scripts\checkSprite.gml</script>
-      <script>scripts\defeatedAnimation.gml</script>
     </scripts>
     <scripts name="crowd">
       <script>scripts\crowd_flash.gml</script>
     </scripts>
-    <script>scripts\script7.gml</script>
     <script>scripts\wiggly_ropes.gml</script>
-    <script>scripts\is_colliding.gml</script>
-    <script>scripts\script9.gml</script>
-    <script>scripts\object_collide.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_Arial40</font>
     <font>fonts\myFont</font>
   </fonts>
   <objects name="objects">
-    <object>objects\obj_wall_en</object>
-    <object>objects\obj_wall_player</object>
-    <object>objects\obj_entrance_wall</object>
-    <object>objects\obj_crowd</object>
+    <objects name="enemies">
+      <object>objects\obj_en_generic</object>
+      <object>objects\obj_en_red</object>
+      <object>objects\obj_en_green</object>
+    </objects>
+    <objects name="invisible_objects">
+      <object>objects\obj_wall_player</object>
+      <object>objects\obj_wall_en</object>
+      <object>objects\obj_entrance_wall</object>
+    </objects>
     <objects name="player">
       <object>objects\obj_player</object>
       <object>objects\obj_player_eliminated</object>
@@ -126,6 +159,7 @@
     <objects name="health">
       <object>objects\obj_heart</object>
       <object>objects\obj_heart_cont</object>
+      <object>objects\obj_blown_heart</object>
     </objects>
     <objects name="manager">
       <object>objects\manager_obj</object>
@@ -134,22 +168,45 @@
       <object>objects\obj_ropes</object>
       <object>objects\obj_back_ropes</object>
       <object>objects\obj_ring</object>
+      <object>objects\obj_floor</object>
       <object>objects\obj_post_left</object>
       <object>objects\obj_post_right</object>
       <object>objects\obj_side_rope_l</object>
       <object>objects\obj_side_rope_r</object>
+      <object>objects\obj_crowd</object>
+      <object>objects\obj_front_crowd</object>
+      <object>objects\obj_arena_light</object>
     </objects>
-    <object>objects\score_manager</object>
     <objects name="control">
       <object>objects\obj_cont_up</object>
       <object>objects\obj_cont_right</object>
       <object>objects\obj_cont_down</object>
       <object>objects\obj_cont_left</object>
+      <object>objects\keyboardManager</object>
     </objects>
-    <object>objects\timer</object>
+    <objects name="hud">
+      <object>objects\timer</object>
+      <object>objects\score_manager</object>
+      <object>objects\pause_menu</object>
+      <object>objects\on_screen_controls</object>
+    </objects>
+    <objects name="end_screen">
+      <object>objects\obj_elim_text</object>
+      <object>objects\obj_end_player</object>
+      <object>objects\obj_new_game_text</object>
+    </objects>
+    <objects name="green_enemy_obj">
+      <object>objects\obj_g_en</object>
+      <object>objects\obj_g_ring_walkin</object>
+      <object>objects\obj_g_ring_entrance</object>
+      <object>objects\obj_g_en_eliminated</object>
+    </objects>
+    <object>objects\game_controller</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room0</room>
+    <room>rooms\main</room>
+    <room>rooms\pause_menu_room</room>
+    <room>rooms\game_over</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
