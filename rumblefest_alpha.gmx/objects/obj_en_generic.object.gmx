@@ -132,10 +132,12 @@ case states.VULNERABLE:
     sprite_index = asset_get_index(spritePrefix + "_vulnerable");
     break;
 case states.BEING_HIT:
-    speed = obj_player.speed;
-    image_speed = .2;
-    direction = obj_player.direction;
-    sprite_index = asset_get_index(spritePrefix + "_being_hit");
+    if (object_exists(obj_player)) {
+        speed = obj_player.speed;
+        image_speed = .2;
+        direction = obj_player.direction;
+        sprite_index = asset_get_index(spritePrefix + "_being_hit");
+    }
     break; 
 case states.ELIMINATED:
     // Separate directional sprites

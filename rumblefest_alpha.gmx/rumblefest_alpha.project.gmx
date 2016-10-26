@@ -159,6 +159,7 @@
     <objects name="enemies">
       <object>objects\obj_en_generic</object>
       <object>objects\obj_en_red</object>
+      <object>objects\obj_en_yellow</object>
       <object>objects\obj_en_green</object>
     </objects>
     <objects name="invisible_objects">
