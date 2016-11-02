@@ -41,6 +41,9 @@
         <sprite>sprites\spr_mask_player_right</sprite>
         <sprite>sprites\spr_mask_player_vulnerable</sprite>
       </sprites>
+      <sprites name="non_scale_sprite">
+        <sprite>sprites\spr_player_scale_down</sprite>
+      </sprites>
     </sprites>
     <sprites name="red_enemy">
       <sprite>sprites\spr_en</sprite>
