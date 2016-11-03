@@ -53,6 +53,9 @@ isActive = false;
 // Need a flag instead of a state to avoid race conditions
 isEliminated = false;
 
+// Another flag for collisions
+collisionFlag = false;
+
 // When player hits enemy, keep track of direction of collision. -1 is default or unset.
 playerCollisionDir = -1
 
@@ -62,6 +65,33 @@ playerCollisionDir = -1
 // TODO: Move this into state management in step event if multiple image speeds are necessary
 image_speed = .1
 state = states.WALKING_IN;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Set state back to roaming after being hit
+/// Use alarm 11 to not interfere with others
+
+collisionFlag = false;
+state = states.ROAMING;
 </string>
           </argument>
         </arguments>
@@ -109,19 +139,24 @@ case states.ROAMING:
     speed = 4;
     image_speed = .1;
     depth = -500;
+    mask_index = spr_mask_en_vulnerable;
     // Separate directional sprites
     switch(direction) {
         case directions.UP:
             sprite_index = asset_get_index(spritePrefix + "_up");
+            mask_index = spr_mask_en_up;
             break;
         case directions.DOWN:
             sprite_index = asset_get_index(spritePrefix + "_down");
+            mask_index = spr_mask_en_down;
             break;
         case directions.LEFT:
             sprite_index = asset_get_index(spritePrefix + "_left");
+            mask_index = spr_mask_en_left;
             break;
         case directions.RIGHT:
             sprite_index = asset_get_index(spritePrefix + "_right");
+            mask_index = spr_mask_en_right;
             break;
     }
     break;
@@ -130,13 +165,14 @@ case states.VULNERABLE:
     image_speed = .1;
     depth = -500;
     sprite_index = asset_get_index(spritePrefix + "_vulnerable");
+    mask_index = spr_mask_en_vulnerable;
     break;
 case states.BEING_HIT:
     if (object_exists(obj_player)) {
-        speed = obj_player.speed;
         image_speed = .2;
         direction = obj_player.direction;
         sprite_index = asset_get_index(spritePrefix + "_being_hit");
+        mask_index = spr_mask_en_vulnerable;
     }
     break; 
 case states.ELIMINATED:
@@ -162,6 +198,68 @@ case states.ELIMINATED:
     // end event will fire and not actually show the eliminated sprite
     isEliminated = true;
     break; 
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Collisions with player when vulnerable
+
+if (state == states.VULNERABLE || state == states.BEING_HIT) {
+
+    playerDirection = obj_player.direction;
+    
+    if (playerDirection == 0 &amp;&amp; place_meeting(x - 4, y, obj_player)) {
+            x = x + 4;
+            state = states.BEING_HIT;
+            collisionFlag = true;
+            alarm[11] = 3 * room_speed;
+            
+    } else if (playerDirection == 90 &amp;&amp; place_meeting(x, y + 4, obj_player)) {
+
+            y = y - 4;
+            state = states.BEING_HIT;
+            collisionFlag = true;
+            alarm[11] = 3 * room_speed;
+
+    } else if (playerDirection == 180 &amp;&amp; place_meeting(x + 4, y, obj_player)) {
+
+            x = x - 4;
+            state = states.BEING_HIT;
+            collisionFlag = true;
+            alarm[11] = 3 * room_speed;
+
+    } else if (playerDirection == 270 &amp;&amp; place_meeting(x, y - 4, obj_player)) {
+
+            y = y + 4;
+            state = states.BEING_HIT;
+            collisionFlag = true;
+            alarm[11] = 3 * room_speed;
+
+    } else {
+        // TODO: Figure out how to cancel out red enemy alarms
+        if (collisionFlag) {
+            state = states.VULNERABLE;
+        }
+    }
+
 }
 
 </string>
@@ -233,7 +331,6 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_wall_en)) {
     
         // Check if colliding, only proceed if yes
     if (!place_meeting(x + xd, y + yd, obj_wall_en)) {
-        show_debug_message("not colliding")
         exit;
     }
     
@@ -293,68 +390,6 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_player)) {
     }
 
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Collisions with player when vulnerable
-
-// Pretty confusing code here, could probably be refactored
-// If we're meeting with player when vulnerable, we want to move back
-// However, if the player breaks away, we want to just go to vulnerable state
-
-// To do this we set the `playerCollisionDir` on first contact (-1 means it's not set)
-// If the playerCollisionDir still matches the player's current direction, keep being punched
-
-// Set up flag if player is knocked back, since that should break collisions
-if (instance_exists(obj_player) &amp;&amp; obj_player.state == player_states.KNOCKED_BACK) {
-    playerKnockedBack = true;
-} else {
-    playerKnockedBack = false;
-}
-
-if (place_meeting(x, y, obj_player)) {
-    
-    if (state == states.VULNERABLE) {
-        if (playerCollisionDir == -1) {
-            playerCollisionDir = obj_player.direction;
-        }
-        
-        if (obj_player.direction == playerCollisionDir &amp;&amp; !playerKnockedBack) {
-            state = states.BEING_HIT;
-        } else {
-            state = states.VULNERABLE;
-        }
-    } else if (state == states.BEING_HIT) {
-    
-        if (obj_player.direction == playerCollisionDir &amp;&amp; !playerKnockedBack) {
-            state = states.BEING_HIT;
-        } else {
-            state = states.VULNERABLE;
-        }
-    }
-
-} else {
-    playerCollisionDir = -1;
-}
-
-
 </string>
           </argument>
         </arguments>
