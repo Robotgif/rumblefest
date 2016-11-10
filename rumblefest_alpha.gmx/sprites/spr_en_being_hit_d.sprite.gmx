@@ -20,7 +20,7 @@
   <width>96</width>
   <height>102</height>
   <frames>
-    <frame index="0">images\spr_en_damage_d_0.png</frame>
-    <frame index="1">images\spr_en_damage_d_1.png</frame>
+    <frame index="0">images\spr_en_being_hit_d_0.png</frame>
+    <frame index="1">images\spr_en_being_hit_d_1.png</frame>
   </frames>
 </sprite>

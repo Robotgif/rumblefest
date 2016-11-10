@@ -53,7 +53,7 @@
       <sprite>sprites\spr_en_up</sprite>
       <sprite>sprites\spr_en_left</sprite>
       <sprite>sprites\spr_en_right</sprite>
-      <sprite>sprites\spr_en_damage_d</sprite>
+      <sprite>sprites\spr_en_being_hit_d</sprite>
       <sprites name="ring_entrance">
         <sprite>sprites\spr_en_entrance</sprite>
         <sprite>sprites\spr_en_walkin</sprite>
