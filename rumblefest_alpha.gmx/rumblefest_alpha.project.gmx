@@ -6,6 +6,14 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
+    <sprites name="ref">
+      <sprite>sprites\spr_ref_up</sprite>
+      <sprite>sprites\spr_ref_down</sprite>
+      <sprite>sprites\spr_ref_left_right</sprite>
+      <sprite>sprites\spr_ref_count_up</sprite>
+      <sprite>sprites\spr_ref_count_down</sprite>
+      <sprite>sprites\spr_ref_hit</sprite>
+    </sprites>
     <sprites name="pause_menu">
       <sprite>sprites\spr_pause_menu</sprite>
       <sprite>sprites\spr_on_screen_controls</sprite>
