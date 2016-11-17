@@ -250,6 +250,9 @@
       <object>objects\obj_g_en_eliminated</object>
     </objects>
     <object>objects\game_controller</object>
+    <objects name="ref">
+      <object>objects\ref</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\main</room>
