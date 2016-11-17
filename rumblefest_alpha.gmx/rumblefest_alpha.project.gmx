@@ -13,6 +13,7 @@
       <sprite>sprites\spr_ref_count_up</sprite>
       <sprite>sprites\spr_ref_count_down</sprite>
       <sprite>sprites\spr_ref_get_up</sprite>
+      <sprite>sprites\spr_ref_wakeup</sprite>
       <sprite>sprites\spr_ref_hit</sprite>
     </sprites>
     <sprites name="pause_menu">
