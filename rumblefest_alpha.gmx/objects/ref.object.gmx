@@ -29,7 +29,9 @@
 
 direction = directions.DOWN;
 
-speed = 4;
+isColliding = false;
+
+speed = 2;
 image_speed = .2
 </string>
           </argument>
@@ -55,55 +57,10 @@ image_speed = .2
             <kind>1</kind>
             <string>/// Move away from player
 
-direction = point_direction(obj_player.x, obj_player.y, x, y)
-
-show_debug_message(point_direction(obj_player.x, obj_player.y, x, y))
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Collisions with wall
-
-if (place_meeting(x, y, obj_wall_en)) {
-
-    // "Momentum" will take enemy into the colliding object,
-    // so push away from ropes (using 400x400 as a general center of the ring)
-    // TODO: Could be improved based on incoming position
-    while (!place_free(x, y)) {
-        if (y &lt; 400) {
-            y = y + speed;
-        } else {
-            y = y - speed;
-        }
-        
-        if (x &lt; 400) {
-            x = x + speed;
-        } else {
-            x = x - speed;
-        }
-        
-    }
-    // Call event to change direction
-    event_user(1)
-
-    
+if (instance_exists(obj_player)) {
+    direction = point_direction(obj_player.x, obj_player.y, x, y)
 }
+
 </string>
           </argument>
         </arguments>
@@ -131,10 +88,10 @@ if (direction &gt;= 45 &amp;&amp; direction &lt; 135) {
 } else if (direction &gt;= 135 &amp;&amp; direction &lt; 225) {
     sprite_index = asset_get_index(spr_prefix + "left_right");
 } else if (direction &gt; 225 &amp;&amp; direction &lt; 315) {
+    sprite_index = asset_get_index(spr_prefix + "down");
+} else {
     sprite_index = asset_get_index(spr_prefix + "left_right");
     image_xscale = -1
-} else {
-    sprite_index = asset_get_index(spr_prefix + "right");
 }
 
 
@@ -143,6 +100,51 @@ if (direction &gt;= 45 &amp;&amp; direction &lt; 135) {
 
 depth = -500 - y;
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Change to moving along ropes if you get there
+
+if (instance_exists(obj_player) &amp;&amp; place_meeting(x, y, obj_wall_en)) {
+    leftBound = 93;
+    rightBound = 670;
+    bottomBound = 630;
+    topBound = 210;
+    
+    if (x &gt; leftBound &amp;&amp; x &lt; rightBound) {
+        if (x &lt; obj_player.x) {
+            direction = directions.LEFT
+        } else {
+            direction = directions.RIGHT
+        }
+    } else if (y &gt; topBound &amp;&amp; y &lt; bottomBound) {
+        if (y &lt; obj_player.y) {
+            direction = directions.UP
+        } else {
+            direction = directions.DOWN
+        }
+    } else {
+        speed = 0
+    }
+    
+}
 </string>
           </argument>
         </arguments>
@@ -182,7 +184,7 @@ direction = newDirection;
   </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
-  <PhysicsObjectShape>0</PhysicsObjectShape>
+  <PhysicsObjectShape>1</PhysicsObjectShape>
   <PhysicsObjectDensity>0.5</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
