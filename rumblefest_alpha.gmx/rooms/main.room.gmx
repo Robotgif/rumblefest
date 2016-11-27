@@ -76,7 +76,7 @@
     <instance objName="keyboardManager" x="0" y="0" name="inst_F901B621" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="pause_menu" x="672" y="32" name="inst_DFE2E16C" locked="0" code="" scaleX="0.220689654350281" scaleY="0.220689654350281" colour="4294967295" rotation="0"/>
     <instance objName="game_controller" x="32" y="0" name="inst_BDE22CC2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_player" x="484" y="487" name="inst_05F091A6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_player" x="255" y="316" name="inst_05F091A6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_en" x="72" y="408" name="inst_CAF7582D" locked="0" code="" scaleX="1" scaleY="17" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_en" x="696" y="405" name="inst_7C3AE167" locked="0" code="" scaleX="1" scaleY="17" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_en" x="391" y="664" name="inst_AC296757" locked="0" code="" scaleX="20" scaleY="1" colour="4294967295" rotation="0"/>
