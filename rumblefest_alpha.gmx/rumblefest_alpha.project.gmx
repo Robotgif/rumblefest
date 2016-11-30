@@ -113,6 +113,8 @@
       <sprite>sprites\spr_mang_walk_right</sprite>
       <sprite>sprites\spr_mang_walk_left</sprite>
       <sprite>sprites\spr_mang_lowclap</sprite>
+      <sprite>sprites\spr_mang_panic_2</sprite>
+      <sprite>sprites\spr_mang_chair</sprite>
       <sprite>sprites\spr_mang_panic</sprite>
     </sprites>
     <sprites name="health">
