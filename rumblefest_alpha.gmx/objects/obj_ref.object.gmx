@@ -35,25 +35,124 @@ isColliding = false;
 isSticking = false;
 shouldStick = true;
 
+// When player gets close
+shouldMoveToMiddle = false;
+movingToMiddle = false;
+
 // So alarms know which way to move
 directionBackToCorner = directions.LEFT;
+
+previousAlarmTimes[0] = 0;
+previousSpeed = 0;
+
+enemiesToCount = 0;
+isCounting = false;
 
 defaultSpeed = 8;
 speed = defaultSpeed;
 image_speed = .2
 
 // Use bounds instead of colliding with objects
-leftBound = 113;
-rightBound = 660;
-bottomBound = 630;
-topBound = 180;
+leftBound = 123;
+rightBound = 650;
+bottomBound = 620;
+topBound = 190;
 
 centerX = room_width / 2;
 centerY = room_height / 2;
 
+distanceThreshold = 60;
+
 lastCollision = "none";
 
 event_user(0)
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Set alarms back to where they were before enemy eliminated
+alarm[0] = previousAlarms[0]
+alarm[1] = previousAlarms[1]
+alarm[2] = previousAlarms[2]
+
+speed = previousSpeed;
+direction = previousDirection;
+isCounting = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Show count animation for each enemy eliminated
+
+if (enemiesToCount &gt; 0) {
+    alarm[3] = .5 * room_speed;
+} else {
+    alarm[11] = 1;
+}
+enemiesToCount--
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// After moving towards middle when player gets close
+movingToMiddle = false;
+shouldMoveToMiddle = false;
+isSticking = false;
+shouldStick = true;
 </string>
           </argument>
         </arguments>
@@ -78,6 +177,9 @@ event_user(0)
             <kind>1</kind>
             <string>/// Move back to corner
 direction = directionBackToCorner;
+speed = defaultSpeed;
+
+
 shouldStick = true
 </string>
           </argument>
@@ -139,6 +241,7 @@ alarm[1] = room_speed * 1;
           <argument>
             <kind>1</kind>
             <string>/// Hit Bounds
+
 
 // Create a bounding box with our set dimensions, then detect if the ref leaves that box to trigger collision events 
 colliding = collision_rectangle(leftBound, topBound, rightBound, bottomBound, self, false, false);
@@ -208,6 +311,8 @@ if !colliding &amp;&amp; !isSticking &amp;&amp; shouldStick {
             <string>/// Update sprite based on state
 
 lookDirection = 0
+image_speed = .2
+
 
 if (instance_exists(obj_player)) {
     lookDirection = point_direction(obj_player.x, obj_player.y, x, y);
@@ -223,6 +328,16 @@ if (lookDirection &gt;= 45 &amp;&amp; lookDirection &lt; 135) {
 } else {
     sprite_index = asset_get_index(spr_prefix + "left_right");
     image_xscale = -1
+}
+
+// Counting overrides other sprite animations
+if (instance_exists(obj_player) &amp;&amp; isCounting) {
+    image_speed = 4 / room_speed;
+    if (y &gt;= obj_player.y) {
+        sprite_index = asset_get_index(spr_prefix + "count_up");
+    } else {
+        sprite_index = asset_get_index(spr_prefix + "count_down");
+    }
 }
 
 
@@ -254,10 +369,91 @@ depth = -500 - y;
 if (x &lt;= leftBound || x &gt;= rightBound) &amp;&amp; (y &lt;= topBound || y &gt;= bottomBound) &amp;&amp; shouldStick  {
     direction = 0;
     speed = 0;
+    
+    // Set flags
     isSticking = true;
-    alarm[0] = room_speed * 2;
     shouldStick = false;
+    shouldMoveToMiddle = true;
+    
+    alarm[0] = room_speed * 2;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// If player hits distance threshold, go past him then go to initial state
+distance = distance_to_object(obj_player)
+
+if (distance &lt; distanceThreshold &amp;&amp; !movingToMiddle &amp;&amp; shouldMoveToMiddle) {
+    direction = point_direction(x, y, centerX, centerY)
+    speed = defaultSpeed;
+    movingToMiddle = true;
+    
+    // Reset other alarms
+    alarm[0] = -1;
+    alarm[1] = -1;
+    
+    alarm[2] = 1.5 * room_speed;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="14">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Enemy eliminated, trigger animation
+
+// Save current alarm values, then cancel them all and restart after next alarm fires
+previousAlarms[0] = alarm[0]
+previousAlarms[1] = alarm[1]
+previousAlarms[2] = alarm[2]
+
+previousSpeed = speed;
+previousDirection = direction;
+
+alarm[0] = -1;
+alarm[1] = -1;
+alarm[2] = -1;
+
+speed = 0;
+
+enemiesToCount = global.enemiesEliminated;
+isCounting = true;
+image_index = 0;
+alarm[3] = 1;
+
 </string>
           </argument>
         </arguments>

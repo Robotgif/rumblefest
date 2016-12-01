@@ -354,6 +354,7 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_wall_en)) {
     // Only change to eliminated if direction matches actual direction
     if (direction == expectedDirection) {
         wiggly_ropes(moveDirection)
+        enemy_eliminated();
         state = states.ELIMINATED
     }
     
