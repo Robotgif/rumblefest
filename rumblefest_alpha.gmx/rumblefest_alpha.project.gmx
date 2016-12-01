@@ -16,6 +16,8 @@
       <sprite>sprites\spr_ref_dazed</sprite>
       <sprite>sprites\spr_ref_wakeup</sprite>
       <sprite>sprites\spr_ref_hurtdown</sprite>
+      <sprite>sprites\spr_ref_standing_up</sprite>
+      <sprite>sprites\spr_ref_standing_down</sprite>
       <sprite>sprites\spr_ref_hit</sprite>
     </sprites>
     <sprites name="pause_menu">
@@ -168,6 +170,9 @@
       <sprites name="eliminated">
         <sprite>sprites\spr_y_l_out</sprite>
       </sprites>
+    </sprites>
+    <sprites name="weapons">
+      <sprite>sprites\spr_chair</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background"/>
