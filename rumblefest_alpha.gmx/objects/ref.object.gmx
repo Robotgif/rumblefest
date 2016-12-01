@@ -31,7 +31,15 @@ direction = directions.DOWN;
 
 isColliding = false;
 
-speed = 8;
+// For sticking to corners
+isSticking = false;
+shouldStick = true;
+
+// So alarms know which way to move
+directionBackToCorner = directions.LEFT;
+
+defaultSpeed = 8;
+speed = defaultSpeed;
 image_speed = .2
 
 // Use bounds instead of colliding with objects
@@ -41,10 +49,73 @@ bottomBound = 630;
 topBound = 180;
 
 centerX = room_width / 2;
+centerY = room_height / 2;
 
 lastCollision = "none";
 
 event_user(0)
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Move back to corner
+direction = directionBackToCorner;
+shouldStick = true
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Move a little bit when in corner, then trigger alarm to move back
+speed = defaultSpeed
+
+// Choose direction based on position
+if (x &gt;= rightBound) {
+    direction = directions.LEFT;
+    directionBackToCorner = directions.RIGHT;
+} else {
+    direction = directions.RIGHT;
+    directionBackToCorner = directions.LEFT;
+}
+
+isSticking = false;
+
+alarm[1] = room_speed * 1;
 </string>
           </argument>
         </arguments>
@@ -71,30 +142,44 @@ event_user(0)
 
 // Create a bounding box with our set dimensions, then detect if the ref leaves that box to trigger collision events 
 colliding = collision_rectangle(leftBound, topBound, rightBound, bottomBound, self, false, false);
-if !colliding {
+if !colliding &amp;&amp; !isSticking &amp;&amp; shouldStick {
     
     // Keep track of "lastCollision" so we only change direction when we hit a boundary
     if (y &lt;= topBound &amp;&amp; lastCollision != "top") {
-        direction = directions.LEFT;
+        if (x &lt;= centerX) {
+            direction = directions.LEFT;
+        } else {
+            direction = directions.RIGHT;
+        }
+        
         lastCollision = "top";
         event_user(1)
     } 
     else if (y &gt;= bottomBound &amp;&amp; lastCollision != "bottom") {
-        
+        if (x &lt;= centerX) {
+            direction = directions.LEFT;
+        } else {
+            direction = directions.RIGHT;
+        }
         lastCollision = "bottom"
-        direction = directions.LEFT;
-
-        
         event_user(1)
     }
     else if (x &lt;= leftBound &amp;&amp; lastCollision != "left") {
-        direction = directions.DOWN;
+        if (y &lt;= centerY) {
+            direction = directions.UP;
+        } else {
+            direction = directions.DOWN;
+        }
         lastCollision = "left";
         
         event_user(2)
     }
     else if (x &gt;= rightBound &amp;&amp; lastCollision != "right") {
-        direction = directions.UP;
+        if (y &lt;= centerY) {
+            direction = directions.UP;
+        } else {
+            direction = directions.DOWN;
+        }
         lastCollision = "right";
         
         event_user(2)
@@ -145,6 +230,59 @@ if (lookDirection &gt;= 45 &amp;&amp; lookDirection &lt; 135) {
 
 depth = -500 - y;
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Stick in corner for a little bit
+if (x &lt;= leftBound || x &gt;= rightBound) &amp;&amp; (y &lt;= topBound || y &gt;= bottomBound) &amp;&amp; shouldStick  {
+    direction = 0;
+    speed = 0;
+    isSticking = true;
+    alarm[0] = room_speed * 2;
+    shouldStick = false;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="13">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Go back to roaming mode
+x = x - 6;
+isSticking = false;
 </string>
           </argument>
         </arguments>
