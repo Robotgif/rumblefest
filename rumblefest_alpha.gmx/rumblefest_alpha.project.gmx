@@ -84,6 +84,11 @@
         <sprite>sprites\spr_mask_en_right</sprite>
         <sprite>sprites\spr_mask_en_vulnerable</sprite>
       </sprites>
+      <sprites name="hit_by_chair">
+        <sprite>sprites\spr_en_chair_l_and_r</sprite>
+        <sprite>sprites\spr_en_chair_up</sprite>
+        <sprite>sprites\spr_en_chair_down</sprite>
+      </sprites>
     </sprites>
     <sprites name="end_screen">
       <sprite>sprites\spr_end_screen</sprite>
