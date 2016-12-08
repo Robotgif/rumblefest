@@ -20,9 +20,29 @@
       <sprite>sprites\spr_ref_standing_down</sprite>
       <sprite>sprites\spr_ref_hit</sprite>
     </sprites>
-    <sprites name="pause_menu">
-      <sprite>sprites\spr_pause_menu</sprite>
-      <sprite>sprites\spr_on_screen_controls</sprite>
+    <sprites name="Menus">
+      <sprites name="pause_menu">
+        <sprite>sprites\spr_pause_menu</sprite>
+        <sprite>sprites\spr_on_screen_controls</sprite>
+      </sprites>
+      <sprites name="end_screen">
+        <sprite>sprites\spr_end_screen</sprite>
+        <sprite>sprites\spr_elim</sprite>
+        <sprite>sprites\spr_new_game</sprite>
+      </sprites>
+      <sprites name="main_menu">
+        <sprite>sprites\spr_title</sprite>
+        <sprite>sprites\spr_play</sprite>
+        <sprite>sprites\spr_options_01</sprite>
+      </sprites>
+      <sprites name="options_menu">
+        <sprite>sprites\spr_control_type</sprite>
+        <sprite>sprites\spr_options_menu</sprite>
+        <sprite>sprites\spr_swipe_on</sprite>
+        <sprite>sprites\spr_directional_on</sprite>
+        <sprite>sprites\spr_directional_off</sprite>
+        <sprite>sprites\spr_swipe_off</sprite>
+      </sprites>
     </sprites>
     <sprites name="player">
       <sprites name="punching">
@@ -58,6 +78,12 @@
       <sprites name="non_scale_sprite">
         <sprite>sprites\spr_player_scale_down</sprite>
       </sprites>
+      <sprites name="chair_shots">
+        <sprite>sprites\spr_player_chair_left</sprite>
+        <sprite>sprites\spr_player_chair_down</sprite>
+        <sprite>sprites\spr_player_chair_up</sprite>
+        <sprite>sprites\spr_player_chair_right</sprite>
+      </sprites>
     </sprites>
     <sprites name="red_enemy">
       <sprite>sprites\spr_en</sprite>
@@ -89,11 +115,6 @@
         <sprite>sprites\spr_en_chair_up</sprite>
         <sprite>sprites\spr_en_chair_down</sprite>
       </sprites>
-    </sprites>
-    <sprites name="end_screen">
-      <sprite>sprites\spr_end_screen</sprite>
-      <sprite>sprites\spr_elim</sprite>
-      <sprite>sprites\spr_new_game</sprite>
     </sprites>
     <sprites name="background">
       <sprite>sprites\spr_canvas</sprite>
