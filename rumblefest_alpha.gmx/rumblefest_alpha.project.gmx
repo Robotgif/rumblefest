@@ -269,6 +269,9 @@
     <objects name="ref">
       <object>objects\obj_ref</object>
     </objects>
+    <objects name="weapons">
+      <object>objects\obj_chair</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\main</room>

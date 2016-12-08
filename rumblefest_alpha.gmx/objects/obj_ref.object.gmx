@@ -95,7 +95,6 @@ event_user(0)
           <argument>
             <kind>1</kind>
             <string>/// Set alarms back to where they were before enemy eliminated
-show_debug_message(previousAlarms)
 alarm[0] = previousAlarms[0]
 alarm[1] = previousAlarms[1]
 alarm[2] = previousAlarms[2]
@@ -547,10 +546,16 @@ if (distance &lt; distanceThreshold &amp;&amp; !movingToMiddle &amp;&amp; should
           <argument>
             <kind>1</kind>
             <string>/// Call event if user hits ref when vulnerable
-if (isVulnerable) {
+// DEBUG: Always vulnerable
+if (isVulnerable || true) {
     if (instance_exists(obj_player) &amp;&amp; position_meeting(x, y, obj_player)) {
         isVulnerable = false;
         event_user(5)
+        
+        // Call event on manager
+        with (manager_obj) {
+            event_user(1)
+        }
     }
 }
 </string>

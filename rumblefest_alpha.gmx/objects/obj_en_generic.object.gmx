@@ -329,33 +329,41 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_wall_en)) {
     }
     
         // Check if colliding, only proceed if yes
+    shouldContinue = true
     if (!place_meeting(x + xd, y + yd, obj_wall_en)) {
-        exit;
+        shouldContinue = false;
     }
     
     // Debug, prob won't work for all enemies
     // Just checking x/y coords that happen when we collide with ropes as opposed
     // to checking actual collision directions which were wonky
-    if (x &lt;= 136) {
-        expectedDirection = directions.LEFT;
-        moveDirection = "left";
-    } else if (x &gt;= 632) {
-        expectedDirection = directions.RIGHT;
-        moveDirection = "right";
-    } else if (y &lt;= 174) {
-        expectedDirection = directions.UP;
-        moveDirection = "back";
-    } else {
-        expectedDirection = directions.DOWN;
-        moveDirection = "front";
-    }
+    
+    // Outer if because "return()" was fucking up
+    if (shouldContinue) {
     
     
-    // Only change to eliminated if direction matches actual direction
-    if (direction == expectedDirection) {
-        wiggly_ropes(moveDirection)
-        enemy_eliminated();
-        state = states.ELIMINATED
+        if (x &lt;= 136) {
+            expectedDirection = directions.LEFT;
+            moveDirection = "left";
+        } else if (x &gt;= 632) {
+            expectedDirection = directions.RIGHT;
+            moveDirection = "right";
+        } else if (y &lt;= 174) {
+            expectedDirection = directions.UP;
+            moveDirection = "back";
+        } else {
+            expectedDirection = directions.DOWN;
+            moveDirection = "front";
+        }
+        
+        
+        // Only change to eliminated if direction matches actual direction
+        if (direction == expectedDirection) {
+            wiggly_ropes(moveDirection)
+            enemy_eliminated();
+            state = states.ELIMINATED
+        }
+    
     }
     
 }
@@ -411,16 +419,19 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_player)) {
           <argument>
             <kind>1</kind>
             <string>/// Change depth based on position relative to player
-
 // Don't run this if we're entering
 if (state == states.WALKING_IN || 
-    state == states.CLIMBING_IN) {
+    state == states.CLIMBING_IN ) {
     
-    exit;   
+    
+
+} else if (state == states.ELIMINATED) {
+    depth = -2001;
+} else {
+    // Player has the same code, so depth is relative to y position
+    depth = -500 - y;
 }
 
-// Player has the same code, so depth is relative to y position
-depth = -500 - y;
 </string>
           </argument>
         </arguments>

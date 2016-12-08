@@ -36,6 +36,8 @@ direction = 180;
 LEFT_THRESHOLD = 148;
 RIGHT_THRESHOLD = 610;
 
+isGettingChair = false;
+
 alarm[0] = 1 * room_speed;
 </string>
           </argument>
@@ -172,13 +174,73 @@ alarm[1] = rand * room_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (x &lt; LEFT_THRESHOLD) {
+            <string>/// Check thresholds to move back and forth
+if (x &lt; LEFT_THRESHOLD) {
     direction = 0;
     sprite_index = spr_mang_walk_right;
 } else if (x &gt; RIGHT_THRESHOLD) {
     direction = 180;
     sprite_index = spr_mang_walk_left;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Create chair on 15th frame of animation
+if (isGettingChair &amp;&amp; image_index &gt;= 15) {
+    isGettingChair = false;
+    instance_create(x, y, obj_chair)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Get chair 
+
+// Reset alarms
+alarm[0] = -1;
+alarm[1] = -1;
+alarm[2] = -1;
+
+image_index = 0;
+sprite_index = spr_mang_chair;
+speed = 0;
+
+isGettingChair = true;
 </string>
           </argument>
         </arguments>
@@ -208,6 +270,34 @@ alarm[1] = rand * room_speed;
 
 secondsToWait = random_range(3, 5);
 alarm[2] = secondsToWait * room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="7">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Go back to normal when done with chair
+if (sprite_index == spr_mang_chair) {
+    show_debug_message('in animation end')
+    isGettingChair = false;
+    alarm[1] = 1;
+}
 </string>
           </argument>
         </arguments>
