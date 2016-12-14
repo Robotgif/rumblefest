@@ -219,7 +219,8 @@ if (moveBackAmount &gt; 0) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Flashing animation 
+            <string>/// Check states
+// Flashing animation 
 if (flashing) {
     flashingCount++
     
@@ -232,10 +233,13 @@ if (flashing) {
 }
 
 // Override sprite indices set previously if we're being knocked back
+shouldContinue = true;
 if (state == KNOCKED_BACK) {
     sprite_index = spr_punched;
-    exit;
+    shouldContinue = false;
 }
+
+if (shouldContinue) {
 
 if (state == STILL) {
     sprite_index = spr_still
@@ -295,6 +299,8 @@ if (state == MOVING) {
     } else {
         sprite_index = spr_down;
     }
+}
+
 }
 </string>
           </argument>
@@ -429,25 +435,27 @@ if (state == TIRED) {
 
 // If flashing, do nothing
 if (flashing) {
-    exit;
-}
-// Get knocked back based on which direction we're facing
-// moveBackAmount is how many times we will call alarm[0] to push the player back
-moveBackAmount = 18
+    
+} else {
+    // Get knocked back based on which direction we're facing
+    // moveBackAmount is how many times we will call alarm[0] to push the player back
+    moveBackAmount = 18
+    
+    alarm[0] = 1
+    
+    // Set to flashing, then set alarm to make un-flashing
+    flashing = true
+    // Used to flip flashing
+    flashingCount = 0
+    
+    
+    alarm[2] = 1.5 * room_speed
+    
+    // Lose a heart
+    with (obj_heart_cont) {
+        event_user(0)
+    }
 
-alarm[0] = 1
-
-// Set to flashing, then set alarm to make un-flashing
-flashing = true
-// Used to flip flashing
-flashingCount = 0
-
-
-alarm[2] = 1.5 * room_speed
-
-// Lose a heart
-with (obj_heart_cont) {
-    event_user(0)
 }
 </string>
           </argument>
