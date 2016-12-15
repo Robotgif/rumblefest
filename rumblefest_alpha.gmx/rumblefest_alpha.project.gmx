@@ -309,7 +309,6 @@
     <room>rooms\room_start</room>
     <room>rooms\room_options</room>
     <room>rooms\main</room>
-    <room>rooms\pause_menu_room</room>
     <room>rooms\game_over</room>
   </rooms>
   <help>
