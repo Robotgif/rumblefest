@@ -52,7 +52,7 @@ detectSwipes = false;
             <kind>1</kind>
             <string>/// Detect swipes
 
-if (last_x &amp;&amp; detectSwipes) {
+if (last_x &amp;&amp; detectSwipes &amp;&amp; global.controlType == "swipe") {
     if ((last_x - mouse_x) &gt; 80)
          global.lastKeyPressed = "left";
     else if ((last_x - mouse_x) &lt;= -80)
@@ -108,7 +108,8 @@ detectSwipes = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>last_x = mouse_x;
+            <string>/// Start swipe
+last_x = mouse_x;
 last_y = mouse_y;
 
 detectSwipes = true;

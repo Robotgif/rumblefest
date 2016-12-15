@@ -20,7 +20,7 @@
       <sprite>sprites\spr_ref_standing_down</sprite>
       <sprite>sprites\spr_ref_hit</sprite>
     </sprites>
-    <sprites name="Menus">
+    <sprites name="menus">
       <sprites name="pause_menu">
         <sprite>sprites\spr_pause_menu</sprite>
         <sprite>sprites\spr_on_screen_controls</sprite>
@@ -42,6 +42,7 @@
         <sprite>sprites\spr_directional_on</sprite>
         <sprite>sprites\spr_directional_off</sprite>
         <sprite>sprites\spr_swipe_off</sprite>
+        <sprite>sprites\spr_main_menu</sprite>
       </sprites>
     </sprites>
     <sprites name="player">
@@ -274,6 +275,16 @@
       <object>objects\score_manager</object>
       <object>objects\pause_menu</object>
       <object>objects\on_screen_controls</object>
+      <objects name="start_screen">
+        <object>objects\obj_start_title</object>
+        <object>objects\obj_start_play</object>
+        <object>objects\obj_start_options</object>
+        <object>objects\obj_start_swipe</object>
+        <object>objects\obj_start_control_type</object>
+        <object>objects\obj_start_direction</object>
+        <object>objects\start_screen_controller</object>
+        <object>objects\obj_start_main_menu</object>
+      </objects>
     </objects>
     <objects name="end_screen">
       <object>objects\obj_elim_text</object>
@@ -295,6 +306,8 @@
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\room_start</room>
+    <room>rooms\room_options</room>
     <room>rooms\main</room>
     <room>rooms\pause_menu_room</room>
     <room>rooms\game_over</room>
