@@ -44,6 +44,9 @@ enum directions {
     RIGHT = 0
 }
 
+// Thresholds for hitting ropes
+topBound = 420
+
 // Prefix for sprites
 spritePrefix = "spr_en"
 
@@ -341,14 +344,13 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_wall_en)) {
     // Outer if because "return()" was fucking up
     if (shouldContinue) {
     
-    
         if (x &lt;= 136) {
             expectedDirection = directions.LEFT;
             moveDirection = "left";
         } else if (x &gt;= 632) {
             expectedDirection = directions.RIGHT;
             moveDirection = "right";
-        } else if (y &lt;= 174) {
+        } else if (y &lt;= 390) {
             expectedDirection = directions.UP;
             moveDirection = "back";
         } else {

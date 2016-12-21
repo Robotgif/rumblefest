@@ -294,7 +294,6 @@ alarm[2] = secondsToWait * room_speed;
             <kind>1</kind>
             <string>/// Go back to normal when done with chair
 if (sprite_index == spr_mang_chair) {
-    show_debug_message('in animation end')
     isGettingChair = false;
     alarm[1] = 1;
 }

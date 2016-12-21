@@ -33,8 +33,9 @@ event_inherited()
 // TODO: Might want to rename this to spr_en_red
 spritePrefix = "spr_en"
 
-// DEBUG set tired after 4 seconds
-alarm[0] = room_speed * 5
+// Set to tired after random time 
+timeToTired = random_range(5, 8)
+alarm[0] = room_speed * timeToTired
 </string>
           </argument>
         </arguments>

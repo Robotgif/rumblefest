@@ -61,8 +61,8 @@ image_speed = .2
 // Use bounds instead of colliding with objects
 leftBound = 123;
 rightBound = 650;
-bottomBound = 620;
-topBound = 190;
+bottomBound = 824;
+topBound = 390;
 
 centerX = room_width / 2;
 centerY = room_height / 2;
@@ -194,12 +194,6 @@ alarm[6] = 2 * room_speed;
             <string>/// Go down, then start count 
 sprite_index = spr_ref_hurtdown;
 
-// Cancel other alarms going on
-alarm[0] = -1;
-alarm[1] = -1;
-alarm[2] = -1;
-alarm[3] = -1;
-
 
 alarm[5] = 2 * room_speed;
 </string>
@@ -228,7 +222,7 @@ alarm[5] = 2 * room_speed;
 
 if (enemiesToCount &gt; 0) {
     // TODO: Make this faster
-    alarm[3] = 3 * room_speed;
+    alarm[3] = 0.5 * room_speed;
     isVulnerable = true;
 } else {
     alarm[11] = 1;
@@ -351,10 +345,13 @@ alarm[1] = room_speed * 1;
             <kind>1</kind>
             <string>/// Update sprite based on state
 
+shouldContinue = true;
 // Return if hurt 
 if (isHurt) {
-    exit;
+    shouldContinue = false;
 }
+
+if (shouldContinue) {
 
 lookDirection = 0
 image_speed = .2
@@ -376,6 +373,14 @@ if (lookDirection &gt;= 45 &amp;&amp; lookDirection &lt; 135) {
     image_xscale = -1
 }
 
+// Sticking overrides moving sprites
+if (y &gt; room_height / 2 &amp;&amp; isSticking) {
+    sprite_index = spr_ref_standing_up;
+} else if (isSticking) {
+    sprite_index = spr_ref_standing_down;
+}
+
+
 // Counting overrides other sprite animations
 if (instance_exists(obj_player) &amp;&amp; isCounting) {
     image_speed = 4 / room_speed;
@@ -390,6 +395,8 @@ if (instance_exists(obj_player) &amp;&amp; isCounting) {
 /// Change depth based on y value
 
 depth = -500 - y;
+
+}
 
 </string>
           </argument>
@@ -481,7 +488,7 @@ if !colliding &amp;&amp; !isSticking &amp;&amp; shouldStick {
             <kind>1</kind>
             <string>/// Stick in corner for a little bit
 if (x &lt;= leftBound || x &gt;= rightBound) &amp;&amp; (y &lt;= topBound || y &gt;= bottomBound) &amp;&amp; shouldStick  {
-    direction = 0;
+    
     speed = 0;
     
     // Set flags
@@ -514,7 +521,7 @@ if (x &lt;= leftBound || x &gt;= rightBound) &amp;&amp; (y &lt;= topBound || y &
             <string>/// If player hits distance threshold, go past him then go to initial state
 distance = distance_to_object(obj_player)
 
-if (distance &lt; distanceThreshold &amp;&amp; !movingToMiddle &amp;&amp; shouldMoveToMiddle) {
+if (distance &lt; distanceThreshold &amp;&amp; !movingToMiddle &amp;&amp; shouldMoveToMiddle &amp;&amp; !isCounting &amp;&amp; !isHurt) {
     direction = point_direction(x, y, centerX, centerY)
     speed = defaultSpeed;
     movingToMiddle = true;
@@ -522,6 +529,9 @@ if (distance &lt; distanceThreshold &amp;&amp; !movingToMiddle &amp;&amp; should
     // Reset other alarms
     alarm[0] = -1;
     alarm[1] = -1;
+    
+    // Reset some states
+    isSticking = false;
     
     alarm[2] = 1.5 * room_speed;
 }
@@ -546,8 +556,7 @@ if (distance &lt; distanceThreshold &amp;&amp; !movingToMiddle &amp;&amp; should
           <argument>
             <kind>1</kind>
             <string>/// Call event if user hits ref when vulnerable
-// DEBUG: Always vulnerable
-if (isVulnerable || true) {
+if (isVulnerable) {
     if (instance_exists(obj_player) &amp;&amp; position_meeting(x, y, obj_player)) {
         isVulnerable = false;
         event_user(5)
@@ -581,6 +590,16 @@ if (isVulnerable || true) {
           <argument>
             <kind>1</kind>
             <string>/// Ref hit when vulnerable
+
+// Cancel other alarms going on
+alarm[0] = -1;
+alarm[1] = -1;
+alarm[2] = -1;
+alarm[3] = -1;
+
+speed = 0;
+
+
 isHurt = true;
 speed = 0;
 sprite_index = spr_ref_hit;
