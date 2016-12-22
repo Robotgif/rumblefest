@@ -376,8 +376,10 @@ if (lookDirection &gt;= 45 &amp;&amp; lookDirection &lt; 135) {
 // Sticking overrides moving sprites
 if (y &gt; room_height / 2 &amp;&amp; isSticking) {
     sprite_index = spr_ref_standing_up;
+    image_speed = 0.05;
 } else if (isSticking) {
     sprite_index = spr_ref_standing_down;
+    image_speed = 0.05;
 }
 
 

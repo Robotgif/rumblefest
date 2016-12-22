@@ -518,8 +518,6 @@ while (newDirection == direction) {
   
 }
 
-show_debug_message("changed direction")
-show_debug_message(newDirection)
 direction = newDirection;
 </string>
           </argument>

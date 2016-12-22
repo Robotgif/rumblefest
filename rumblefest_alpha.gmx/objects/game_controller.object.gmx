@@ -61,8 +61,8 @@ alarm[0] = 1
 
 instance_create(enemySpawnX, enemySpawnY, obj_en_red);
 
-// Spawn every 4 sec
-alarm[0] = room_speed * 8;
+// Spawn after set time
+alarm[0] = room_speed * 4;
 </string>
           </argument>
         </arguments>

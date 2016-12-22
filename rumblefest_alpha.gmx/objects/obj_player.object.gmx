@@ -479,14 +479,19 @@ if (flashing) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.cameraFlashing) {
+            <string>
+/*
+TODO: Add camera flash?
+if (false) {
     draw_set_blend_mode(bm_add); //(or try experimenting with draw_set_blend_mode_ext)
     draw_self(); //(or draw_sprite or whatever)
     draw_set_blend_mode(bm_normal);
 } else {
     draw_self();
 }
+*/
 
+draw_self();
 </string>
           </argument>
         </arguments>

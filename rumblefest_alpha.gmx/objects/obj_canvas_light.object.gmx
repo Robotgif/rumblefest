@@ -3,7 +3,7 @@
   <spriteName>spr_canvas_light_cover</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>451</depth>
+  <depth>452</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
