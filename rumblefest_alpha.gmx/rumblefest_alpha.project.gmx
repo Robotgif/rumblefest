@@ -134,6 +134,7 @@
       <sprite>sprites\spr_side_rope_wiggle_r</sprite>
       <sprite>sprites\spr_wall_walking</sprite>
       <sprite>sprites\spr_front_crowd</sprite>
+      <sprite>sprites\spr_camera_flash</sprite>
       <sprite>sprites\spr_arena_shade</sprite>
     </sprites>
     <sprites name="manager">
@@ -262,6 +263,7 @@
       <object>objects\obj_crowd</object>
       <object>objects\obj_front_crowd</object>
       <object>objects\obj_arena_light</object>
+      <object>objects\obj_camera_flash</object>
     </objects>
     <objects name="control">
       <object>objects\obj_cont_up</object>
