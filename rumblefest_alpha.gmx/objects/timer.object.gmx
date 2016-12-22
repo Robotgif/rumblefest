@@ -95,7 +95,7 @@ alarm[0] = room_speed * 1
           </argument>
           <argument>
             <kind>0</kind>
-            <string>82</string>
+            <string>160</string>
           </argument>
         </arguments>
       </action>

@@ -29,6 +29,61 @@
 speed = 8;
 
 distanceToGo = random_range(100, 500);
+
+flashingCount = 0;
+shouldStartFlashing = true;
+flashing = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Destroy instance
+instance_destroy();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Start flashing and start countdown to destroy
+
+flashing = true;
+
+alarm[1] = 2 * room_speed;
 </string>
           </argument>
         </arguments>
@@ -58,6 +113,24 @@ if (distanceToGo &gt; 0) {
     distanceToGo -= 8;
 } else {
     speed = 0;
+    
+    // If we haven't yet, start alarm to start flashing
+    if (shouldStartFlashing) {
+        shouldStartFlashing = false;
+        alarm[0] = 2 * room_speed;
+    }
+}
+
+// Flashing animation 
+if (flashing) {
+    flashingCount++
+    
+    if (flashingCount mod 2 == 0) {
+        image_alpha = .8
+    } else {
+        image_alpha = .3
+    }
+    
 }
 
 

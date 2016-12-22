@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-500</depth>
+  <depth>-2001</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -52,8 +52,6 @@ if (direction == 270){
 
 // Make sure alpha is set back to 1
 image_alpha = 1
-// Go in front of enemies
-depth = -1001
 
 
 </string>

@@ -32,9 +32,12 @@ hasHearts = true // this changes to false when out of hearts
 // Loop over lives (3 times) and add hearts to container
 for (i = 0; i &lt; maxHearts; i += 1) {
     heart = instance_create(x, y, obj_heart);
+    heart.y = 75;
     heart.x = heart.x + i * 50;
     heartArray[i] = heart;
+    
 }
+
 </string>
           </argument>
         </arguments>

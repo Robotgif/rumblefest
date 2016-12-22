@@ -34,7 +34,7 @@ event_inherited()
 spritePrefix = "spr_en"
 
 // Set to tired after random time 
-timeToTired = random_range(5, 8)
+timeToTired = random_range(6, 8)
 alarm[0] = room_speed * timeToTired
 </string>
           </argument>
@@ -64,6 +64,28 @@ alarm[0] = room_speed * timeToTired
 if (state == states.VULNERABLE) {
     state = states.ROAMING
     alarm[0] = room_speed * 4;
+    
+    // For now, always go after player
+    
+    if (instance_exists(obj_player)) {
+        playerDirection = point_direction(x, y, obj_player.x, obj_player.y)
+        
+        if (playerDirection &gt; 45 &amp;&amp; playerDirection &lt; 135) {
+            moveDirection = 90;
+        } else if (playerDirection &gt;= 135 &amp;&amp; playerDirection &lt; 225) {
+            moveDirection = 180;
+        } else if (playerDirection &gt;= 225 &amp;&amp; playerDirection &lt; 305) {
+            moveDirection = 270;
+        } else {
+            moveDirection = 0;
+        }
+        
+        direction = moveDirection;
+        
+    }
+    
+    
+    
 } else if (state != states.ELIMINATED) {
     alarm[1] = room_speed * 1.5;
 }

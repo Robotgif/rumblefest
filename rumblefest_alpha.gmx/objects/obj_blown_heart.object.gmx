@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>/// Move to random spot on board
 randomX = random_range(96, 640);
-randomY = random_range(224, 576);
+randomY = random_range(440, 820);
 
 // Speed until disappearing 
 lifetime = 5
