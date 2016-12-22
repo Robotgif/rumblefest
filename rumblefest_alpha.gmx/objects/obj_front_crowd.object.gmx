@@ -3,7 +3,7 @@
   <spriteName>spr_front_crowd</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>451</depth>
+  <depth>453</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>

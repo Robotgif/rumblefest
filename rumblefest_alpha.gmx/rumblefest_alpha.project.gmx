@@ -48,10 +48,13 @@
     <sprites name="player">
       <sprites name="punching">
         <sprite>sprites\spr_right</sprite>
+        <sprite>sprites\spr_right_hurt</sprite>
         <sprite>sprites\spr_still</sprite>
         <sprite>sprites\spr_down</sprite>
+        <sprite>sprites\spr_down_hurt</sprite>
         <sprite>sprites\spr_up</sprite>
         <sprite>sprites\spr_left</sprite>
+        <sprite>sprites\spr_left_hurt</sprite>
       </sprites>
       <sprites name="damage">
         <sprite>sprites\spr_tired</sprite>
@@ -119,6 +122,7 @@
     </sprites>
     <sprites name="background">
       <sprite>sprites\spr_canvas</sprite>
+      <sprite>sprites\spr_canvas_light_cover</sprite>
       <sprite>sprites\spr_floor</sprite>
       <sprite>sprites\spr_back_ropes</sprite>
       <sprite>sprites\spr_wall</sprite>
@@ -254,6 +258,7 @@
     <objects name="ring">
       <object>objects\obj_ropes</object>
       <object>objects\obj_back_ropes</object>
+      <object>objects\obj_canvas_light</object>
       <object>objects\obj_ring</object>
       <object>objects\obj_floor</object>
       <object>objects\obj_post_left</object>
