@@ -78,6 +78,10 @@ image_alpha = 1
             <kind>1</kind>
             <string>instance_destroy()
 room_persistent = false;
+
+// End music
+audio_stop_sound(music1);
+
 room_goto(game_over)
 </string>
           </argument>
