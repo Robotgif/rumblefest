@@ -34,7 +34,7 @@ enemySpawnY = 42
 global.enemiesEliminated = 0;
 
 // Play music!
-audio_play_sound(music1, 1, true);
+global.music = audio_play_sound(music1, 1, true);
 
 
 alarm[0] = 1

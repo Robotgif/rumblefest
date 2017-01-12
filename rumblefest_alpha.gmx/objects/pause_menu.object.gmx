@@ -81,6 +81,7 @@ roomname = room_get_name(room);
 if (roomname == "main") {
     room_persistent = true;
     global.gamePaused = true;
+    audio_pause_sound(global.music);
     room_goto(room_options)
 } else if (global.gamePaused) {
     global.gamePaused = false;

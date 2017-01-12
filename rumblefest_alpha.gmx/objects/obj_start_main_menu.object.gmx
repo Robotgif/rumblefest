@@ -25,10 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.gamePaused) {
-    visible = false;
-}
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -52,7 +49,12 @@
             <kind>1</kind>
             <string>/// Switch rooms
 
-if (!global.gamePaused) { room_goto(room_start) }
+if (!global.gamePaused) {
+    room_goto(room_start) 
+} else {
+    audio_resume_sound(global.music);
+    room_goto(main) 
+}
 </string>
           </argument>
         </arguments>
