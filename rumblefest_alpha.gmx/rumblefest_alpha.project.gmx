@@ -313,6 +313,7 @@
     <objects name="weapons">
       <object>objects\obj_chair</object>
     </objects>
+    <object>objects\game_over_controller</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_start</room>
