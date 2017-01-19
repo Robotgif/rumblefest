@@ -210,7 +210,8 @@
     </sprites>
     <sprites name="pro_tips">
       <sprite>sprites\tip_001</sprite>
-      <sprite>sprites\tip_002</sprite>
+      <sprite>sprites\tip_003</sprite>
+      <sprite>sprites\sprite142</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background"/>
