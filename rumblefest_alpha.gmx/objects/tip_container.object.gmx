@@ -57,7 +57,6 @@ if (currentIndex != global.proTipIndex) {
     index = asset_get_index("tip_00" + string(global.proTipIndex));
     sprite_index = index
     currentIndex = global.proTipIndex
-    show_debug_message("in step")
 }
 
 </string>
