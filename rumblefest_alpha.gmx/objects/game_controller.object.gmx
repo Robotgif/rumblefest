@@ -34,7 +34,11 @@ enemySpawnY = 42
 global.enemiesEliminated = 0;
 
 // Play music!
-global.music = audio_play_sound(music1, 1, true);
+if (global.musicEnabled) {
+    global.music = audio_play_sound(music1, 1, true);
+}
+
+show_debug_message("game started")
 
 
 alarm[0] = 1
@@ -90,6 +94,36 @@ instance_create(enemySpawnX, enemySpawnY, obj_en_red);
 
 // Spawn after set time
 alarm[0] = room_speed * 4;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check if we should restart our room (if going to pause then back to main menu)
+/// Hate doing this here instead of just calling a function...fuck game maker
+
+if (global.shouldRestartMain) {
+    global.shouldRestartMain = false
+    room_persistent = false;
+    room_restart()
+}
 </string>
           </argument>
         </arguments>

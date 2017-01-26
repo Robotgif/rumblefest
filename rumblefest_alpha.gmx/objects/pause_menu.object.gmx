@@ -78,15 +78,15 @@
             <string>/// Enter or exit pause screen
 roomname = room_get_name(room);
 
-if (roomname == "main") {
-    room_persistent = true;
-    global.gamePaused = true;
+room_persistent = true;
+global.gamePaused = true;
+
+if (global.music) {
     audio_pause_sound(global.music);
-    room_goto(room_options)
-} else if (global.gamePaused) {
-    global.gamePaused = false;
-    room_goto(main)
 }
+
+room_goto(room_pause)
+
 </string>
           </argument>
         </arguments>

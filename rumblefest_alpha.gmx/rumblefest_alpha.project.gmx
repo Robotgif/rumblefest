@@ -48,10 +48,10 @@
       <sprites name="options_menu">
         <sprite>sprites\spr_control_type</sprite>
         <sprite>sprites\spr_options_menu</sprite>
-        <sprite>sprites\spr_swipe_on</sprite>
+        <sprite>sprites\spr_swipe_off</sprite>
         <sprite>sprites\spr_directional_on</sprite>
         <sprite>sprites\spr_directional_off</sprite>
-        <sprite>sprites\spr_swipe_off</sprite>
+        <sprite>sprites\spr_swipe_on</sprite>
         <sprite>sprites\spr_options_title</sprite>
         <sprite>sprites\spr_main_menu</sprite>
         <sprite>sprites\spr_sound_off</sprite>
@@ -299,6 +299,7 @@
     <objects name="pause_screen">
       <object>objects\obj_back</object>
       <object>objects\obj_pause_title</object>
+      <object>objects\pause_screen_controller</object>
     </objects>
     <objects name="options_screen">
       <object>objects\obj_options_title</object>

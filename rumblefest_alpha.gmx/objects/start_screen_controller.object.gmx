@@ -29,6 +29,13 @@
 
 global.controlType = "directional"
 global.gamePaused = false;
+global.music = "";
+global.musicEnabled = true;
+global.soundEnabled = true;
+global.shouldRestartMain = false;
+
+// TODO: Make sure this doesn't cause memory issues
+room_persistent = true;
 
 show_debug_message("In game init")
 </string>
