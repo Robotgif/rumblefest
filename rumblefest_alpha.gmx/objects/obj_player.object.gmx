@@ -434,28 +434,24 @@ if (state == TIRED) {
             <string>/// Event when colliding with normal roaming enemy
 
 // If flashing, do nothing
-if (flashing) {
-    
-} else {
-    // Get knocked back based on which direction we're facing
-    // moveBackAmount is how many times we will call alarm[0] to push the player back
-    moveBackAmount = 18
-    
-    alarm[0] = 1
-    
-    // Set to flashing, then set alarm to make un-flashing
-    flashing = true
-    // Used to flip flashing
-    flashingCount = 0
-    
-    
-    alarm[2] = 1.5 * room_speed
-    
-    // Lose a heart
-    with (obj_heart_cont) {
-        event_user(0)
-    }
+show_debug_message("knock")
+// Get knocked back based on which direction we're facing
+// moveBackAmount is how many times we will call alarm[0] to push the player back
+moveBackAmount = 18
 
+alarm[0] = 1
+
+// Set to flashing, then set alarm to make un-flashing
+flashing = true
+// Used to flip flashing
+flashingCount = 0
+
+
+alarm[2] = 1.5 * room_speed
+
+// Lose a heart
+with (obj_heart_cont) {
+    event_user(0)
 }
 </string>
           </argument>

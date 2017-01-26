@@ -395,8 +395,10 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_player)) {
     
     // Move back player
     with (obj_player) {
-        collisionDirection = point_direction(x,y, other.x, other.y)
-        event_user(0)
+        if (!flashing) {
+            collisionDirection = point_direction(x,y, other.x, other.y)
+            event_user(0)
+        }
     }
 
 }
