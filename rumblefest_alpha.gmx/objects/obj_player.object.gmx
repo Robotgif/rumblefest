@@ -433,8 +433,6 @@ if (state == TIRED) {
             <kind>1</kind>
             <string>/// Event when colliding with normal roaming enemy
 
-// If flashing, do nothing
-show_debug_message("knock")
 // Get knocked back based on which direction we're facing
 // moveBackAmount is how many times we will call alarm[0] to push the player back
 moveBackAmount = 18

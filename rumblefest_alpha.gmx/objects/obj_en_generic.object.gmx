@@ -256,9 +256,11 @@ if ((state == states.VULNERABLE || state == states.BEING_HIT) &amp;&amp; instanc
             collisionFlag = true;
 
     } else {
-        // TODO: Figure out how to cancel out red enemy alarms
         if (collisionFlag) {
             state = states.VULNERABLE;
+            alarm[1] = room_speed * 3;
+            // TODO: Make sure this doesn't fuck with anything else
+            collisionFlag = false
         }
     }
 
