@@ -55,6 +55,11 @@ if (global.controlType == "directional") {
             <kind>1</kind>
             <string>/// Change global control type
 global.controlType = "swipe"
+
+// Save setting
+ini_open("saveData.ini");
+ini_write_string("Settings", "controlType", global.controlType); 
+ini_close();
 </string>
           </argument>
         </arguments>

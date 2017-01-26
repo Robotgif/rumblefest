@@ -42,6 +42,36 @@ show_debug_message("In game init")
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Load saved data, override defaults
+
+ini_open("saveData.ini");
+global.statsEnemiesEliminated = ini_read_real("Stats", "enemiesEliminated", 0); 
+global.soundEnabled = ini_read_real("Settings", "soundEnabled", true); 
+global.musicEnabled = ini_read_real("Settings", "musicEnabled", true); 
+global.controlType = ini_read_string("Settings", "controlType", "directional"); 
+
+ini_close();
+
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
   </events>
   <PhysicsObject>0</PhysicsObject>

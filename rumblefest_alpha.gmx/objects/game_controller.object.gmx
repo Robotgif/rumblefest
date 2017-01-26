@@ -25,8 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Initialize Game
-// Handle different game cases/spawning enemies
+            <string>/// Setup game
 
 enemySpawnX = 384
 enemySpawnY = 42
@@ -42,30 +41,6 @@ show_debug_message("game started")
 
 
 alarm[0] = 1
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Load saved data
-ini_open("saveData.ini");
-global.statsEnemiesEliminated = ini_read_real("Stats", "enemiesEliminated", 0); //The third value here will set the score variable if there is no save file
-ini_close();
 </string>
           </argument>
         </arguments>

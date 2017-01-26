@@ -61,6 +61,11 @@ if (global.musicEnabled) {
     global.musicEnabled = true;
     sprite_index = spr_music_on
 }
+
+// Save setting
+ini_open("saveData.ini");
+ini_write_real("Settings", "musicEnabled", global.musicEnabled);
+ini_close();
 </string>
           </argument>
         </arguments>
