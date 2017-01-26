@@ -33,9 +33,17 @@
         <sprite>sprites\spr_new_game</sprite>
       </sprites>
       <sprites name="main_menu">
+        <sprite>sprites\spr_story</sprite>
         <sprite>sprites\spr_title</sprite>
         <sprite>sprites\spr_play</sprite>
+        <sprite>sprites\spr_options_main</sprite>
         <sprite>sprites\spr_options_01</sprite>
+        <sprite>sprites\spr_how_to_play_main</sprite>
+        <sprite>sprites\spr_arena_background</sprite>
+      </sprites>
+      <sprites name="pause_menu">
+        <sprite>sprites\spr_pause</sprite>
+        <sprite>sprites\spr_back</sprite>
       </sprites>
       <sprites name="options_menu">
         <sprite>sprites\spr_control_type</sprite>
@@ -44,7 +52,12 @@
         <sprite>sprites\spr_directional_on</sprite>
         <sprite>sprites\spr_directional_off</sprite>
         <sprite>sprites\spr_swipe_off</sprite>
+        <sprite>sprites\spr_options_title</sprite>
         <sprite>sprites\spr_main_menu</sprite>
+        <sprite>sprites\spr_sound_off</sprite>
+        <sprite>sprites\spr_music_on</sprite>
+        <sprite>sprites\spr_music_off</sprite>
+        <sprite>sprites\spr_sound_on</sprite>
       </sprites>
     </sprites>
     <sprites name="player">
@@ -283,21 +296,34 @@
       <object>objects\obj_cont_left</object>
       <object>objects\keyboardManager</object>
     </objects>
+    <objects name="pause_screen">
+      <object>objects\obj_back</object>
+      <object>objects\obj_pause_title</object>
+    </objects>
+    <objects name="options_screen">
+      <object>objects\obj_options_title</object>
+      <object>objects\obj_music</object>
+      <object>objects\obj_sound</object>
+    </objects>
     <objects name="hud">
       <object>objects\timer</object>
       <object>objects\score_manager</object>
       <object>objects\pause_menu</object>
       <object>objects\on_screen_controls</object>
-      <objects name="start_screen">
-        <object>objects\obj_start_title</object>
-        <object>objects\obj_start_play</object>
-        <object>objects\obj_start_options</object>
-        <object>objects\obj_start_swipe</object>
-        <object>objects\obj_start_control_type</object>
-        <object>objects\obj_start_direction</object>
-        <object>objects\start_screen_controller</object>
-        <object>objects\obj_start_main_menu</object>
-      </objects>
+    </objects>
+    <objects name="start_screen">
+      <object>objects\obj_stats_main</object>
+      <object>objects\obj_start_title</object>
+      <object>objects\obj_start_play</object>
+      <object>objects\obj_start_options</object>
+      <object>objects\obj_start_swipe</object>
+      <object>objects\obj_arena_background</object>
+      <object>objects\obj_start_control_type</object>
+      <object>objects\obj_start_direction</object>
+      <object>objects\start_screen_controller</object>
+      <object>objects\obj_start_main_menu</object>
+      <object>objects\obj_story_main</object>
+      <object>objects\obj_how_to_play_main</object>
     </objects>
     <objects name="end_screen">
       <object>objects\obj_elim_text</object>
@@ -322,10 +348,12 @@
       <object>objects\tip_container</object>
       <object>objects\next_tip</object>
     </objects>
+    <object>objects\object66</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_start</room>
     <room>rooms\room_options</room>
+    <room>rooms\room_pause</room>
     <room>rooms\main</room>
     <room>rooms\game_over</room>
   </rooms>
