@@ -72,14 +72,14 @@
     <instance objName="obj_floor" x="377" y="728" name="inst_D3E56871" locked="0" code="" scaleX="0.998697936534882" scaleY="0.958984375" colour="4294967295" rotation="0"/>
     <instance objName="timer" x="512" y="274" name="inst_E43726C4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="keyboardManager" x="0" y="210" name="inst_F901B621" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="pause_menu" x="655" y="215" name="inst_DFE2E16C" locked="0" code="" scaleX="0.75" scaleY="0.75" colour="4294967295" rotation="0"/>
+    <instance objName="pause_menu" x="683" y="250" name="inst_DFE2E16C" locked="0" code="" scaleX="0.75" scaleY="0.75" colour="4294967295" rotation="0"/>
     <instance objName="game_controller" x="32" y="210" name="inst_BDE22CC2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_en" x="72" y="618" name="inst_CAF7582D" locked="0" code="" scaleX="1" scaleY="17" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_en" x="696" y="615" name="inst_7C3AE167" locked="0" code="" scaleX="1" scaleY="17" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_en" x="391" y="874" name="inst_AC296757" locked="0" code="" scaleX="20" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_en" x="389" y="327" name="inst_084304FE" locked="0" code="" scaleX="20" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_entrance_wall" x="374" y="432" name="inst_7889DAA4" locked="0" code="" scaleX="7.5" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="obj_front_crowd" x="376" y="842" name="inst_815AE6AA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_front_crowd" x="379" y="834" name="inst_815AE6AA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_player" x="559" y="501" name="inst_05F091A6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_ref" x="370" y="622" name="inst_26A71E22" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_cont_up" x="380" y="1057" name="inst_5135238C" locked="0" code="" scaleX="3" scaleY="2.5" colour="4294967295" rotation="0"/>
