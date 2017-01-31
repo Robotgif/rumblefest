@@ -33,6 +33,7 @@
         <sprite>sprites\spr_new_game</sprite>
       </sprites>
       <sprites name="main_menu">
+        <sprite>sprites\spr_stats</sprite>
         <sprite>sprites\spr_story</sprite>
         <sprite>sprites\spr_title</sprite>
         <sprite>sprites\spr_play</sprite>
@@ -74,9 +75,6 @@
       <sprites name="damage">
         <sprite>sprites\spr_tired</sprite>
         <sprite>sprites\spr_punched_old</sprite>
-        <sprite>sprites\spr_player_l_out</sprite>
-        <sprite>sprites\spr_player_back_out</sprite>
-        <sprite>sprites\spr_player_front_out</sprite>
         <sprite>sprites\spr_punched_down</sprite>
         <sprite>sprites\spr_punched_up</sprite>
         <sprite>sprites\spr_punched</sprite>
@@ -102,6 +100,18 @@
         <sprite>sprites\spr_player_chair_down</sprite>
         <sprite>sprites\spr_player_chair_up</sprite>
         <sprite>sprites\spr_player_chair_right</sprite>
+      </sprites>
+      <sprites name="holding_on">
+        <sprite>sprites\spr_hld_front</sprite>
+        <sprite>sprites\spr_hld_back</sprite>
+      </sprites>
+      <sprites name="eliminated">
+        <sprite>sprites\spr_player_l_out</sprite>
+        <sprite>sprites\spr_player_back_out</sprite>
+        <sprite>sprites\spr_player_front_out</sprite>
+      </sprites>
+      <sprites name="enter_ring">
+        <sprite>sprites\spr_enter_ring</sprite>
       </sprites>
     </sprites>
     <sprites name="red_enemy">
