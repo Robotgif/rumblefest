@@ -69,6 +69,12 @@ instance_create(enemySpawnX, enemySpawnY, obj_en_red);
 
 // Spawn after set time
 alarm[0] = room_speed * 4;
+
+// DEBUG spawn slower 
+if (global.debugMode) {
+    alarm[0] = room_speed * 8;
+}
+
 </string>
           </argument>
         </arguments>

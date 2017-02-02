@@ -363,7 +363,6 @@
       <object>objects\tip_container</object>
       <object>objects\next_tip</object>
     </objects>
-    <object>objects\object66</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_start</room>

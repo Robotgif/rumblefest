@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>direction = directions.UP;
+            <string>/// Set up
+
+direction = directions.UP;
 speed = 8;
 
 distanceToGo = random_range(100, 500);
@@ -84,6 +86,11 @@ instance_destroy();
 flashing = true;
 
 alarm[1] = 2 * room_speed;
+
+// DEBUG
+if (global.debugMode) {
+    alarm[1] = 6 * room_speed;
+}
 </string>
           </argument>
         </arguments>
@@ -134,6 +141,36 @@ if (flashing) {
 }
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check collision with player
+if (place_meeting(x, y, obj_player)) {
+    // Call function to set chair as weapon
+    with (obj_player) {
+        event_user(2)
+    }
+    
+    show_debug_message("colliding with chair")
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>

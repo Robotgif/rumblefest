@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>speed = 0
+            <string>/// Set initial variables for player
+
+speed = 0
 image_speed = 0
 
 // Bring in same state variables as enemy
@@ -54,6 +56,14 @@ enum player_states {
     KNOCKED_BACK,
     STILL
 }
+
+enum player_weapons {
+    NONE,
+    CHAIR
+}
+
+// Set initial to no weapon
+weapon = player_weapons.NONE;
 
 // Set initial state to MOVING
 state = STILL
@@ -292,19 +302,26 @@ if (state == MOVING) {
     speed = 4
     image_speed = .2
     
+    spriteToSet = "spr"
+    if (weapon == player_weapons.CHAIR) {
+        spriteToSet = "spr_player_chair"
+    }
+    
     if (direction == 0) {
-        sprite_index = spr_right;
+        spriteToSet += "_right"
         mask_index = spr_mask_player_right;
     } else if (direction == 90) {
-        sprite_index = spr_up;
+        spriteToSet += "_up"
         mask_index = spr_mask_player_up;
     } else if (direction == 180) {
-        sprite_index = spr_left;
+        spriteToSet += "_left"
         mask_index = spr_mask_player_left;
     } else {
-        sprite_index = spr_down;
+        spriteToSet += "_down"
         mask_index = spr_mask_player_down;
     }
+    
+    sprite_index = asset_get_index(spriteToSet);
 }
 
 }
@@ -386,8 +403,79 @@ depth = -500 - y;
         global.lastKeyPressed = "up"
         wiggly_ropes("front")
     }
+    
+    // Throw chair if currently equipped
+    if (weapon == player_weapons.CHAIR) {
+        event_user(3)
+    }
 
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="13">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Throw dat chair
+weapon = player_weapons.NONE;
+var chairDirection;
+if (direction == directions.UP) {
+    chair = instance_create(x, y - 85, obj_chair);
+    chairDirection = directions.UP;
+} else if (direction == directions.RIGHT) {
+    chair = instance_create(x + 75, y, obj_chair);
+    chairDirection = directions.RIGHT;
+} else if (direction == directions.DOWN) {
+    chair = instance_create(x, y + 85, obj_chair);
+    chairDirection = directions.DOWN;
+} else {
+    chair = instance_create(x - 75, y, obj_chair);
+    chairDirection = directions.LEFT;
+}
+
+with (chair) {
+    direction = chairDirection
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="12">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Pick up chair
+weapon = player_weapons.CHAIR;
 </string>
           </argument>
         </arguments>

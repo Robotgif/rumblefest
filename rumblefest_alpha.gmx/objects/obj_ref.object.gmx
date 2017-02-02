@@ -558,7 +558,7 @@ if (distance &lt; distanceThreshold &amp;&amp; !movingToMiddle &amp;&amp; should
           <argument>
             <kind>1</kind>
             <string>/// Call event if user hits ref when vulnerable
-if (isVulnerable) {
+if (isVulnerable || global.debugMode) {
     if (instance_exists(obj_player) &amp;&amp; position_meeting(x, y, obj_player)) {
         isVulnerable = false;
         event_user(5)
