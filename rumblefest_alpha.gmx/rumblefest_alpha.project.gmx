@@ -59,6 +59,7 @@
         <sprite>sprites\spr_music_on</sprite>
         <sprite>sprites\spr_music_off</sprite>
         <sprite>sprites\spr_sound_on</sprite>
+        <sprite>sprites\spr_debug</sprite>
       </sprites>
     </sprites>
     <sprites name="player">
@@ -317,6 +318,7 @@
       <object>objects\obj_options_title</object>
       <object>objects\obj_music</object>
       <object>objects\obj_sound</object>
+      <object>objects\obj_debug</object>
     </objects>
     <objects name="hud">
       <object>objects\timer</object>
