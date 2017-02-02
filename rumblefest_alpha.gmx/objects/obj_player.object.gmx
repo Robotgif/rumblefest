@@ -283,6 +283,8 @@ if (state == TIRED) {
     } else {
         sprite_index = spr_tired_down;
     }
+    
+    mask_index = spr_mask_player_vulnerable;
 }
 
 // Change sprite based on direction when moving
@@ -292,12 +294,16 @@ if (state == MOVING) {
     
     if (direction == 0) {
         sprite_index = spr_right;
+        mask_index = spr_mask_player_right;
     } else if (direction == 90) {
         sprite_index = spr_up;
+        mask_index = spr_mask_player_up;
     } else if (direction == 180) {
         sprite_index = spr_left;
+        mask_index = spr_mask_player_left;
     } else {
         sprite_index = spr_down;
+        mask_index = spr_mask_player_down;
     }
 }
 
