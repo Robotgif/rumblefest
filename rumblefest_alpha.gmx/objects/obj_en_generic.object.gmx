@@ -34,7 +34,8 @@ enum states {
     ROAMING,
     BEING_HIT,
     VULNERABLE,
-    ELIMINATED
+    ELIMINATED,
+    HIT_BY_WEAPON
 }
 
 enum directions {
@@ -95,6 +96,60 @@ state = states.WALKING_IN;
 
 collisionFlag = false;
 state = states.ROAMING;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Move back after being hit with chair
+// moveBackAmount will decrease as this is called to slide the enemy back
+
+if (moveBackAmount &gt; 0) {
+    
+    // Turn off normal enemy speed while getting knocked back
+    speed = 0;
+    
+    // Move enemy depending on which way they were hit
+    if (moveDirection == 0) {
+        x = x + 7
+    }
+    if (moveDirection == 90) {
+        y = y - 7
+    }
+    if (moveDirection == 180) {
+        x = x - 7
+    }
+    if (moveDirection == 270) {
+        y = y + 7
+    }
+    
+    // Decrease our move back amount so we know when to stop (when it gets to 0)
+    moveBackAmount = moveBackAmount - 1
+    
+    // Call this alarm again
+    alarm[10] = 1
+} else {
+    // After moving back, set tired then go back into loop to move around
+    event_user(2)
+    show_debug_message("done moving back")
+}
 </string>
           </argument>
         </arguments>
@@ -162,6 +217,27 @@ case states.ROAMING:
             break;
     }
     break;
+case states.HIT_BY_WEAPON:
+    speed = 0;
+    // Separate directional sprites
+    switch(moveDirection) {
+        case directions.UP:
+            sprite_index = asset_get_index(spritePrefix + "_chair_up");
+            mask_index = spr_mask_en_up;
+            break;
+        case directions.DOWN:
+            sprite_index = asset_get_index(spritePrefix + "_chair_down");
+            mask_index = spr_mask_en_down;
+            break;
+        case directions.RIGHT:
+            image_xscale = -1;
+            // Note that break is omitted intentionally
+        case directions.LEFT:
+            sprite_index = asset_get_index(spritePrefix + "_chair_l_and_r");
+            mask_index = spr_mask_en_right;
+            break;
+    }
+    break;
 case states.VULNERABLE:
     speed = 0;
     image_speed = .1;
@@ -225,9 +301,70 @@ case states.ELIMINATED:
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Collisions with player when he has a chair
+
+if (instance_exists(obj_player) 
+    &amp;&amp; obj_player.weapon == player_weapons.CHAIR
+    &amp;&amp; state != states.WALKING_IN
+    &amp;&amp; state != states.CLIMBING_IN
+    &amp;&amp; state != states.ELIMINATED) {
+
+    playerDirection = obj_player.direction;
+    playerSpeed = obj_player.speed;
+    
+    if (playerDirection == 0 &amp;&amp; place_meeting(x - playerSpeed, y, obj_player)) {
+        moveDirection = directions.RIGHT;
+        moveBackAmount = 18;
+        state = states.HIT_BY_WEAPON
+        alarm[10] = 1;
+            
+    } else if (playerDirection == 90 &amp;&amp; place_meeting(x, y + playerSpeed, obj_player)) {
+        moveDirection = directions.UP;
+        moveBackAmount = 18;
+        state = states.HIT_BY_WEAPON
+        alarm[10] = 1;
+        
+
+    } else if (playerDirection == 180 &amp;&amp; place_meeting(x + playerSpeed, y, obj_player)) {
+        moveDirection = directions.LEFT;
+        moveBackAmount = 18;
+        state = states.HIT_BY_WEAPON
+        alarm[10] = 1;
+
+    } else if (playerDirection == 270 &amp;&amp; place_meeting(x, y - playerSpeed, obj_player)) {
+        moveDirection = directions.DOWN;
+        moveBackAmount = 18;
+        state = states.HIT_BY_WEAPON
+        alarm[10] = 1;
+    }
+
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Collisions with player when vulnerable
 
-if ((state == states.VULNERABLE || state == states.BEING_HIT) &amp;&amp; instance_exists(obj_player)) {
+if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.NONE 
+    &amp;&amp; (state == states.VULNERABLE 
+    || state == states.BEING_HIT)) {
 
     playerDirection = obj_player.direction;
     playerSpeed = obj_player.speed;
@@ -288,7 +425,8 @@ if ((state == states.VULNERABLE || state == states.BEING_HIT) &amp;&amp; instanc
             <kind>1</kind>
             <string>/// Collisions with wall
 // Normal state when roaming
-if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_wall_en)) {
+if ((state == states.ROAMING) 
+    &amp;&amp; place_meeting(x, y, obj_wall_en)) {
 
     // "Momentum" will take enemy into the colliding object,
     // so push away from ropes (using 400x400 as a general center of the ring)
@@ -333,7 +471,7 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_wall_en)) {
         break;
     }
     
-        // Check if colliding, only proceed if yes
+    // Check if colliding, only proceed if yes
     shouldContinue = true
     if (!place_meeting(x + xd, y + yd, obj_wall_en)) {
         shouldContinue = false;
@@ -370,6 +508,21 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_wall_en)) {
     
     }
     
+} else if (state == states.HIT_BY_WEAPON &amp;&amp; place_meeting(x, y, obj_wall_en)) {
+    
+    // Go over ropes when being hit by weapon
+    wiggly_ropes(moveDirection)
+    direction = moveDirection;
+    speed = 4;
+    
+    // Reset alarms so they don't fuck with us
+    alarm[0] = -1;
+    alarm[1] = -1;
+    alarm[10] = -1;
+    alarm[11] = -1;
+    
+    enemy_eliminated();
+    state = states.ELIMINATED
 }
 </string>
           </argument>
@@ -393,7 +546,8 @@ if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_wall_en)) {
             <kind>1</kind>
             <string>/// Collisions with player when roaming
 
-if (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_player)) {   
+if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.NONE 
+    &amp;&amp; (state == states.ROAMING &amp;&amp; place_meeting(x, y, obj_player))) {   
     
     // Move back player
     with (obj_player) {

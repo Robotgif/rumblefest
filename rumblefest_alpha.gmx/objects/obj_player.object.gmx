@@ -434,6 +434,7 @@ depth = -500 - y;
             <kind>1</kind>
             <string>/// Throw dat chair
 weapon = player_weapons.NONE;
+
 var chairDirection;
 if (direction == directions.UP) {
     chair = instance_create(x, y - 85, obj_chair);
