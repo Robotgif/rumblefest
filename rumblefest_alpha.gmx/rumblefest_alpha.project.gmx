@@ -164,6 +164,7 @@
       <sprite>sprites\spr_wall_walking</sprite>
       <sprite>sprites\spr_front_crowd</sprite>
       <sprite>sprites\spr_camera_flash</sprite>
+      <sprite>sprites\spr_arena_blueshade</sprite>
       <sprite>sprites\spr_arena_shade</sprite>
     </sprites>
     <sprites name="manager">
@@ -296,6 +297,7 @@
       <object>objects\obj_side_rope_r</object>
       <object>objects\obj_crowd</object>
       <object>objects\obj_front_crowd</object>
+      <object>objects\obj_arena_blue_light</object>
       <object>objects\obj_arena_light</object>
       <object>objects\obj_camera_flash</object>
     </objects>
@@ -365,6 +367,7 @@
     <room>rooms\room_start</room>
     <room>rooms\room_options</room>
     <room>rooms\room_pause</room>
+    <room>rooms\room_story_select</room>
     <room>rooms\main</room>
     <room>rooms\game_over</room>
   </rooms>
