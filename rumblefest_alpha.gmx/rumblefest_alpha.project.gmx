@@ -21,6 +21,7 @@
       <sprite>sprites\spr_ref_standing_up</sprite>
       <sprite>sprites\spr_ref_standing_down</sprite>
       <sprite>sprites\spr_ref_hit</sprite>
+      <sprite>sprites\spr_ref_dq</sprite>
     </sprites>
     <sprites name="menus">
       <sprites name="pause_menu">
@@ -72,6 +73,13 @@
         <sprite>sprites\spr_up</sprite>
         <sprite>sprites\spr_left</sprite>
         <sprite>sprites\spr_left_hurt</sprite>
+        <sprites name="mask">
+          <sprite>sprites\spr_mask_player_up</sprite>
+          <sprite>sprites\spr_mask_player_down</sprite>
+          <sprite>sprites\spr_mask_player_left</sprite>
+          <sprite>sprites\spr_mask_player_right</sprite>
+          <sprite>sprites\spr_mask_player_vulnerable</sprite>
+        </sprites>
       </sprites>
       <sprites name="damage">
         <sprite>sprites\spr_tired</sprite>
@@ -86,13 +94,6 @@
         <sprite>sprites\spr_tired_down</sprite>
         <sprite>sprites\spr_tired_left</sprite>
       </sprites>
-      <sprites name="mask">
-        <sprite>sprites\spr_mask_player_up</sprite>
-        <sprite>sprites\spr_mask_player_down</sprite>
-        <sprite>sprites\spr_mask_player_left</sprite>
-        <sprite>sprites\spr_mask_player_right</sprite>
-        <sprite>sprites\spr_mask_player_vulnerable</sprite>
-      </sprites>
       <sprites name="non_scale_sprite">
         <sprite>sprites\spr_player_scale_down</sprite>
       </sprites>
@@ -101,6 +102,16 @@
         <sprite>sprites\spr_player_chair_down</sprite>
         <sprite>sprites\spr_player_chair_up</sprite>
         <sprite>sprites\spr_player_chair_right</sprite>
+        <sprites name="chair_masks">
+          <sprite>sprites\spr_chair_mask_up_01</sprite>
+          <sprite>sprites\spr_chair_mask_up_02</sprite>
+          <sprite>sprites\spr_chair_mask_down_01</sprite>
+          <sprite>sprites\spr_chair_mask_down_02</sprite>
+          <sprite>sprites\spr_chair_mask_left_01</sprite>
+          <sprite>sprites\spr_chair_mask_left_02</sprite>
+          <sprite>sprites\spr_chair_mask_right_01</sprite>
+          <sprite>sprites\spr_chair_mask_right_02</sprite>
+        </sprites>
       </sprites>
       <sprites name="holding_on">
         <sprite>sprites\spr_hld_front</sprite>
