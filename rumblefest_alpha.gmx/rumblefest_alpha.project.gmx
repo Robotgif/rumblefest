@@ -116,6 +116,7 @@
       <sprites name="holding_on">
         <sprite>sprites\spr_hld_front</sprite>
         <sprite>sprites\spr_hld_back</sprite>
+        <sprite>sprites\spr_hld_sides</sprite>
       </sprites>
       <sprites name="eliminated">
         <sprite>sprites\spr_player_l_out</sprite>
