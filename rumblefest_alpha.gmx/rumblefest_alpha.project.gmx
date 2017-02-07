@@ -157,6 +157,11 @@
         <sprite>sprites\spr_en_chair_up</sprite>
         <sprite>sprites\spr_en_chair_down</sprite>
       </sprites>
+      <sprites name="wake_up">
+        <sprites name="wake_up_lvl1">
+          <sprite>sprites\spr_en_wakeup_01</sprite>
+        </sprites>
+      </sprites>
     </sprites>
     <sprites name="background">
       <sprite>sprites\spr_canvas</sprite>
