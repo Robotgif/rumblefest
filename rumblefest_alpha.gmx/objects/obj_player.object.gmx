@@ -307,18 +307,48 @@ if (state == MOVING) {
         spriteToSet = "spr_player_chair"
     }
     
+    // Set masks for normal player movement, or override with weapon if applicable
     if (direction == 0) {
         spriteToSet += "_right"
         mask_index = spr_mask_player_right;
+        
+        if (weapon == player_weapons.CHAIR) {
+            if (image_index % 2 == 0) {
+                mask_index = spr_chair_mask_right_01;  
+            } else {
+                mask_index = spr_chair_mask_right_02; 
+            }
+        }
     } else if (direction == 90) {
         spriteToSet += "_up"
         mask_index = spr_mask_player_up;
+        if (weapon == player_weapons.CHAIR) {
+            if (image_index % 2 == 0) {
+                mask_index = spr_chair_mask_up_01;  
+            } else {
+                mask_index = spr_chair_mask_up_02; 
+            }
+        }
     } else if (direction == 180) {
         spriteToSet += "_left"
         mask_index = spr_mask_player_left;
+        if (weapon == player_weapons.CHAIR) {
+            if (image_index % 2 == 0) {
+                mask_index = spr_chair_mask_left_01;  
+            } else {
+                mask_index = spr_chair_mask_left_02; 
+            }
+        }
     } else {
         spriteToSet += "_down"
         mask_index = spr_mask_player_down;
+        if (weapon == player_weapons.CHAIR) {
+            if (image_index % 2 == 0) {
+                mask_index = spr_chair_mask_down_01;  
+            } else {
+                mask_index = spr_chair_mask_down_02; 
+            }
+        }
     }
     
     sprite_index = asset_get_index(spriteToSet);

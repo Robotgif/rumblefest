@@ -36,6 +36,7 @@ direction = 180;
 LEFT_THRESHOLD = 148;
 RIGHT_THRESHOLD = 610;
 
+shouldThrowChair = false;
 isGettingChair = false;
 
 alarm[0] = 1 * room_speed;
@@ -175,10 +176,10 @@ alarm[1] = rand * room_speed;
           <argument>
             <kind>1</kind>
             <string>/// Check thresholds to move back and forth
-if (x &lt; LEFT_THRESHOLD) {
+if (x &lt; LEFT_THRESHOLD &amp;&amp; !isGettingChair) {
     direction = 0;
     sprite_index = spr_mang_walk_right;
-} else if (x &gt; RIGHT_THRESHOLD) {
+} else if (x &gt; RIGHT_THRESHOLD &amp;&amp; !isGettingChair) {
     direction = 180;
     sprite_index = spr_mang_walk_left;
 }
@@ -203,8 +204,8 @@ if (x &lt; LEFT_THRESHOLD) {
           <argument>
             <kind>1</kind>
             <string>/// Create chair on 15th frame of animation
-if (isGettingChair &amp;&amp; image_index &gt;= 15) {
-    isGettingChair = false;
+if (shouldThrowChair &amp;&amp; floor(image_index) == 15) {
+    shouldThrowChair = false;
     instance_create(x, y, obj_chair)
 }
 </string>
@@ -241,6 +242,7 @@ sprite_index = spr_mang_chair;
 speed = 0;
 
 isGettingChair = true;
+shouldThrowChair = true;
 </string>
           </argument>
         </arguments>
@@ -263,7 +265,7 @@ isGettingChair = true;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Event for when player loses a heart
+            <string>/// Event for when player loses a heart
 
 // Blow a heart after a certain amount of time
 // TODO: Set the timer lower if we have already lost a heart
@@ -293,7 +295,7 @@ alarm[2] = secondsToWait * room_speed;
           <argument>
             <kind>1</kind>
             <string>/// Go back to normal when done with chair
-if (sprite_index == spr_mang_chair) {
+if (isGettingChair) {
     isGettingChair = false;
     alarm[1] = 1;
 }
