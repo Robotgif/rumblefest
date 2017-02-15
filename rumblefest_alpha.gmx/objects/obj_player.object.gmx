@@ -282,29 +282,23 @@ if (global.lastKeyPressed == "right"){
     }
 }
 
-if (state == TIRED) {
-    speed = 2
-    if (direction == 0) {
-        sprite_index = spr_tired_right;
-    } else if (direction == 90) {
-        sprite_index = spr_tired_up;
-    } else if (direction == 180) {
-        sprite_index = spr_tired_left;
-    } else {
-        sprite_index = spr_tired_down;
-    }
-    
-    mask_index = spr_mask_player_vulnerable;
-}
-
 // Change sprite based on direction when moving
-if (state == MOVING) {
+if (state == MOVING || state == TIRED) {
     speed = 4
     image_speed = .2
     
     spriteToSet = "spr"
+    
+    // Override sprite prefix speed if tired, then override again if weilding weapon
+    if (state == TIRED) {
+        spriteToSet = "spr_tired"
+        mask_index = spr_mask_player_vulnerable;
+        speed = 2
+    }
+    
     if (weapon == player_weapons.CHAIR) {
         spriteToSet = "spr_player_chair"
+        speed = 4;
     }
     
     // Set masks for normal player movement, or override with weapon if applicable
@@ -319,6 +313,8 @@ if (state == MOVING) {
                 mask_index = spr_chair_mask_right_02; 
             }
         }
+        
+        
     } else if (direction == 90) {
         spriteToSet += "_up"
         mask_index = spr_mask_player_up;
@@ -383,8 +379,6 @@ depth = -500 - y;
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="4" ename="obj_wall_player">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -401,45 +395,80 @@ depth = -500 - y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state != MOVING &amp;&amp; state != PUNCHING_PLAYER &amp;&amp; state != TIRED) {
-    // collisionDirection is rounded, so find closest arrow direction to move in
-    // need to go in opposite direction than coming from
-    if (collisionDirection &gt; 45 &amp;&amp; collisionDirection &lt; 135) {
-        // coming from direction = 90;
-        direction = 270
-    } else if (collisionDirection &gt;= 135 &amp;&amp; collisionDirection &lt; 225) {
-        // coming from direction = 180;
-        direction = 0
-    } else if (collisionDirection &gt;= 225 &amp;&amp; collisionDirection &lt; 305) {
-        // coming from direction = 270;
-        direction = 90
-    } else {
-        // coming from direction = 0;
-        direction = 180
-    }
-    instance_change(obj_player_eliminated, true);
-} else if (state == MOVING || state == TIRED) {
-    // bounce off ropes
-    if (direction == 0) {
-        global.lastKeyPressed = "left"
-        wiggly_ropes("right")
-    } else if (direction == 90) {
-        global.lastKeyPressed = "down"
-        wiggly_ropes("back")
-    } else if (direction == 180) {
-        global.lastKeyPressed = "right"
-        wiggly_ropes("left")
-    } else if (direction == 270) {
-        global.lastKeyPressed = "up"
-        wiggly_ropes("front")
-    }
+            <string>/// Collisions with wall
+// Set mask to normal (override chair masks)
     
-    // Throw chair if currently equipped
-    if (weapon == player_weapons.CHAIR) {
-        event_user(3)
-    }
+// Set masks for normal player movement, or override with weapon if applicable
+currentMaskIndex = mask_index;
+xModifier = 0;
+yModifier = 0;
 
+if (direction == 0) {
+    mask_index = spr_mask_player_right;
+    xModifier = speed;
+} else if (direction == 90) {
+    mask_index = spr_mask_player_up;
+    yModifier = 0 - speed;
+} else if (direction == 180) {
+    mask_index = spr_mask_player_left;
+    xModifier = 0 - speed;
+} else {
+    mask_index = spr_mask_player_down;
+    yModifier = speed;
 }
+
+
+if (state == TIRED) {
+    mask_index = spr_mask_player_vulnerable
+}
+
+if (place_meeting(x + xModifier, y + yModifier, obj_wall_player)) {
+    if (state != MOVING &amp;&amp; state != PUNCHING_PLAYER &amp;&amp; state != TIRED) {
+        // collisionDirection is rounded, so find closest arrow direction to move in
+        // need to go in opposite direction than coming from
+        if (collisionDirection &gt; 45 &amp;&amp; collisionDirection &lt; 135) {
+            // coming from direction = 90;
+            direction = 270
+        } else if (collisionDirection &gt;= 135 &amp;&amp; collisionDirection &lt; 225) {
+            // coming from direction = 180;
+            direction = 0
+        } else if (collisionDirection &gt;= 225 &amp;&amp; collisionDirection &lt; 305) {
+            // coming from direction = 270;
+            direction = 90
+        } else {
+            // coming from direction = 0;
+            direction = 180
+        }
+        instance_change(obj_player_eliminated, true);
+    } else if (state == MOVING || state == TIRED) {
+        // bounce off ropes
+        if (direction == 0) {
+            global.lastKeyPressed = "left"
+            wiggly_ropes("right")
+        } else if (direction == 90) {
+            global.lastKeyPressed = "down"
+            wiggly_ropes("back")
+        } else if (direction == 180) {
+            global.lastKeyPressed = "right"
+            wiggly_ropes("left")
+        } else if (direction == 270) {
+            global.lastKeyPressed = "up"
+            wiggly_ropes("front")
+        }
+        
+        // Throw chair if currently equipped
+        if (weapon == player_weapons.CHAIR) {
+            event_user(3)
+        }
+    
+    }
+}
+
+// Set mask index back to whatever it was
+mask_index = currentMaskIndex
+
+
+
 </string>
           </argument>
         </arguments>

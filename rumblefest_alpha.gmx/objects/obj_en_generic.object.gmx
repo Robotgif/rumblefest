@@ -148,7 +148,6 @@ if (moveBackAmount &gt; 0) {
 } else {
     // After moving back, set tired then go back into loop to move around
     event_user(2)
-    show_debug_message("done moving back")
 }
 </string>
           </argument>
