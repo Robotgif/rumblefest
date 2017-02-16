@@ -175,10 +175,14 @@
       <sprite>sprites\spr_post_left</sprite>
       <sprite>sprites\spr_post_right</sprite>
       <sprite>sprites\spr_wiggly_ropes_front</sprite>
+      <sprite>sprites\spr_ropes_holdon_front</sprite>
       <sprite>sprites\spr_wiggly_ropes_back</sprite>
+      <sprite>sprites\spr_ropes_holdon_back</sprite>
       <sprite>sprites\spr_side_rope</sprite>
       <sprite>sprites\spr_side_rope_wiggle</sprite>
+      <sprite>sprites\spr_side_rope_holdon_l</sprite>
       <sprite>sprites\spr_side_rope_wiggle_r</sprite>
+      <sprite>sprites\spr_side_rope_holdon_r</sprite>
       <sprite>sprites\spr_wall_walking</sprite>
       <sprite>sprites\spr_front_crowd</sprite>
       <sprite>sprites\spr_camera_flash</sprite>
