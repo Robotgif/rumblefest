@@ -42,6 +42,7 @@ ENTERING = 6
 GHOST = 7
 KNOCKED_BACK = 8
 STILL = 9
+GETTING_BACK_IN = 10
 
 // TODO: Refactor this to use all enums
 enum player_states {
@@ -122,7 +123,8 @@ image_alpha = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (obj_heart_cont.hasHearts) {
+            <string>/// Set to moving if we have hearts
+if (obj_heart_cont.hasHearts) {
     state = MOVING
 }
 </string>
@@ -149,6 +151,9 @@ image_alpha = 1
             <kind>1</kind>
             <string>/// Alarm for moving player back after being hit
 // moveBackAmount will decrease as this is called to slide the player back
+
+// Don't do anything if we're getting back in 
+if (state != GETTING_BACK_IN) {
 
 
 moveDirection = 0;
@@ -207,6 +212,8 @@ if (moveBackAmount &gt; 0) {
     // Note that we've turned this off for now so it fires right away
     alarm[1] = 1
 }
+
+}
 </string>
           </argument>
         </arguments>
@@ -231,6 +238,7 @@ if (moveBackAmount &gt; 0) {
             <kind>1</kind>
             <string>/// Check states
 // Flashing animation 
+show_debug_message(state)
 if (flashing) {
     flashingCount++
     
@@ -246,6 +254,21 @@ if (flashing) {
 shouldContinue = true;
 if (state == KNOCKED_BACK) {
     sprite_index = spr_punched;
+    shouldContinue = false;
+}
+
+if (state == GETTING_BACK_IN) {
+    speed = 0;
+    if (direction == 0) {
+        sprite_index = spr_hld_sides;
+    } else if (direction == 90) {
+        sprite_index = spr_hld_front;
+    } else if (direction == 180) {
+        image_xscale = -1;
+        sprite_index = spr_hld_sides;
+    } else {
+        sprite_index = spr_hld_back
+    }
     shouldContinue = false;
 }
 
@@ -395,7 +418,8 @@ depth = -500 - y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Collisions with wall
+            <string>/// Check to see if we are colliding with wall 
+/// Collisions with wall
 // Set mask to normal (override chair masks)
     
 // Set masks for normal player movement, or override with weapon if applicable
@@ -423,44 +447,31 @@ if (state == TIRED) {
 }
 
 if (place_meeting(x + xModifier, y + yModifier, obj_wall_player)) {
-    if (state != MOVING &amp;&amp; state != PUNCHING_PLAYER &amp;&amp; state != TIRED) {
-        // collisionDirection is rounded, so find closest arrow direction to move in
-        // need to go in opposite direction than coming from
-        if (collisionDirection &gt; 45 &amp;&amp; collisionDirection &lt; 135) {
-            // coming from direction = 90;
-            direction = 270
-        } else if (collisionDirection &gt;= 135 &amp;&amp; collisionDirection &lt; 225) {
-            // coming from direction = 180;
-            direction = 0
-        } else if (collisionDirection &gt;= 225 &amp;&amp; collisionDirection &lt; 305) {
-            // coming from direction = 270;
-            direction = 90
-        } else {
-            // coming from direction = 0;
-            direction = 180
-        }
-        instance_change(obj_player_eliminated, true);
+
+    if (state == KNOCKED_BACK) {
+        // Trigger eliminated / get back in animation
+        event_user(4)
     } else if (state == MOVING || state == TIRED) {
-        // bounce off ropes
-        if (direction == 0) {
-            global.lastKeyPressed = "left"
-            wiggly_ropes("right")
-        } else if (direction == 90) {
-            global.lastKeyPressed = "down"
-            wiggly_ropes("back")
-        } else if (direction == 180) {
-            global.lastKeyPressed = "right"
-            wiggly_ropes("left")
-        } else if (direction == 270) {
-            global.lastKeyPressed = "up"
-            wiggly_ropes("front")
-        }
-        
-        // Throw chair if currently equipped
-        if (weapon == player_weapons.CHAIR) {
-            event_user(3)
-        }
+    // bounce off ropes
+    if (direction == 0) {
+        global.lastKeyPressed = "left"
+        wiggly_ropes("right")
+    } else if (direction == 90) {
+        global.lastKeyPressed = "down"
+        wiggly_ropes("back")
+    } else if (direction == 180) {
+        global.lastKeyPressed = "right"
+        wiggly_ropes("left")
+    } else if (direction == 270) {
+        global.lastKeyPressed = "up"
+        wiggly_ropes("front")
+    }
     
+    // Throw chair if currently equipped
+    if (weapon == player_weapons.CHAIR) {
+        event_user(3)
+    }
+
     }
 }
 
@@ -469,6 +480,59 @@ mask_index = currentMaskIndex
 
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="14">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Come back into ring if we have hearts, otherwise get fked
+if (state != MOVING &amp;&amp; state != PUNCHING_PLAYER &amp;&amp; state != TIRED) {
+
+    if (collisionDirection &gt; 45 &amp;&amp; collisionDirection &lt; 135) {
+        // coming from direction = 90;
+        direction = 270
+    } else if (collisionDirection &gt;= 135 &amp;&amp; collisionDirection &lt; 225) {
+        // coming from direction = 180;
+        direction = 0
+    } else if (collisionDirection &gt;= 225 &amp;&amp; collisionDirection &lt; 305) {
+        // coming from direction = 270;
+        direction = 90
+    } else {
+        // coming from direction = 0;
+        direction = 180
+    }
+
+    if (!obj_heart_cont.hasHearts ) {
+        // No hearts, get eliminated
+        // collisionDirection is rounded, so find closest arrow direction to move in
+        // need to go in opposite direction than coming from
+        
+        instance_change(obj_player_eliminated, true);
+    } else {
+        // Otherwise, get back in dat shit!
+        show_debug_message('should set state........')
+        image_index = 0;
+        state = GETTING_BACK_IN;
+    }
+        
+}
 </string>
           </argument>
         </arguments>
@@ -604,6 +668,32 @@ alarm[2] = 1.5 * room_speed
 // Lose a heart
 with (obj_heart_cont) {
     event_user(0)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="7">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// After getting back in animation, go back to moving
+if (state == GETTING_BACK_IN) {
+    state = MOVING;
 }
 </string>
           </argument>
