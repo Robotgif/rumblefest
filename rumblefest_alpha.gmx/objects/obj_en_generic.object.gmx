@@ -35,7 +35,8 @@ enum states {
     BEING_HIT,
     VULNERABLE,
     ELIMINATED,
-    HIT_BY_WEAPON
+    HIT_BY_WEAPON,
+    WAKING_UP
 }
 
 enum directions {
@@ -128,16 +129,16 @@ if (moveBackAmount &gt; 0) {
     
     // Move enemy depending on which way they were hit
     if (moveDirection == 0) {
-        x = x + 7
+        x = x + 9
     }
     if (moveDirection == 90) {
-        y = y - 7
+        y = y - 9
     }
     if (moveDirection == 180) {
-        x = x - 7
+        x = x - 9
     }
     if (moveDirection == 270) {
-        y = y + 7
+        y = y + 9
     }
     
     // Decrease our move back amount so we know when to stop (when it gets to 0)
@@ -173,6 +174,9 @@ if (moveBackAmount &gt; 0) {
             <kind>1</kind>
             <string>/// Handle variables based on state
 
+// Reset image x_scale if we changed it previously 
+image_xscale = 1;
+
 switch (state) {
 case states.WALKING_IN:
     direction = directions.DOWN;
@@ -191,6 +195,11 @@ case states.CLIMBING_IN:
     if ( image_index &gt;= 7 &amp;&amp; image_index &lt; 8) {
         depth = -500
     }
+    break;
+case states.WAKING_UP:
+    speed = 0;
+    image_speed = .3;
+    sprite_index = asset_get_index(spritePrefix + "_wakeup");
     break;
 case states.ROAMING:
     speed = 4;
@@ -313,26 +322,26 @@ if (instance_exists(obj_player)
     
     if (playerDirection == 0 &amp;&amp; place_meeting(x - playerSpeed, y, obj_player)) {
         moveDirection = directions.RIGHT;
-        moveBackAmount = 18;
+        moveBackAmount = 14;
         state = states.HIT_BY_WEAPON
         alarm[10] = 1;
             
     } else if (playerDirection == 90 &amp;&amp; place_meeting(x, y + playerSpeed, obj_player)) {
         moveDirection = directions.UP;
-        moveBackAmount = 18;
+        moveBackAmount = 14;
         state = states.HIT_BY_WEAPON
         alarm[10] = 1;
         
 
     } else if (playerDirection == 180 &amp;&amp; place_meeting(x + playerSpeed, y, obj_player)) {
         moveDirection = directions.LEFT;
-        moveBackAmount = 18;
+        moveBackAmount = 14;
         state = states.HIT_BY_WEAPON
         alarm[10] = 1;
 
     } else if (playerDirection == 270 &amp;&amp; place_meeting(x, y - playerSpeed, obj_player)) {
         moveDirection = directions.DOWN;
-        moveBackAmount = 18;
+        moveBackAmount = 14;
         state = states.HIT_BY_WEAPON
         alarm[10] = 1;
     }
@@ -363,7 +372,8 @@ if (instance_exists(obj_player)
 
 if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.NONE 
     &amp;&amp; (state == states.VULNERABLE 
-    || state == states.BEING_HIT)) {
+    || state == states.BEING_HIT
+    || state == states.WAKING_UP)) {
 
     playerDirection = obj_player.direction;
     playerSpeed = obj_player.speed;
@@ -372,28 +382,42 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
             x = x + playerSpeed;
             state = states.BEING_HIT;
             collisionFlag = true;
+            alarm[0] = -1;
+            alarm[2] = -1;
+            alarm[1] = room_speed * 3;
             
     } else if (playerDirection == 90 &amp;&amp; place_meeting(x, y + playerSpeed, obj_player)) {
 
             y = y - playerSpeed;
             state = states.BEING_HIT;
             collisionFlag = true;
+            alarm[0] = -1;
+            alarm[2] = -1;
+            alarm[1] = room_speed * 3;
 
     } else if (playerDirection == 180 &amp;&amp; place_meeting(x + playerSpeed, y, obj_player)) {
 
             x = x - playerSpeed;
             state = states.BEING_HIT;
             collisionFlag = true;
+            alarm[0] = -1;
+            alarm[2] = -1;
+            alarm[1] = room_speed * 3;
 
     } else if (playerDirection == 270 &amp;&amp; place_meeting(x, y - playerSpeed, obj_player)) {
 
             y = y + playerSpeed;
             state = states.BEING_HIT;
             collisionFlag = true;
+            alarm[0] = -1;
+            alarm[2] = -1;
+            alarm[1] = room_speed * 3;
 
     } else {
         if (collisionFlag) {
             state = states.VULNERABLE;
+            alarm[0] = -1;
+            alarm[2] = -1;
             alarm[1] = room_speed * 3;
             // TODO: Make sure this doesn't fuck with anything else
             collisionFlag = false

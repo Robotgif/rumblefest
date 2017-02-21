@@ -345,6 +345,9 @@ alarm[1] = room_speed * 1;
             <kind>1</kind>
             <string>/// Update sprite based on state
 
+// Reset image x_scale if we changed it previously 
+image_xscale = 1;
+
 shouldContinue = true;
 // Return if hurt 
 if (isHurt) {

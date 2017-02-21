@@ -237,8 +237,11 @@ if (moveBackAmount &gt; 0) {
           <argument>
             <kind>1</kind>
             <string>/// Check states
+
+// Reset image x_scale if we changed it previously 
+image_xscale = 1;
+
 // Flashing animation 
-show_debug_message(state)
 if (flashing) {
     flashingCount++
     
@@ -260,11 +263,11 @@ if (state == KNOCKED_BACK) {
 if (state == GETTING_BACK_IN) {
     speed = 0;
     if (direction == 0) {
+        image_xscale = -1;
         sprite_index = spr_hld_sides;
     } else if (direction == 90) {
         sprite_index = spr_hld_front;
     } else if (direction == 180) {
-        image_xscale = -1;
         sprite_index = spr_hld_sides;
     } else {
         sprite_index = spr_hld_back
@@ -527,7 +530,6 @@ if (state != MOVING &amp;&amp; state != PUNCHING_PLAYER &amp;&amp; state != TIRE
         instance_change(obj_player_eliminated, true);
     } else {
         // Otherwise, get back in dat shit!
-        show_debug_message('should set state........')
         image_index = 0;
         state = GETTING_BACK_IN;
     }

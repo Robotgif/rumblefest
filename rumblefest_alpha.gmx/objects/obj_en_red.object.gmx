@@ -41,7 +41,7 @@ alarm[0] = room_speed * timeToTired
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="1">
+    <event eventtype="2" enumb="2">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -61,13 +61,16 @@ alarm[0] = room_speed * timeToTired
             <string>/// Alarm to go back to roaming
 // Only do this if we're still vulnerable, otherwise wait less time before roaming
 // in case the player was punching then walked away
-if (state == states.VULNERABLE) {
+if (state == states.WAKING_UP) {
     state = states.ROAMING
     alarm[0] = room_speed * 4;
     
-    // For now, always go after player
+    // % time should go after player. Currently set at 100%
+    aggressionIndex = 1
+    randomNum = random_range(1, 100)
+    shouldPursuePlayer = randomNum &gt;= aggressionIndex
     
-    if (instance_exists(obj_player)) {
+    if (instance_exists(obj_player) &amp;&amp; shouldPursuePlayer) {
         playerDirection = point_direction(x, y, obj_player.x, obj_player.y)
         
         if (playerDirection &gt; 45 &amp;&amp; playerDirection &lt; 135) {
@@ -85,10 +88,36 @@ if (state == states.VULNERABLE) {
     }
     
     
-    
 } else if (state != states.ELIMINATED) {
     alarm[1] = room_speed * 1.5;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Wake up
+state = states.WAKING_UP
+
+// After 2 seconds go back to normal if we're not being punched
+alarm[2] = room_speed * 1;
 </string>
           </argument>
         </arguments>

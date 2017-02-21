@@ -159,7 +159,7 @@
       </sprites>
       <sprites name="wake_up">
         <sprites name="wake_up_lvl1">
-          <sprite>sprites\spr_en_wakeup_01</sprite>
+          <sprite>sprites\spr_en_wakeup</sprite>
         </sprites>
       </sprites>
     </sprites>

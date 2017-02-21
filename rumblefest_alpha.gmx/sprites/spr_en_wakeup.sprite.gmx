@@ -20,7 +20,7 @@
   <width>192</width>
   <height>192</height>
   <frames>
-    <frame index="0">images\spr_en_wakeup_01_0.png</frame>
-    <frame index="1">images\spr_en_wakeup_01_1.png</frame>
+    <frame index="0">images\spr_en_wakeup_0.png</frame>
+    <frame index="1">images\spr_en_wakeup_1.png</frame>
   </frames>
 </sprite>
