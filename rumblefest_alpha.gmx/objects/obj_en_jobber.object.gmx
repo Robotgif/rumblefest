@@ -3,9 +3,9 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>600</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_en_generic</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,49 +25,94 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Setup game
+            <string>// After 3 seconds go vulnerable
+// TODO: Randomize this
 
-enemySpawnX = 384
-enemySpawnY = 42
+event_inherited()
 
-global.enemiesEliminated = 0;
+// TODO: Might want to rename this to spr_en_red
+spritePrefix = "jobber_1"
 
-// Play music!
-if (global.musicEnabled) {
-    global.music = audio_play_sound(music1, 1, true);
-}
-
-show_debug_message("game started")
-
-
-alarm[0] = 1
-
-// DEBUG to start with jobbers in beginning
-enemy1 = instance_create(561, 720, obj_en_jobber);
-with (enemy1) {
-    state = states.ROAMING;
-    isActive = true
+isJobber = true;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Alarm to go back to roaming
+// Only do this if we're still vulnerable, otherwise wait less time before roaming
+// in case the player was punching then walked away
+if (state == states.WAKING_UP) {
+    state = states.ROAMING
     
-    // Run event to set up roaming
-    event_user(0)
-}
-enemy2 = instance_create(194, 720, obj_en_jobber);
-with (enemy2) {
-    state = states.ROAMING;
-    isActive = true
+    // % time should go after player
+    aggressionIndex = 101
+    randomNum = random_range(1, 100)
+    shouldPursuePlayer = randomNum &gt;= aggressionIndex
     
-    // Run event to set up roaming
-    event_user(0)
-}
-enemy3 = instance_create(194, 494, obj_en_jobber);
-with (enemy3) {
-    state = states.ROAMING;
-    isActive = true
+    if (instance_exists(obj_player) &amp;&amp; shouldPursuePlayer) {
+        playerDirection = point_direction(x, y, obj_player.x, obj_player.y)
+        
+        if (playerDirection &gt; 45 &amp;&amp; playerDirection &lt; 135) {
+            moveDirection = 90;
+        } else if (playerDirection &gt;= 135 &amp;&amp; playerDirection &lt; 225) {
+            moveDirection = 180;
+        } else if (playerDirection &gt;= 225 &amp;&amp; playerDirection &lt; 305) {
+            moveDirection = 270;
+        } else {
+            moveDirection = 0;
+        }
+        
+        direction = moveDirection;
+        
+    }
     
-    // Run event to set up roaming
-    event_user(0)
+    
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Wake up
+state = states.WAKING_UP
 
+// After 2 seconds go back to normal if we're not being punched
+alarm[2] = room_speed * 1;
 </string>
           </argument>
         </arguments>
@@ -90,53 +135,11 @@ with (enemy3) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// DEBUG to spawn enemies
+            <string>/// Alarm to set state to vunerable (tired)
+state = states.VULNERABLE
 
-randomNum = random_range(0, 2)
-if (randomNum &gt; 1) {
-    instance_create(enemySpawnX, enemySpawnY, obj_en_jobber);
-} else {
-    instance_create(enemySpawnX, enemySpawnY, obj_en_red);
-}
-
-// Spawn after set time
-alarm[0] = room_speed * 5;
-
-// DEBUG spawn slower 
-if (global.debugMode) {
-    alarm[0] = room_speed * 8;
-}
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Check if we should restart our room (if going to pause then back to main menu)
-/// Hate doing this here instead of just calling a function...fuck game maker
-
-if (global.shouldRestartMain) {
-    global.shouldRestartMain = false
-    room_persistent = false;
-    room_restart()
-}
+// After 3 seconds go back to normal if we're not being punched
+alarm[1] = room_speed * 1;
 </string>
           </argument>
         </arguments>
