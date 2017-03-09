@@ -260,6 +260,9 @@
     </sprites>
     <sprites name="jobbers">
       <sprites name="jobber_1">
+        <sprite>sprites\jobber_1_punch_down</sprite>
+        <sprite>sprites\jobber_1_punch_up</sprite>
+        <sprite>sprites\jobber_1_punch_lr</sprite>
         <sprite>sprites\jobber_1_being_hit</sprite>
         <sprite>sprites\jobber_1_being_hit_d</sprite>
         <sprite>sprites\jobber_1_chair_l_and_r</sprite>
