@@ -66,13 +66,13 @@
     <sprites name="player">
       <sprites name="punching">
         <sprite>sprites\spr_right</sprite>
-        <sprite>sprites\spr_right_hurt</sprite>
+        <sprite>sprites\spr_tired_punching_right</sprite>
         <sprite>sprites\spr_still</sprite>
         <sprite>sprites\spr_down</sprite>
-        <sprite>sprites\spr_down_hurt</sprite>
+        <sprite>sprites\spr_tired_punching_down</sprite>
         <sprite>sprites\spr_up</sprite>
         <sprite>sprites\spr_left</sprite>
-        <sprite>sprites\spr_left_hurt</sprite>
+        <sprite>sprites\spr_tired_punching_left</sprite>
         <sprites name="mask">
           <sprite>sprites\spr_mask_player_up</sprite>
           <sprite>sprites\spr_mask_player_down</sprite>
@@ -90,6 +90,7 @@
       </sprites>
       <sprites name="tired">
         <sprite>sprites\spr_tired_up</sprite>
+        <sprite>sprites\spr_tired_punching_up</sprite>
         <sprite>sprites\spr_tired_right</sprite>
         <sprite>sprites\spr_tired_down</sprite>
         <sprite>sprites\spr_tired_left</sprite>

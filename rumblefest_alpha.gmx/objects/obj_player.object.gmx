@@ -30,6 +30,15 @@
 speed = 0
 image_speed = 0
 
+// DEBUG 
+
+/*
+collisionDirection = 0
+event_user(0)
+event_user(0)
+event_user(0)
+*/
+
 // Bring in same state variables as enemy
 // Right now we're only using GHOST and MOVING
 MOVING = 0
@@ -43,6 +52,7 @@ GHOST = 7
 KNOCKED_BACK = 8
 STILL = 9
 GETTING_BACK_IN = 10
+TIRED_PUNCHING = 11
 
 // TODO: Refactor this to use all enums
 enum player_states {
@@ -74,6 +84,45 @@ flashing = false
 
 // This just makes sure random numbers are different every game
 randomize();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Screen shake 
+
+view_object[0] = noone;
+
+randX = random_range(-10, 10)
+randY = random_range(-10, 10)
+
+view_xview[0] = 0 + randX
+view_yview[0] = 0 + randY
+
+shakeAmount--
+if (shakeAmount &gt; 0) {
+    alarm[11] = room_speed * 0.05
+} else {
+    view_xview[0] = 0
+    view_yview[0] = 0
+}
 </string>
           </argument>
         </arguments>
@@ -309,7 +358,7 @@ if (global.lastKeyPressed == "right"){
 }
 
 // Change sprite based on direction when moving
-if (state == MOVING || state == TIRED) {
+if (state == MOVING || state == TIRED || state == TIRED_PUNCHING) {
     speed = 4
     image_speed = .2
     
@@ -321,6 +370,14 @@ if (state == MOVING || state == TIRED) {
         mask_index = spr_mask_player_vulnerable;
         speed = 2
     }
+    if (state == TIRED_PUNCHING) {
+        show_debug_message("tired...")
+        spriteToSet = "spr_tired_punching"
+        mask_index = spr_mask_player_vulnerable;
+        speed = 2
+    }
+    
+    show_debug_message(state)
     
     if (weapon == player_weapons.CHAIR) {
         spriteToSet = "spr_player_chair"
@@ -481,6 +538,31 @@ if (place_meeting(x + xModifier, y + yModifier, obj_wall_player)) {
 // Set mask index back to whatever it was
 mask_index = currentMaskIndex
 
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="25">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Called from enemy object when being punched to indicate they are currently engaged
 
 
 </string>
@@ -663,6 +745,10 @@ alarm[0] = 1
 flashing = true
 // Used to flip flashing
 flashingCount = 0
+
+// Screen shake
+shakeAmount = 10
+alarm[11] = 1
 
 
 alarm[2] = 1.5 * room_speed
