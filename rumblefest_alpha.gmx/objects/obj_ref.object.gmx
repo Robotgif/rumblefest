@@ -30,6 +30,7 @@
 direction = directions.DOWN;
 
 isColliding = false;
+isDisqualifying = false;
 
 // For sticking to corners
 isSticking = false;
@@ -126,21 +127,31 @@ isCounting = false;
             <kind>1</kind>
             <string>/// Wake up from dazed, go back to normal mode
 
-// TODO: End game if seeing player with chair
-
-// Set back to "default" state
-// For sticking to corners
-isSticking = false;
-shouldStick = true;
-shouldMoveToMiddle = false;
-movingToMiddle = false;
+// Set some states back to default
 isHurt = false;
 isVulnerable = false;
 isColliding = false;
 isCounting = false;
-speed = defaultSpeed;
+isDisqualifying = false;
 lastCollision = "";
-event_user(0)
+
+// End game if seeing player with chair
+if (obj_player.weapon != player_weapons.NONE) {
+    show_debug_message("DQ")
+    isDisqualifying = true;
+    image_index = 0;
+    speed = 0;
+    sprite_index = spr_ref_dq;
+    
+    
+} else {
+    
+    // Move away from player and (hopefully) hit ropes to start routine again 
+    event_user(0)
+    speed = defaultSpeed
+    shouldStick = true;
+
+}
 
 </string>
           </argument>
@@ -195,7 +206,7 @@ alarm[6] = 2 * room_speed;
 sprite_index = spr_ref_hurtdown;
 
 
-alarm[5] = 2 * room_speed;
+alarm[5] = 10 * room_speed;
 </string>
           </argument>
         </arguments>
@@ -350,9 +361,10 @@ image_xscale = 1;
 
 shouldContinue = true;
 // Return if hurt 
-if (isHurt) {
+if (isHurt || isDisqualifying) {
     shouldContinue = false;
 }
+
 
 if (shouldContinue) {
 
@@ -428,7 +440,9 @@ depth = -500 - y;
 
 // Create a bounding box with our set dimensions, then detect if the ref leaves that box to trigger collision events 
 colliding = collision_rectangle(leftBound, topBound, rightBound, bottomBound, self, false, false);
-if !colliding &amp;&amp; !isSticking &amp;&amp; shouldStick {
+if (!colliding &amp;&amp; !isSticking &amp;&amp; shouldStick) {
+
+    movingToMiddle = false;
     
     // Keep track of "lastCollision" so we only change direction when we hit a boundary
     if (y &lt;= topBound &amp;&amp; lastCollision != "top") {
@@ -526,7 +540,17 @@ if (x &lt;= leftBound || x &gt;= rightBound) &amp;&amp; (y &lt;= topBound || y &
             <string>/// If player hits distance threshold, go past him then go to initial state
 distance = distance_to_object(obj_player)
 
-if (distance &lt; distanceThreshold &amp;&amp; !movingToMiddle &amp;&amp; shouldMoveToMiddle &amp;&amp; !isCounting &amp;&amp; !isHurt) {
+show_debug_message(movingToMiddle)
+show_debug_message(shouldMoveToMiddle)
+show_debug_message(isCounting)
+show_debug_message(isHurt)
+
+if (distance &lt; distanceThreshold 
+    &amp;&amp; !movingToMiddle 
+    &amp;&amp; shouldMoveToMiddle 
+    &amp;&amp; !isCounting 
+    &amp;&amp; !isHurt) {
+    
     direction = point_direction(x, y, centerX, centerY)
     speed = defaultSpeed;
     movingToMiddle = true;
@@ -602,8 +626,7 @@ alarm[1] = -1;
 alarm[2] = -1;
 alarm[3] = -1;
 
-speed = 0;
-
+previousSpeed = speed;
 
 isHurt = true;
 speed = 0;
@@ -636,27 +659,36 @@ alarm[4] = .5 * room_speed;
             <kind>1</kind>
             <string>/// Enemy eliminated, trigger animation
 
-// Save current alarm values, then cancel them all and restart after next alarm fires
+// Only trigger this if we're not down and out 
+shouldContinue = true;
+if (!isCounting &amp;&amp; !isDisqualifying &amp;&amp; !isHurt) {
+    shouldContinue = false;
+}
 
-// TODO: Fix bug when eliminating 2 enemies at once
-if alarm[0] &gt; 0 previousAlarms[0] = alarm[0];
-if alarm[1] &gt; 0 previousAlarms[1] = alarm[1];
-if alarm[2] &gt; 0 previousAlarms[2] = alarm[2];
+if (shouldContinue) {
+    // Save current alarm values, then cancel them all and restart after next alarm fires
+    
+    // TODO: Fix bug when eliminating 2 enemies at once
+    if alarm[0] &gt; 0 previousAlarms[0] = alarm[0];
+    if alarm[1] &gt; 0 previousAlarms[1] = alarm[1];
+    if alarm[2] &gt; 0 previousAlarms[2] = alarm[2];
+    
+    // TODO: Fix this shit because it probably isn't working right
+    previousSpeed = speed;
+    previousDirection = direction;
+    
+    alarm[0] = -1;
+    alarm[1] = -1;
+    alarm[2] = -1;
+    
+    speed = 0;
+    
+    enemiesToCount = global.enemiesEliminated;
+    isCounting = true;
+    image_index = 0;
+    alarm[3] = 1;
 
-
-previousSpeed = speed;
-previousDirection = direction;
-
-alarm[0] = -1;
-alarm[1] = -1;
-alarm[2] = -1;
-
-speed = 0;
-
-enemiesToCount = global.enemiesEliminated;
-isCounting = true;
-image_index = 0;
-alarm[3] = 1;
+}
 
 </string>
           </argument>
@@ -768,6 +800,34 @@ if (x &gt;= rightBound) {
             <string>/// Move away from player
 if (instance_exists(obj_player)) {
     direction = point_direction(obj_player.x, obj_player.y, x, y)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="7">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// If finishing DQ animation, get fucked
+if (isDisqualifying) {
+    room_persistent = false;
+    audio_stop_sound(music1);
+    room_goto(game_over_dq)
 }
 </string>
           </argument>

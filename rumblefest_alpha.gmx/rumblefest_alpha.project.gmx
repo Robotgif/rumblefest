@@ -31,6 +31,7 @@
       <sprites name="end_screen">
         <sprite>sprites\spr_end_screen</sprite>
         <sprite>sprites\spr_elim</sprite>
+        <sprite>sprites\spr_elim_dq</sprite>
         <sprite>sprites\spr_new_game</sprite>
       </sprites>
       <sprites name="main_menu">
@@ -390,6 +391,7 @@
     </objects>
     <objects name="end_screen">
       <object>objects\obj_elim_text</object>
+      <object>objects\obj_elim_text_dq</object>
       <object>objects\obj_end_player</object>
       <object>objects\obj_new_game_text</object>
     </objects>
@@ -419,6 +421,7 @@
     <room>rooms\room_story_select</room>
     <room>rooms\main</room>
     <room>rooms\game_over</room>
+    <room>rooms\game_over_dq</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

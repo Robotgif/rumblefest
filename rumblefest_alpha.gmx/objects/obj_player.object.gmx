@@ -371,13 +371,10 @@ if (state == MOVING || state == TIRED || state == TIRED_PUNCHING) {
         speed = 2
     }
     if (state == TIRED_PUNCHING) {
-        show_debug_message("tired...")
         spriteToSet = "spr_tired_punching"
         mask_index = spr_mask_player_vulnerable;
         speed = 2
     }
-    
-    show_debug_message(state)
     
     if (weapon == player_weapons.CHAIR) {
         spriteToSet = "spr_player_chair"
