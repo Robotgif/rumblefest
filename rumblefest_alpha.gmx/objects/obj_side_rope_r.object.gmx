@@ -27,9 +27,6 @@
             <kind>1</kind>
             <string>///Initial Variables
 sprite_index = spr_side_rope;
-image_speed = .8;
-
-
 
 NORMAL = 2
 WIGGLE = 1
@@ -41,7 +38,7 @@ state = NORMAL;
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="0">
+    <event eventtype="7" enumb="7">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -58,7 +55,14 @@ state = NORMAL;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>sprite_index = spr_side_rope
+            <string>/// After animation ends, set back to default,
+// or go to next animation (if holding on)
+if (sprite_index == spr_side_rope_wiggle_r) {
+    sprite_index = spr_side_rope
+} else if (sprite_index == spr_side_rope_holdon_r) {
+    sprite_index = spr_side_rope_wiggle_r
+    image_speed = .8
+}
 </string>
           </argument>
         </arguments>

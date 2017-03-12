@@ -491,10 +491,15 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
             <kind>1</kind>
             <string>/// Collisions with player when roaming
 
+playerVulnerable = instance_exists(obj_player) 
+&amp;&amp; obj_player.state != obj_player.KNOCKED_BACK 
+&amp;&amp; obj_player.state != obj_player.GETTING_BACK_IN
+
 if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.NONE 
     &amp;&amp; (state == states.ROAMING 
         &amp;&amp; place_meeting(x, y, obj_player)
-        &amp;&amp; !isJobber)) {   
+        &amp;&amp; !isJobber)
+        &amp;&amp; playerVulnerable ) {   
     
     // Move back player
     with (obj_player) {

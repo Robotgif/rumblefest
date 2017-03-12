@@ -136,7 +136,7 @@ isDisqualifying = false;
 lastCollision = "";
 
 // End game if seeing player with chair
-if (obj_player.weapon != player_weapons.NONE) {
+if (instance_exists(obj_player) &amp;&amp; obj_player.weapon != player_weapons.NONE) {
     show_debug_message("DQ")
     isDisqualifying = true;
     image_index = 0;
@@ -539,11 +539,6 @@ if (x &lt;= leftBound || x &gt;= rightBound) &amp;&amp; (y &lt;= topBound || y &
             <kind>1</kind>
             <string>/// If player hits distance threshold, go past him then go to initial state
 distance = distance_to_object(obj_player)
-
-show_debug_message(movingToMiddle)
-show_debug_message(shouldMoveToMiddle)
-show_debug_message(isCounting)
-show_debug_message(isHurt)
 
 if (distance &lt; distanceThreshold 
     &amp;&amp; !movingToMiddle 

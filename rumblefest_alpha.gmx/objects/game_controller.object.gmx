@@ -92,7 +92,7 @@ with (enemy3) {
             <kind>1</kind>
             <string>/// DEBUG to spawn enemies
 
-randomNum = random_range(0, 2)
+randomNum = random_range(0, 1)
 if (randomNum &gt; 1) {
     instance_create(enemySpawnX, enemySpawnY, obj_en_jobber);
 } else {
