@@ -25,15 +25,116 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// After 3 seconds go vulnerable
+            <string>/// After 3 seconds go vulnerable
 // TODO: Randomize this
 
 event_inherited()
 
-// TODO: Might want to rename this to spr_en_red
+// Can't use enums since they just go from 1, so start at 101 instead and 
+// hope we don't have more than 100 states for generic enemies
+
+PUNCHING = 101
+
 spritePrefix = "jobber_1"
 
+prevDirection = 0
+prevSpeed = 4;
+
+isVulnerable = true
 isJobber = true;
+
+alarm[3] = 1 * room_speed
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// End punch
+
+speed = prevSpeed;
+state = states.ROAMING;
+isVulnerable = true;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Follow through on punch
+
+punchSpeed = 2;
+isVulnerable = false;
+
+alarm[5] = room_speed * 1
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Start punch
+
+state = PUNCHING
+
+prevDirection = direction
+prevSpeed = speed;
+punchSpeed = 0
+image_index = 0
+
+
+alarm[4] = room_speed * 1
+
+
+alarm[3] = room_speed * 4
 </string>
           </argument>
         </arguments>
@@ -140,6 +241,102 @@ state = states.VULNERABLE
 
 // After 3 seconds go back to normal if we're not being punched
 alarm[1] = room_speed * 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Step function 
+
+event_inherited()
+image_xscale = 1;
+
+if (state == PUNCHING) {
+    
+    switch (direction) {
+       case directions.UP:
+        sprite_index = jobber_1_punch_up
+        mask_index = spr_mask_en_up;
+        break;
+       case directions.DOWN:
+        sprite_index = jobber_1_punch_down
+        mask_index = spr_mask_en_down;
+        break;
+       case directions.LEFT:
+        sprite_index = jobber_1_punch_lr
+        image_xscale = -1;
+        mask_index = spr_mask_en_left;
+        break;
+       case directions.RIGHT:
+        sprite_index = jobber_1_punch_lr
+        mask_index = spr_mask_en_right;
+       break;
+    }
+    
+    speed = punchSpeed;
+    image_speed = 1 / room_speed
+} else {
+    speed = prevSpeed
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Collisions with player while punching
+
+if (place_meeting(x, y, obj_player)) {
+    show_debug_message('in place')
+}
+
+if (instance_exists(obj_player) 
+    &amp;&amp; obj_player.weapon == player_weapons.NONE 
+    &amp;&amp; place_meeting(x, y, obj_player)
+    &amp;&amp; !isVulnerable) {
+    
+    show_debug_message("should move back player")
+
+   with (obj_player) {
+        if (!flashing) {
+            collisionDirection = point_direction(x,y, other.x, other.y)
+            event_user(0)
+        }
+    }
+
+}
+
 </string>
           </argument>
         </arguments>

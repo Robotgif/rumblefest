@@ -382,7 +382,7 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
     playerDirection = obj_player.direction;
     playerSpeed = obj_player.speed;
     
-    if (playerDirection == 0 &amp;&amp; place_meeting(x - playerSpeed, y, obj_player)) {
+    if (playerDirection == 0 &amp;&amp; place_meeting(x, y, obj_player)) {
             x = x + playerSpeed;
             state = states.BEING_HIT;
             collisionFlag = true;
@@ -397,7 +397,7 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
                 }
             }
             
-    } else if (playerDirection == 90 &amp;&amp; place_meeting(x, y + playerSpeed, obj_player)) {
+    } else if (playerDirection == 90 &amp;&amp; place_meeting(x, y, obj_player)) {
 
             y = y - playerSpeed;
             state = states.BEING_HIT;
@@ -413,7 +413,7 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
                 }
             }
 
-    } else if (playerDirection == 180 &amp;&amp; place_meeting(x + playerSpeed, y, obj_player)) {
+    } else if (playerDirection == 180 &amp;&amp; place_meeting(x, y, obj_player)) {
 
             x = x - playerSpeed;
             state = states.BEING_HIT;
@@ -429,7 +429,7 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
                 }
             }
 
-    } else if (playerDirection == 270 &amp;&amp; place_meeting(x, y - playerSpeed, obj_player)) {
+    } else if (playerDirection == 270 &amp;&amp; place_meeting(x, y, obj_player)) {
 
             y = y + playerSpeed;
             state = states.BEING_HIT;
