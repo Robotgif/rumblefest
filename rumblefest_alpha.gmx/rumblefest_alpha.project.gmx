@@ -398,6 +398,7 @@
       <object>objects\obj_g_ring_entrance</object>
       <object>objects\obj_g_en_eliminated</object>
     </objects>
+    <object>objects\enemy_spawner</object>
     <object>objects\game_controller</object>
     <objects name="ref">
       <object>objects\obj_ref</object>

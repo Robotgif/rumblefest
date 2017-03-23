@@ -25,51 +25,46 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Setup game
+            <string>/// Define initial order of enemy spawning
 
 enemySpawnX = 384
 enemySpawnY = 42
+enemyToSpawn = "obj_en_red"
 
-global.enemiesEliminated = 0;
+// Define arrays of enemy objects and timing (in seconds) that they should spawn in
+// Have to use two arrays since key/value pairs are a PITA in game maker
+// Also why can't I just have an array I can .pop() on...
+listIndex = 0
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Actually spawn the enemy
+instance_create(enemySpawnX, enemySpawnY, asset_get_index(enemyToSpawn));
 
-// Play music!
-if (global.musicEnabled) {
-    global.music = audio_play_sound(music1, 1, true);
+// Call alarm[0] again if we still have enemies 
+if (ds_list_size(enemyList) &gt; 0) {
+    listIndex++
+    alarm[0] = 1
 }
-
-show_debug_message("game started")
-
-// Start spawning enemies for level 1
-with (enemy_spawner) {
-    event_user(0)
-}
-
-// DEBUG to start with jobbers in beginning
-enemy1 = instance_create(561, 720, obj_en_jobber);
-with (enemy1) {
-    state = states.ROAMING;
-    isActive = true
-    
-    // Run event to set up roaming
-    event_user(0)
-}
-enemy2 = instance_create(194, 720, obj_en_jobber);
-with (enemy2) {
-    state = states.ROAMING;
-    isActive = true
-    
-    // Run event to set up roaming
-    event_user(0)
-}
-enemy3 = instance_create(194, 494, obj_en_jobber);
-with (enemy3) {
-    state = states.ROAMING;
-    isActive = true
-    
-    // Run event to set up roaming
-    event_user(0)
-}
-
 </string>
           </argument>
         </arguments>
@@ -92,34 +87,21 @@ with (enemy3) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// DEBUG to spawn enemies
+            <string>/// Pop off of arrays, spawn enemy, then call this alarm again after specified time 
 
+enemyToSpawn = ds_list_find_value(enemyList, 0)
+time = ds_list_find_value(timingList, 0)
 
-/*
-TODO: Remove after porting everything to enemy_spawner object
+alarm[1] = room_speed * time
 
-randomNum = random_range(0, 1)
-if (randomNum &gt; 1) {
-    instance_create(enemySpawnX, enemySpawnY, obj_en_jobber);
-} else {
-    instance_create(enemySpawnX, enemySpawnY, obj_en_red);
-}
-
-// Spawn after set time
-alarm[0] = room_speed * 5;
-
-// DEBUG spawn slower 
-if (global.debugMode) {
-    alarm[0] = room_speed * 8;
-}
-*/
-
+ds_list_delete(enemyList, 0)
+ds_list_delete(timingList, 0)
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -136,14 +118,26 @@ if (global.debugMode) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Check if we should restart our room (if going to pause then back to main menu)
-/// Hate doing this here instead of just calling a function...fuck game maker
+            <string>/// Call alarm to set up chain of spawning enemies for first time
+enemyList = ds_list_create()
+timingList = ds_list_create()
 
-if (global.shouldRestartMain) {
-    global.shouldRestartMain = false
-    room_persistent = false;
-    room_restart()
-}
+ds_list_add(enemyList, 
+    "obj_en_jobber", 
+    "obj_en_jobber", 
+    "obj_en_jobber",
+    "obj_en_jobber",
+    "obj_en_red")
+    
+ds_list_add(timingList, 
+    .1,
+    5, 
+    5, 
+    5,
+    10)
+
+    
+alarm[0] = 1
 </string>
           </argument>
         </arguments>
