@@ -85,20 +85,15 @@
       </sprites>
       <sprites name="damage">
         <sprite>sprites\spr_tired</sprite>
-        <sprite>sprites\spr_punched_old</sprite>
         <sprite>sprites\spr_punched_down</sprite>
         <sprite>sprites\spr_punched_up</sprite>
         <sprite>sprites\spr_punched</sprite>
       </sprites>
       <sprites name="tired">
         <sprite>sprites\spr_tired_up</sprite>
-        <sprite>sprites\spr_tired_punching_up</sprite>
         <sprite>sprites\spr_tired_right</sprite>
         <sprite>sprites\spr_tired_down</sprite>
         <sprite>sprites\spr_tired_left</sprite>
-      </sprites>
-      <sprites name="non_scale_sprite">
-        <sprite>sprites\spr_player_scale_down</sprite>
       </sprites>
       <sprites name="chair_shots">
         <sprite>sprites\spr_player_chair_left</sprite>
