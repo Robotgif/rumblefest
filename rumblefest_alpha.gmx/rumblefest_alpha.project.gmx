@@ -81,7 +81,6 @@
           <sprite>sprites\spr_mask_player_right</sprite>
           <sprite>sprites\spr_mask_player_vulnerable</sprite>
         </sprites>
-        <sprite>sprites\sprite195</sprite>
       </sprites>
       <sprites name="damage">
         <sprite>sprites\spr_tired</sprite>

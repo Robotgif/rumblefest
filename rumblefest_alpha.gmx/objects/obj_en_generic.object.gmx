@@ -180,6 +180,8 @@ if (moveBackAmount &gt; 0) {
 // Reset image x_scale if we changed it previously 
 image_xscale = 1;
 
+show_debug_message('in step')
+
 switch (state) {
 case states.WALKING_IN:
     direction = directions.DOWN;
@@ -208,6 +210,9 @@ case states.ROAMING:
     speed = 4;
     image_speed = .1;
     mask_index = spr_mask_en_vulnerable;
+    
+    show_debug_message("roaming step")
+    
     // Separate directional sprites
     switch(direction) {
         case directions.UP:
@@ -773,7 +778,13 @@ direction = newDirection;
           <argument>
             <kind>1</kind>
             <string>/// First time entering ring
+
+// debug
+y = y + 25
+
 state = states.ROAMING;
+
+show_debug_message('ay')
 
 // For now keep going down, could call this to change direction if we wanted
 //event_user(1)
