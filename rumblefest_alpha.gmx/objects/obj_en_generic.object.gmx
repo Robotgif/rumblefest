@@ -656,26 +656,20 @@ if ((state == states.ROAMING)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Call alarm to set up chain of spawning enemies for first time
-enemyList = ds_list_create()
-timingList = ds_list_create()
-
-ds_list_add(enemyList, 
-    "obj_en_red", 
-    "obj_en_red", 
-    "obj_en_red",
-    "obj_en_red",
-    "obj_en_red")
+            <string>/// Change depth based on position relative to player
+// Don't run this if we're entering
+if (state == states.WALKING_IN || 
+    state == states.CLIMBING_IN ) {
     
-ds_list_add(timingList, 
-    .1,
-    5, 
-    5, 
-    5,
-    10)
-
     
-alarm[0] = 1
+
+} else if (state == states.ELIMINATED) {
+    depth = -2001;
+} else {
+    // Player has the same code, so depth is relative to y position
+    depth = -500 - y;
+}
+
 </string>
           </argument>
         </arguments>
