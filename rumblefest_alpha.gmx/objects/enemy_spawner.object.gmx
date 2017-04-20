@@ -123,10 +123,10 @@ enemyList = ds_list_create()
 timingList = ds_list_create()
 
 ds_list_add(enemyList, 
-    "obj_en_jobber", 
-    "obj_en_jobber", 
-    "obj_en_jobber",
-    "obj_en_jobber",
+    "obj_en_red", 
+    "obj_en_red", 
+    "obj_en_red",
+    "obj_en_red",
     "obj_en_red")
     
 ds_list_add(timingList, 

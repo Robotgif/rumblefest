@@ -63,10 +63,14 @@ show_debug_message("In game init")
 
 ini_open("saveData.ini");
 global.statsEnemiesEliminated = ini_read_real("Stats", "enemiesEliminated", 0); 
+global.totalScore = ini_read_real("Stats", "totalScore", 0); 
+
 global.soundEnabled = ini_read_real("Settings", "soundEnabled", true); 
 global.musicEnabled = ini_read_real("Settings", "musicEnabled", true); 
 global.controlType = ini_read_string("Settings", "controlType", "directional"); 
 global.debugMode = ini_read_real("Settings", "debugMode", false); 
+
+
 
 ini_close();
 

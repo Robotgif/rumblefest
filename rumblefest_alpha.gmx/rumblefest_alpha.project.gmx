@@ -355,6 +355,9 @@
       <object>objects\obj_cont_left</object>
       <object>objects\keyboardManager</object>
     </objects>
+    <objects name="stats_screen">
+      <object>objects\stats_screen_controller</object>
+    </objects>
     <objects name="pause_screen">
       <object>objects\obj_back</object>
       <object>objects\obj_pause_title</object>
@@ -415,6 +418,7 @@
   <rooms name="rooms">
     <room>rooms\room_start</room>
     <room>rooms\room_options</room>
+    <room>rooms\room_stats</room>
     <room>rooms\room_pause</room>
     <room>rooms\room_story_select</room>
     <room>rooms\main</room>

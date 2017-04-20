@@ -1,12 +1,27 @@
 /// Enemy Eliminated
+
+eliminatedType = argument[0]
+
 global.enemiesEliminated = global.enemiesEliminated + 1;
-score = score + 100;
+
+show_debug_message(eliminatedType)
+if (eliminatedType == "spr_en_jobber") {
+    scoreToAdd = 1
+} else if (eliminatedType == "spr_en") {
+    scoreToAdd = 5
+}
+
 
 // Save to total enemies eliminated
 global.statsEnemiesEliminated = global.statsEnemiesEliminated + 1;
+global.totalScore += scoreToAdd
+
 ini_open("saveData.ini");
-ini_write_real("Stats", "enemiesEliminated", global.statsEnemiesEliminated); //The first value is a header for that section, the second value is the label for your variable in the INI file, and the third value is the actual variable
-ini_close(); //Remember to close the INI or you'll have a memory leak
+ini_write_real("Stats", "enemiesEliminated", global.statsEnemiesEliminated); 
+
+ini_write_real("Stats", "totalScore", global.totalScore); 
+
+ini_close();
 
 // Trigger crowd flash
 crowd_flash();

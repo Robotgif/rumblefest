@@ -609,7 +609,7 @@ if ((state == states.ROAMING)
         // Only change to eliminated if direction matches actual direction
         if (direction == expectedDirection) {
             wiggly_ropes(moveDirection)
-            enemy_eliminated();
+            enemy_eliminated(spritePrefix);
             state = states.ELIMINATED
         }
     
@@ -628,7 +628,7 @@ if ((state == states.ROAMING)
     alarm[10] = -1;
     alarm[11] = -1;
     
-    enemy_eliminated();
+    enemy_eliminated(spritePrefix);
     state = states.ELIMINATED
 }
 </string>

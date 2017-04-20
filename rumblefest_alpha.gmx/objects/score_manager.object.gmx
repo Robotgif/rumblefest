@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fontColor = c_white;
+            <string>/// Set default values
+fontColor = c_white;
 flashYellow = false;
 flashYellowCount = 0;
 </string>
