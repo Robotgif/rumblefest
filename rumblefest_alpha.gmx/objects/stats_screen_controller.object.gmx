@@ -33,7 +33,6 @@ draw_set_color(c_white);     // set the drawing color
 totalString = "Total Score: " + string(global.totalScore);
 draw_text(50, 150, totalString);
 
-show_debug_message("hrmmmm")
 </string>
           </argument>
         </arguments>

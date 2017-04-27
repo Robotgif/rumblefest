@@ -6,6 +6,9 @@
   <NewExtensions/>
   <sounds name="sound">
     <sound>sound\music1</sound>
+    <sound>sound\punch_02</sound>
+    <sound>sound\punch_01</sound>
+    <sound>sound\whiff_01</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="ref">
@@ -294,6 +297,7 @@
     <script>scripts\wiggly_ropes.gml</script>
     <script>scripts\wiggly_ropes_holdon.gml</script>
     <script>scripts\enemy_eliminated.gml</script>
+    <script>scripts\script6.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_Arial40</font>

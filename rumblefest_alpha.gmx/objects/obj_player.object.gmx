@@ -128,6 +128,35 @@ if (shakeAmount &gt; 0) {
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Play "whiff" sound if not colliding with enemy
+
+soundToPlay = whiff_01
+
+audio_play_sound(soundToPlay, 50, false);
+
+alarm[10] = .4 * room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="2">
       <action>
         <libid>1</libid>
@@ -537,6 +566,37 @@ mask_index = currentMaskIndex
 
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check to see if we should play "whiff" sound
+// TODO: Figure out why place meeting aint working
+if (place_meeting(x, y, obj_en_generic)) {
+    show_debug_message("don't play")
+    alarm[10] = -1;
+} else {
+    show_debug_message("play")
+    if (alarm[10] == -1) {
+        alarm[10] = 1
+    }
+}
 </string>
           </argument>
         </arguments>

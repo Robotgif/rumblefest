@@ -158,6 +158,43 @@ if (moveBackAmount &gt; 0) {
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="9">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Play punch sound
+
+soundRandom = random_range(0, 100)
+
+if (soundRandom &gt; 75) {
+    soundToPlay = punch_01
+} else {
+    soundToPlay = punch_02
+}
+
+if (!audio_is_playing(punch_01) &amp;&amp; !audio_is_playing(punch_02)) {
+    audio_play_sound(soundToPlay, 50, false);
+}
+
+alarm[9] = .4 * room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -179,8 +216,6 @@ if (moveBackAmount &gt; 0) {
 
 // Reset image x_scale if we changed it previously 
 image_xscale = 1;
-
-show_debug_message('in step')
 
 switch (state) {
 case states.WALKING_IN:
@@ -210,8 +245,6 @@ case states.ROAMING:
     speed = 4;
     image_speed = .1;
     mask_index = spr_mask_en_vulnerable;
-    
-    show_debug_message("roaming step")
     
     // Separate directional sprites
     switch(direction) {
@@ -387,13 +420,21 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
     playerDirection = obj_player.direction;
     playerSpeed = obj_player.speed;
     
-    if (playerDirection == 0 &amp;&amp; place_meeting(x, y, obj_player)) {
+    if (place_meeting(x, y, obj_player)) {
+    
+        state = states.BEING_HIT;
+        collisionFlag = true;
+        alarm[0] = -1;
+        alarm[2] = -1;
+        alarm[1] = room_speed * 3;
+        
+        // Play punch sound 
+        if (alarm[9] == -1) {
+            alarm[9] = 1;
+        }
+    
+        if (playerDirection == 0) {
             x = x + playerSpeed;
-            state = states.BEING_HIT;
-            collisionFlag = true;
-            alarm[0] = -1;
-            alarm[2] = -1;
-            alarm[1] = room_speed * 3;
             
             // If player is tired, set to tired punching 
             with (obj_player) {
@@ -402,14 +443,9 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
                 }
             }
             
-    } else if (playerDirection == 90 &amp;&amp; place_meeting(x, y, obj_player)) {
+        } else if (playerDirection == 90) {
 
             y = y - playerSpeed;
-            state = states.BEING_HIT;
-            collisionFlag = true;
-            alarm[0] = -1;
-            alarm[2] = -1;
-            alarm[1] = room_speed * 3;
             
             // If player is tired, set to tired punching 
             with (obj_player) {
@@ -418,14 +454,10 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
                 }
             }
 
-    } else if (playerDirection == 180 &amp;&amp; place_meeting(x, y, obj_player)) {
+        } else if (playerDirection == 180) {
 
             x = x - playerSpeed;
             state = states.BEING_HIT;
-            collisionFlag = true;
-            alarm[0] = -1;
-            alarm[2] = -1;
-            alarm[1] = room_speed * 3;
             
             // If player is tired, set to tired punching 
             with (obj_player) {
@@ -434,14 +466,9 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
                 }
             }
 
-    } else if (playerDirection == 270 &amp;&amp; place_meeting(x, y, obj_player)) {
+        } else if (playerDirection == 270) {
 
             y = y + playerSpeed;
-            state = states.BEING_HIT;
-            collisionFlag = true;
-            alarm[0] = -1;
-            alarm[2] = -1;
-            alarm[1] = room_speed * 3;
             
             // If player is tired, set to tired punching 
             with (obj_player) {
@@ -449,11 +476,15 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
                     state = TIRED_PUNCHING
                 }
             }
-
+        }
     } else {
+    
+        alarm[9] = -1;
+    
         if (collisionFlag) {
             state = states.VULNERABLE;
             alarm[0] = -1;
+            alarm[1] = -1;
             alarm[2] = -1;
             
             if (!isJobber) {
@@ -472,6 +503,9 @@ if (instance_exists(obj_player) &amp;&amp; obj_player.weapon == player_weapons.N
         }
     }
 
+} else {
+    // Stop punch sound
+    alarm[9] = -1
 }
 
 </string>
