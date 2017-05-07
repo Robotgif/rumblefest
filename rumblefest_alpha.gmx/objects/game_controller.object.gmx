@@ -32,9 +32,13 @@ enemySpawnY = 42
 
 global.enemiesEliminated = 0;
 
+// Stop music if it's already playing
+if (global.music) {
+    audio_stop_sound(global.music)
+}
 // Play music!
 if (global.musicEnabled) {
-    global.music = audio_play_sound(music1, 1, true);
+    global.music = audio_play_sound(music_main_loop, 1, true);
 }
 
 show_debug_message("game started")

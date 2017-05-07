@@ -30,6 +30,19 @@
 if (global.gamePaused) {
     global.gamePause = false
     global.shouldRestartMain = true
+    
+}
+
+// Restart main menu music if coming from pause screen
+// Stop music if it's already playing
+if (!audio_is_playing(music_main_screen)) {
+    audio_stop_sound(global.music)
+    
+    // Play music!
+    if (global.musicEnabled) {
+        show_debug_message('in play')
+        global.music = audio_play_sound(music_main_screen, 1, true);
+    }
 }
 
 room_goto(room_start) 

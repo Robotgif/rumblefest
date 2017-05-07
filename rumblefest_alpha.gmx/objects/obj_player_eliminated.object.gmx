@@ -80,7 +80,7 @@ image_alpha = 1
 room_persistent = false;
 
 // End music
-audio_stop_sound(music1);
+audio_stop_sound(global.music);
 
 room_goto(game_over)
 </string>

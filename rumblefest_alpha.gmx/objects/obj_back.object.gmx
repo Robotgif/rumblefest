@@ -30,7 +30,7 @@ if (global.musicEnabled) {
     if (global.music) {
         audio_resume_sound(global.music);
     } else {
-        global.music = audio_play_sound(music1, 1, true);
+        global.music = audio_play_sound(music_main_loop, 1, true);
     }
 }
 

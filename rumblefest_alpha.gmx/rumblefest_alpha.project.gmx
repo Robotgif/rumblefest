@@ -5,10 +5,11 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound">
-    <sound>sound\music1</sound>
+    <sound>sound\music_main_loop</sound>
     <sound>sound\punch_02</sound>
     <sound>sound\punch_01</sound>
     <sound>sound\whiff_01</sound>
+    <sound>sound\music_main_screen</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="ref">
