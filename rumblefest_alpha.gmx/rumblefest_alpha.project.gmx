@@ -140,6 +140,9 @@
         <sprite>sprites\spr_player_back_out</sprite>
         <sprite>sprites\spr_player_front_out</sprite>
       </sprites>
+      <sprites name="celebrate">
+        <sprite>sprites\celebrate</sprite>
+      </sprites>
       <sprites name="enter_ring">
         <sprite>sprites\spr_enter_ring</sprite>
       </sprites>
@@ -242,6 +245,9 @@
         <sprite>sprites\spr_g_l_out</sprite>
       </sprites>
       <sprite>sprites\spr_g_test</sprite>
+      <sprites name="green_masks">
+        <sprite>sprites\g_left_mask</sprite>
+      </sprites>
       <sprites name="ring_entrance">
         <sprite>sprites\spr_g_entrance</sprite>
         <sprite>sprites\spr_g_walkin</sprite>
@@ -412,6 +418,7 @@
       <object>objects\obj_elim_text</object>
       <object>objects\obj_elim_text_dq</object>
       <object>objects\obj_end_player</object>
+      <object>objects\player_celebrate</object>
       <object>objects\obj_new_game_text</object>
     </objects>
     <objects name="green_enemy_obj">
@@ -443,6 +450,7 @@
     <room>rooms\main</room>
     <room>rooms\game_over</room>
     <room>rooms\game_over_dq</room>
+    <room>rooms\game_over_win</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
