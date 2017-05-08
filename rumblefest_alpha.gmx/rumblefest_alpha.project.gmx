@@ -10,6 +10,22 @@
     <sound>sound\punch_01</sound>
     <sound>sound\whiff_01</sound>
     <sound>sound\music_main_screen</sound>
+    <sound>sound\sound_hit_5</sound>
+    <sound>sound\sound_hit_6</sound>
+    <sound>sound\sound_hit_7</sound>
+    <sound>sound\sound_hit_8</sound>
+    <sound>sound\sound_wrestler_1</sound>
+    <sound>sound\sound_wrestler_2</sound>
+    <sound>sound\sound_wrestler_3</sound>
+    <sound>sound\sound_wrestler_4</sound>
+    <sound>sound\sound_wrestler_5</sound>
+    <sound>sound\sound_wrestler_6</sound>
+    <sound>sound\sound_wrestler_7</sound>
+    <sound>sound\sound_wrestler_8</sound>
+    <sound>sound\sound_hit_1</sound>
+    <sound>sound\sound_hit_2</sound>
+    <sound>sound\sound_hit_3</sound>
+    <sound>sound\sound_hit_4</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="ref">
@@ -298,7 +314,6 @@
     <script>scripts\wiggly_ropes.gml</script>
     <script>scripts\wiggly_ropes_holdon.gml</script>
     <script>scripts\enemy_eliminated.gml</script>
-    <script>scripts\script6.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_Arial40</font>

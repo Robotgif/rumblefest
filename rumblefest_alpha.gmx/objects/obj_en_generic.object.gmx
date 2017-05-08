@@ -177,15 +177,19 @@ if (moveBackAmount &gt; 0) {
             <kind>1</kind>
             <string>/// Play punch sound
 
-soundRandom = random_range(0, 100)
 
-if (soundRandom &gt; 75) {
-    soundToPlay = punch_01
-} else {
-    soundToPlay = punch_02
-}
+soundToPlay = choose(sound_hit_1, sound_hit_2, sound_hit_3, 
+sound_hit_4, sound_hit_5, sound_hit_6, sound_hit_7, sound_hit_8)
 
-if (!audio_is_playing(punch_01) &amp;&amp; !audio_is_playing(punch_02)) {
+if (!audio_is_playing(sound_hit_1) 
+    &amp;&amp; !audio_is_playing(sound_hit_2)
+    &amp;&amp; !audio_is_playing(sound_hit_3) 
+    &amp;&amp; !audio_is_playing(sound_hit_4)
+    &amp;&amp; !audio_is_playing(sound_hit_5)
+    &amp;&amp; !audio_is_playing(sound_hit_6)
+    &amp;&amp; !audio_is_playing(sound_hit_7)
+    &amp;&amp; !audio_is_playing(sound_hit_8) ) {
+    
     audio_play_sound(soundToPlay, 50, false);
 }
 
