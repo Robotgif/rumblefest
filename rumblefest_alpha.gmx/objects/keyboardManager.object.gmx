@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>/// Initialize global variable
 global.lastKeyPressed = "none"
-global.overrideLastKey = true
+global.overrideLastKey = false
 </string>
           </argument>
         </arguments>
