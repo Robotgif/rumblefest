@@ -86,14 +86,14 @@
     </sprites>
     <sprites name="player">
       <sprites name="punching">
-        <sprite>sprites\spr_right</sprite>
-        <sprite>sprites\spr_tired_punching_right</sprite>
-        <sprite>sprites\spr_still</sprite>
-        <sprite>sprites\spr_down</sprite>
-        <sprite>sprites\spr_tired_punching_down</sprite>
-        <sprite>sprites\spr_up</sprite>
-        <sprite>sprites\spr_left</sprite>
-        <sprite>sprites\spr_tired_punching_left</sprite>
+        <sprite>sprites\spr_player_right</sprite>
+        <sprite>sprites\spr_player_punch_right</sprite>
+        <sprite>sprites\spr_player_stand</sprite>
+        <sprite>sprites\spr_player_down</sprite>
+        <sprite>sprites\spr_player_tired_down</sprite>
+        <sprite>sprites\spr_player_up</sprite>
+        <sprite>sprites\spr_player_left</sprite>
+        <sprite>sprites\spr_player_tired_punch_left</sprite>
         <sprites name="mask">
           <sprite>sprites\spr_mask_player_up</sprite>
           <sprite>sprites\spr_mask_player_down</sprite>
@@ -342,6 +342,7 @@
     </objects>
     <objects name="player">
       <object>objects\obj_player</object>
+      <object>objects\obj_player_2</object>
       <object>objects\obj_player_eliminated</object>
     </objects>
     <objects name="red_enemy_obj">

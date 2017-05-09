@@ -32,6 +32,9 @@ enemySpawnY = 42
 
 global.enemiesEliminated = 0;
 
+// This just makes sure random numbers are different every game
+randomize();
+
 // Stop music if it's already playing
 if (global.music) {
     audio_stop_sound(global.music)

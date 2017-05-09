@@ -20,7 +20,7 @@
   <width>192</width>
   <height>192</height>
   <frames>
-    <frame index="0">images\spr_tired_punching_left_0.png</frame>
-    <frame index="1">images\spr_tired_punching_left_1.png</frame>
+    <frame index="0">images\spr_player_punch_right_0.png</frame>
+    <frame index="1">images\spr_player_punch_right_1.png</frame>
   </frames>
 </sprite>

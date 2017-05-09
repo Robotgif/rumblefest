@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>/// Initialize global variable
 global.lastKeyPressed = "none"
+global.overrideLastKey = true
 </string>
           </argument>
         </arguments>
@@ -51,14 +52,17 @@ global.lastKeyPressed = "none"
             <kind>1</kind>
             <string>/// Listen to when keyboard is pressed and set that to last touched key
 
-if (keyboard_check(vk_down)){
-    global.lastKeyPressed = "down";
-} else if (keyboard_check(vk_up)){
-    global.lastKeyPressed = "up";
-} else if (keyboard_check(vk_left)){
-    global.lastKeyPressed = "left";
-} else if (keyboard_check(vk_right)){
-    global.lastKeyPressed = "right";
+// Last key will be overriden if player hits wall, causing them to go backwards
+if (!global.overrideLastKey) {
+    if (keyboard_check(vk_down)){
+        global.lastKeyPressed = "down";
+    } else if (keyboard_check(vk_up)){
+        global.lastKeyPressed = "up";
+    } else if (keyboard_check(vk_left)){
+        global.lastKeyPressed = "left";
+    } else if (keyboard_check(vk_right)){
+        global.lastKeyPressed = "right";
+    }
 }
 </string>
           </argument>
