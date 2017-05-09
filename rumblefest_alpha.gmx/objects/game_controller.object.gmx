@@ -43,6 +43,11 @@ if (global.musicEnabled) {
 
 show_debug_message("game started")
 
+// DEBUG with new enemies
+enemy1 = instance_create(561, 720, obj_en_generic2);
+
+/*
+
 // Start spawning enemies for level 1
 with (enemy_spawner) {
     event_user(0)
@@ -73,6 +78,7 @@ with (enemy3) {
     // Run event to set up roaming
     event_user(0)
 }
+*/
 
 </string>
           </argument>
