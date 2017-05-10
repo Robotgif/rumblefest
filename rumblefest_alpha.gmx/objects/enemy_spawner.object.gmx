@@ -27,9 +27,9 @@
             <kind>1</kind>
             <string>/// Define initial order of enemy spawning
 
-enemySpawnX = 384
-enemySpawnY = 42
 enemyToSpawn = "obj_en_red"
+enemySpawnX = (room_width / 2) - (sprite_get_width(spr_red_en_left) / 2)
+enemySpawnY = 42
 
 // Define arrays of enemy objects and timing (in seconds) that they should spawn in
 // Have to use two arrays since key/value pairs are a PITA in game maker
@@ -123,11 +123,11 @@ enemyList = ds_list_create()
 timingList = ds_list_create()
 
 ds_list_add(enemyList, 
-    "obj_en_red", 
-    "obj_en_red", 
-    "obj_en_red",
-    "obj_en_red",
-    "obj_en_red")
+    "obj_generic_walkin", 
+    "obj_generic_walkin", 
+    "obj_generic_walkin",
+    "obj_generic_walkin",
+    "obj_generic_walkin")
     
 ds_list_add(timingList, 
     .1,

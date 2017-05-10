@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>/// Set position
 x = 180;
-y = 470;
+y = 450;
 
 image_xscale = 410
 image_yscale = 325
