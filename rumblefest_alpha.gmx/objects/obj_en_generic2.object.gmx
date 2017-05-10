@@ -36,12 +36,38 @@ direction = directions.DOWN
 sprite_prefix = "spr_red_en_"
 mask_prefix = "spr_mask_en_"
 
-is_colliding = false
+is_colliding = false // With player
+is_colliding_with_ropes = false
+is_hit = false
+is_eliminated = false
 
 
 
 
-
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Destroy instance
+instance_destroy()
 </string>
           </argument>
         </arguments>
@@ -64,9 +90,33 @@ is_colliding = false
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Don't check anything else if we're eliminated
+if (is_eliminated) {
+    return true
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Set mask based on direction
 
-if (!is_colliding) {
+if (!is_colliding &amp;&amp; !is_hit) {
     if (direction == directions.UP) {
         sprite_index = asset_get_index(sprite_prefix + "up")
         mask_index = asset_get_index(mask_prefix + "up") 
@@ -101,7 +151,8 @@ if (!is_colliding) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Check collisions with ring bounding box. Move opposite direction if we would be going out
+            <string>/// Check collisions with ring bounding box. 
+// Move opposite direction if we would be going out
 
 height = sprite_height
 width = sprite_width
@@ -111,19 +162,26 @@ oldMask = mask_index
 mask_index = asset_get_index(sprite_prefix + "down")
 
 // Normal bounds checks
+// For each, set flag that we're colliding so we can handle it in next step
+is_colliding_with_ropes = false
+direction_before_rope_collision = direction
 
 if (direction == directions.LEFT &amp;&amp; !place_meeting(x - speed, y, obj_ring_bounds)) {
     // Left bounds
     direction = choose(directions.RIGHT, directions.UP, directions.DOWN)
+    is_colliding_with_ropes = true
 } else if (direction == directions.RIGHT &amp;&amp; !place_meeting(x + speed, y, obj_ring_bounds)) {
     // Right bounds
     direction = choose(directions.UP, directions.LEFT, directions.DOWN)
+    is_colliding_with_ropes = true
 } else if (direction == directions.DOWN &amp;&amp; !place_meeting(x, y + speed, obj_ring_bounds)) {
     // Down bounds
     direction = choose(directions.UP, directions.LEFT, directions.RIGHT)
+    is_colliding_with_ropes = true
 } else if (direction == directions.UP &amp;&amp; !place_meeting(x, y - speed, obj_ring_bounds)) {
     // Up bounds
     direction = choose(directions.DOWN, directions.LEFT, directions.RIGHT)
+    is_colliding_with_ropes = true
 }
 
 // Corner checks
@@ -145,6 +203,47 @@ if (!place_meeting(x - speed, y, obj_ring_bounds) &amp;&amp; !place_meeting(x, y
 mask_index = oldMask
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// If is colliding with ropes AND being hurt, trigger elimination
+if (is_colliding_with_ropes &amp;&amp; is_hit) {
+    speed = 4
+    direction = direction_before_rope_collision
+    image_index = 0
+    image_xscale = 1
+    is_eliminated = true
+    
+    if (direction_before_rope_collision == directions.UP) {
+        sprite_index = asset_get_index(sprite_prefix + "elim_up")
+    } else if (direction_before_rope_collision == directions.DOWN) {
+        sprite_index = asset_get_index(sprite_prefix + "elim_down")
+    } else if (direction_before_rope_collision == directions.LEFT) {
+        sprite_index = asset_get_index(sprite_prefix + "elim_left")
+    } else if (direction_before_rope_collision == directions.RIGHT) {
+        image_scale = -1
+        sprite_index = asset_get_index(sprite_prefix + "elim_left")
+    }
+    
+    alarm[11] = 2 * room_speed
+}
 </string>
           </argument>
         </arguments>

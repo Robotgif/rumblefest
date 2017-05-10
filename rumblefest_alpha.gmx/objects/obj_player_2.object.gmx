@@ -287,28 +287,24 @@ mask_index = spr_player_down
 
 if (direction == directions.LEFT &amp;&amp; !place_meeting(x - speed, y, obj_ring_bounds)) {
     // Left bounds
-    show_debug_message('left')
     global.lastKeyPressed = "right"
     global.overrideLastKey = true
     alarm[1] = .2 * room_speed
     wiggly_ropes(direction)
 } else if (direction == directions.RIGHT &amp;&amp; !place_meeting(x + speed, y, obj_ring_bounds)) {
     // Right bounds
-    show_debug_message('right')
     global.lastKeyPressed = "left"
     global.overrideLastKey = true
     alarm[1] = .2 * room_speed
     wiggly_ropes(direction)
 } else if (direction == directions.DOWN &amp;&amp; !place_meeting(x, y + speed, obj_ring_bounds)) {
     // Down bounds
-    show_debug_message('down')
     global.lastKeyPressed = "up"
     global.overrideLastKey = true
     alarm[1] = .2 * room_speed
     wiggly_ropes(direction)
 } else if (direction == directions.UP &amp;&amp; !place_meeting(x, y - speed, obj_ring_bounds)) {
     // Up bounds
-    show_debug_message('up')
     global.lastKeyPressed = "down"
     global.overrideLastKey = true
     alarm[1] = .2 * room_speed

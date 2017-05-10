@@ -161,9 +161,9 @@
         <sprite>sprites\spr_red_en_walkin</sprite>
       </sprites>
       <sprites name="eliminated">
-        <sprite>sprites\spr_en_l_out</sprite>
-        <sprite>sprites\spr_en_back_out</sprite>
-        <sprite>sprites\spr_en_front_out</sprite>
+        <sprite>sprites\spr_red_en_elim_left</sprite>
+        <sprite>sprites\spr_red_en_elim_up</sprite>
+        <sprite>sprites\spr_red_en_elim_down</sprite>
       </sprites>
       <sprites name="en_mask">
         <sprite>sprites\spr_mask_en_up</sprite>

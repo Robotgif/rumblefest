@@ -8,7 +8,7 @@
   <parentName>obj_en_generic2</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="3" enumb="0">
+    <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,8 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Change sprite and direction if we're colliding
-event_inherited();
+            <string>/// Init defaults
+speed = 4
+is_hit = false
 </string>
           </argument>
         </arguments>
@@ -50,12 +51,26 @@ event_inherited();
           <argument>
             <kind>1</kind>
             <string>/// Colliding with enemy
-direction = collision_direction
+if (!is_hit) {
+    
+    direction = collision_direction
+    is_hit = true
+    
+    if (direction == directions.DOWN) {
+        sprite_index = spr_red_en_hit_down
+    } else {
+        sprite_index = spr_red_en_hit_up
+    }
+    
+    // Call alarm to get pushed back
+    
+    moveBackDistance = 120
+    moveBackDuration = 1
+    
+    speed = moveBackDistance / (moveBackDuration * room_speed)
+    
+    alarm[0] = moveBackDuration * room_speed
 
-if (direction == directions.DOWN) {
-    sprite_index = spr_red_en_hit_down
-} else {
-    sprite_index = spr_red_en_hit_up
 }
 </string>
           </argument>
