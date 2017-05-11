@@ -27,14 +27,11 @@
             <kind>1</kind>
             <string>/// Init defaults
 
-sprite_index = spr_red_en_down
-
 image_speed = .1
 speed = 4
 direction = directions.DOWN
 
-sprite_prefix = "spr_red_en_"
-mask_prefix = "spr_mask_en_"
+sprite_index = asset_get_index(sprite_prefix + "down")
 
 is_colliding = false // With player
 is_colliding_with_ropes = false
@@ -257,6 +254,8 @@ if (is_colliding_with_ropes &amp;&amp; is_hit) {
         sprite_index = asset_get_index(sprite_prefix + "elim_left")
     }
     
+    enemy_eliminated(sprite_prefix)
+    
     alarm[11] = 2 * room_speed
 }
 </string>
@@ -335,7 +334,8 @@ if (is_colliding) {
     soundToPlay = choose(sound_hit_1, sound_hit_2, sound_hit_3, 
     sound_hit_4, sound_hit_5, sound_hit_6, sound_hit_7, sound_hit_8)
 
-    if (!audio_is_playing(sound_hit_1) 
+    if (global.soundEnabled
+        &amp;&amp; !audio_is_playing(sound_hit_1) 
         &amp;&amp; !audio_is_playing(sound_hit_2)
         &amp;&amp; !audio_is_playing(sound_hit_3) 
         &amp;&amp; !audio_is_playing(sound_hit_4)
