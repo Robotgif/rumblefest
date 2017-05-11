@@ -26,11 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>/// Set position
-x = 180;
-y = 450;
+x = 160;
+y = 430;
 
-image_xscale = 410
-image_yscale = 325
+image_xscale = 450
+image_yscale = 375
 </string>
           </argument>
         </arguments>

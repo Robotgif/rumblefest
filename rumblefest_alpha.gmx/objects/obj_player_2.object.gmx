@@ -247,29 +247,26 @@ image_xscale = 1;
 if (global.lastKeyPressed == "down"){
     direction = directions.DOWN
     sprite_index = spr_player_down
-    mask_index = spr_mask_player_down
 } else if (global.lastKeyPressed == "up"){
     direction = directions.UP
     sprite_index = spr_player_up
-    mask_index = spr_mask_player_up
 } else if (global.lastKeyPressed == "left"){
     direction = directions.LEFT
     sprite_index = spr_player_left
-    mask_index = spr_mask_player_left
 } else if (global.lastKeyPressed == "right"){
     direction = directions.RIGHT
     image_xscale = -1
     sprite_index = spr_player_left
-    mask_index = spr_mask_player_left
 }
 
 
 // debug
+/*
 count++
 if (count % 180 &lt; 90) {
-     // sprite_index = mask_index
+    sprite_index = mask_index
 }
-
+*/
 </string>
           </argument>
         </arguments>
@@ -410,7 +407,6 @@ if (sprite_index = spr_player_stand) {
             <string>/// Change depth based on y value
 
 depth = -500 - y;
-
 </string>
           </argument>
         </arguments>

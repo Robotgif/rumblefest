@@ -26,6 +26,11 @@
     <sound>sound\sound_hit_2</sound>
     <sound>sound\sound_hit_3</sound>
     <sound>sound\sound_hit_4</sound>
+    <sounds name="cut_scenes">
+      <sound>sound\new_challenger</sound>
+      <sound>sound\road_to_victory</sound>
+      <sound>sound\hard_fought_match</sound>
+    </sounds>
   </sounds>
   <sprites name="sprites">
     <sprites name="ref">

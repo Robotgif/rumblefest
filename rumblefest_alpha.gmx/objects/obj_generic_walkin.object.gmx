@@ -35,7 +35,7 @@ direction = directions.DOWN
 
 is_climbing = false
 
-climb_y = 300
+climb_y = 390
 </string>
           </argument>
         </arguments>
@@ -96,7 +96,7 @@ if (is_climbing &amp;&amp; image_index &gt;= 6) {
             <kind>1</kind>
             <string>/// Spawn real enemy, destroy this entrance object
 if (sprite_index == spr_red_en_entrance) {
-    yToSpawn = 330
+    yToSpawn = 430
     instance_create(x, yToSpawn, obj_en_red2)
     instance_destroy()
 }

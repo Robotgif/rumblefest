@@ -4,7 +4,6 @@ eliminatedType = argument[0]
 
 global.enemiesEliminated = global.enemiesEliminated + 1;
 
-show_debug_message(eliminatedType)
 if (eliminatedType == "jobber_1") {
     scoreToAdd = 1
 } else if (eliminatedType == "spr_red_en_") {

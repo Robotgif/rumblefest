@@ -115,30 +115,27 @@ if (is_eliminated) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Set mask based on direction
+            <string>/// Set sprite based on direction
 
 if (!is_colliding &amp;&amp; !is_hit) {
     if (direction == directions.UP) {
         sprite_index = asset_get_index(sprite_prefix + "up")
-        mask_index = asset_get_index(mask_prefix + "up") 
     } else if (direction == directions.DOWN) {
         sprite_index = asset_get_index(sprite_prefix + "down")
-        mask_index = asset_get_index(mask_prefix + "down") 
     } else if (direction == directions.LEFT) {
         sprite_index = asset_get_index(sprite_prefix + "left")
-        mask_index = asset_get_index(mask_prefix + "left") 
     } else if (direction == directions.RIGHT) {
         sprite_index = asset_get_index(sprite_prefix + "right")
-        mask_index = asset_get_index(mask_prefix + "right") 
     }
 }
 
 // debug
+/*
 count++
 if (count % 180 &lt; 90) {
     // sprite_index = mask_index
 }
-
+*/
 </string>
           </argument>
         </arguments>
@@ -244,13 +241,9 @@ if (is_colliding_with_ropes &amp;&amp; is_hit) {
     } else if (direction_before_rope_collision == directions.DOWN) {
         sprite_index = asset_get_index(sprite_prefix + "elim_down")
     } else if (direction_before_rope_collision == directions.LEFT) {
-        sprite_set_offset(asset_get_index(sprite_prefix + "elim_left"), 96, 96);
         sprite_index = asset_get_index(sprite_prefix + "elim_left")
     } else if (direction_before_rope_collision == directions.RIGHT) {
         image_xscale = -1
-        // When flipped, need to flip origin as well
-        spriteWidth = sprite_get_width(asset_get_index(sprite_prefix + "left"));
-        sprite_set_offset(asset_get_index(sprite_prefix + "elim_left"), 288, 96);
         sprite_index = asset_get_index(sprite_prefix + "elim_left")
     }
     
@@ -281,7 +274,6 @@ if (is_colliding_with_ropes &amp;&amp; is_hit) {
             <string>/// Change depth based on y value
 
 depth = -500 - y;
-
 </string>
           </argument>
         </arguments>

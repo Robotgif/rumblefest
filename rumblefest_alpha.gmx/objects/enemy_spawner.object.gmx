@@ -28,7 +28,7 @@
             <string>/// Define initial order of enemy spawning
 
 enemyToSpawn = "obj_en_red"
-enemySpawnX = (room_width / 2) - (sprite_get_width(spr_red_en_left) / 2)
+enemySpawnX = (room_width / 2)
 enemySpawnY = 42
 
 // Define arrays of enemy objects and timing (in seconds) that they should spawn in
