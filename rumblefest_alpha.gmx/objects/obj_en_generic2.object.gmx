@@ -37,6 +37,7 @@ is_colliding = false // With player
 is_colliding_with_ropes = false
 is_hit = false
 is_eliminated = false
+is_vulnerable = false
 
 // debug
 count = 0
@@ -117,7 +118,7 @@ if (is_eliminated) {
             <kind>1</kind>
             <string>/// Set sprite based on direction
 
-if (!is_colliding &amp;&amp; !is_hit) {
+if (!is_colliding &amp;&amp; !is_hit &amp;&amp; !is_vulnerable) {
     if (direction == directions.UP) {
         sprite_index = asset_get_index(sprite_prefix + "up")
     } else if (direction == directions.DOWN) {
@@ -162,10 +163,6 @@ if (count % 180 &lt; 90) {
 height = sprite_height
 width = sprite_width
 
-// Use uniform mask when detecting ring collisions 
-oldMask = mask_index
-mask_index = asset_get_index(sprite_prefix + "down")
-
 // Normal bounds checks
 // For each, set flag that we're colliding so we can handle it in next step
 is_colliding_with_ropes = false
@@ -204,8 +201,6 @@ if (!place_meeting(x - speed, y, obj_ring_bounds) &amp;&amp; !place_meeting(x, y
     direction = choose(directions.UP, directions.RIGHT)
 }
 
-// Set mask back
-mask_index = oldMask
 
 
 </string>
@@ -296,47 +291,50 @@ depth = -500 - y;
             <kind>1</kind>
             <string>/// Collisions with player
 
-is_colliding = false
+if (!obj_player_2.is_eliminated) {
 
-// On collisions, set direction and push to edge we are pushing (so enemy doesn't end up inside player)
-if (obj_player_2.direction == directions.LEFT &amp;&amp; place_meeting(x + speed, y, obj_player_2)) {
-    // Hit from right
-    collision_direction = directions.LEFT
-    is_colliding = true
-} else if (obj_player_2.direction == directions.RIGHT &amp;&amp; place_meeting(x - speed, y, obj_player_2)) {
-    // Hit from left
-    collision_direction = directions.RIGHT
-    is_colliding = true
-} else if (obj_player_2.direction == directions.UP &amp;&amp; place_meeting(x, y + speed, obj_player_2)) {
-    // Hit from bottom
-    collision_direction = directions.UP
-    is_colliding = true
-} else if (obj_player_2.direction == directions.DOWN &amp;&amp; place_meeting(x, y - speed, obj_player_2)) {
-    // Hit from right
-    collision_direction = directions.DOWN
-    is_colliding = true 
-}
-
-
-if (is_colliding) {
-    // Call function to do w/e the enemy should do on collision
-    event_user(0)
+    is_colliding = false
     
-    // Play punch sounds
-    soundToPlay = choose(sound_hit_1, sound_hit_2, sound_hit_3, 
-    sound_hit_4, sound_hit_5, sound_hit_6, sound_hit_7, sound_hit_8)
-
-    if (global.soundEnabled
-        &amp;&amp; !audio_is_playing(sound_hit_1) 
-        &amp;&amp; !audio_is_playing(sound_hit_2)
-        &amp;&amp; !audio_is_playing(sound_hit_3) 
-        &amp;&amp; !audio_is_playing(sound_hit_4)
-        &amp;&amp; !audio_is_playing(sound_hit_5)
-        &amp;&amp; !audio_is_playing(sound_hit_6)
-        &amp;&amp; !audio_is_playing(sound_hit_7)
-        &amp;&amp; !audio_is_playing(sound_hit_8) ) {
+    // On collisions, set direction and push to edge we are pushing (so enemy doesn't end up inside player)
+    if (obj_player_2.direction == directions.LEFT &amp;&amp; place_meeting(x + speed, y, obj_player_2)) {
+        // Hit from right
+        collision_direction = directions.LEFT
+        is_colliding = true
+    } else if (obj_player_2.direction == directions.RIGHT &amp;&amp; place_meeting(x - speed, y, obj_player_2)) {
+        // Hit from left
+        collision_direction = directions.RIGHT
+        is_colliding = true
+    } else if (obj_player_2.direction == directions.UP &amp;&amp; place_meeting(x, y + speed, obj_player_2)) {
+        // Hit from bottom
+        collision_direction = directions.UP
+        is_colliding = true
+    } else if (obj_player_2.direction == directions.DOWN &amp;&amp; place_meeting(x, y - speed, obj_player_2)) {
+        // Hit from right
+        collision_direction = directions.DOWN
+        is_colliding = true 
+    }
+    
+    
+    if (is_colliding &amp;&amp; is_vulnerable) {
+        // Call function to do w/e the enemy should do on collision
+        event_user(0)
         
-        audio_play_sound(soundToPlay, 50, false);
+        // Play punch sounds
+        soundToPlay = choose(sound_hit_1, sound_hit_2, sound_hit_4)
+    
+        if (global.soundEnabled
+            &amp;&amp; !audio_is_playing(sound_hit_1) 
+            &amp;&amp; !audio_is_playing(sound_hit_2)
+            &amp;&amp; !audio_is_playing(sound_hit_4)) {
+            
+            audio_play_sound(soundToPlay, 50, false);
+        }
+    
+    } else if (is_colliding &amp;&amp; !is_vulnerable) {
+        obj_player_2.collision_direction = collision_direction
+        with (obj_player_2) {
+            event_user(0)
+        }
     }
 
 }
