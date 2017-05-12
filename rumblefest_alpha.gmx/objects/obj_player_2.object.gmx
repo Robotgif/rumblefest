@@ -31,6 +31,11 @@ speed = 0
 image_speed = 0
 sprite_index = spr_player_stand
 
+is_hit = false
+is_colliding_with_ropes = false
+is_eliminated = false
+collision_direction = 0
+
 
 // When hit, set flashing to true which makes player invincible for short time
 flashing = false
@@ -60,8 +65,7 @@ count = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Screen shake
-
+            <string>/// Alarm for screen shake
 view_object[0] = noone;
 
 randX = random_range(-10, 10)
@@ -77,6 +81,30 @@ if (shakeAmount &gt; 0) {
     view_xview[0] = 0
     view_yview[0] = 0
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Go back to normal after hit
+is_hit = false
 </string>
           </argument>
         </arguments>
@@ -99,10 +127,31 @@ if (shakeAmount &gt; 0) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Set player to not flashing after a certain amount of time
+            <string>/// Move back from enemy hit
+direction = collision_direction
+is_hit = true
 
-flashing = false
-image_alpha = 1
+image_xscale = 1
+if (direction == directions.UP) {
+    sprite_index = spr_player_hit_up
+} else if (direction == directions.DOWN) {
+    sprite_index = spr_player_hit_down
+} else if (direction == directions.LEFT) {
+    sprite_index = spr_player_hit_left
+} else if (direction == directions.RIGHT) {
+    image_xscale = -1
+    sprite_index = spr_player_hit_left
+}
+
+// Call alarm to get pushed back
+
+moveBackDistance = 120
+moveBackDuration = 1
+
+speed = moveBackDistance / (moveBackDuration * room_speed)
+
+// After being moved back, go to tired
+alarm[3] = moveBackDuration * room_speed
 
 </string>
           </argument>
@@ -151,71 +200,8 @@ global.overrideLastKey = false
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Alarm for moving player back after being hit
-// moveBackAmount will decrease as this is called to slide the player back
-
-// Don't do anything if we're getting back in
-if (state != GETTING_BACK_IN) {
-
-
-moveDirection = 0;
-// collisionDirection is rounded, so find closest arrow direction to move in
-if (collisionDirection &gt; 45 &amp;&amp; collisionDirection &lt; 135) {
-    moveDirection = 90;
-} else if (collisionDirection &gt;= 135 &amp;&amp; collisionDirection &lt; 225) {
-    moveDirection = 180;
-} else if (collisionDirection &gt;= 225 &amp;&amp; collisionDirection &lt; 305) {
-    moveDirection = 270;
-} else {
-    moveDirection = 0;
-}
-
-if (moveBackAmount &gt; 0) {
-
-    // Turn off normal player speed while getting knocked back
-    speed = 0;
-
-    // Move player depending on which way they are facing
-    if (moveDirection == 0) {
-        x = x - 7
-    }
-    if (moveDirection == 90) {
-        y = y + 7
-    }
-    if (moveDirection == 180) {
-        x = x + 7
-    }
-    if (moveDirection == 270) {
-        y = y - 7
-    }
-
-
-    // Set character sprite to being hurt
-    state = KNOCKED_BACK
-
-    // Decrease our move back amount so we know when to stop (when it gets to 0)
-    moveBackAmount = moveBackAmount - 1
-
-    // Set collision index so we can go through enemies
-
-
-    // Call this alarm again
-    alarm[0] = 1
-} else {
-    // When moveBackAmount is at 0, set speed to normal if we still have hearts
-    if (obj_heart_cont.hasHearts) {
-        // Set character sprite to being hurt
-        state = STILL
-    } else {
-        state = TIRED
-    }
-
-    // Set state back to moving after an amount of time
-    // Note that we've turned this off for now so it fires right away
-    alarm[1] = 1
-}
-
-}
+            <string>/// Go to game over after being eliminated
+room_goto(game_over)
 </string>
           </argument>
         </arguments>
@@ -238,25 +224,63 @@ if (moveBackAmount &gt; 0) {
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Don't check anything else if we're eliminated
+if (is_eliminated) {
+    depth = -2001
+    return true
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Set direction/sprites based on keyboard input
 
 // Reset default
 image_xscale = 1;
 
 // Change direction when hitting keyboard buttons
-if (global.lastKeyPressed == "down"){
-    direction = directions.DOWN
-    sprite_index = spr_player_down
-} else if (global.lastKeyPressed == "up"){
-    direction = directions.UP
-    sprite_index = spr_player_up
-} else if (global.lastKeyPressed == "left"){
-    direction = directions.LEFT
-    sprite_index = spr_player_left
-} else if (global.lastKeyPressed == "right"){
-    direction = directions.RIGHT
-    image_xscale = -1
-    sprite_index = spr_player_left
+if (!is_hit) {
+    if (global.lastKeyPressed == "down"){
+        direction = directions.DOWN
+        sprite_index = spr_player_down
+    } else if (global.lastKeyPressed == "up"){
+        direction = directions.UP
+        sprite_index = spr_player_up
+    } else if (global.lastKeyPressed == "left"){
+        direction = directions.LEFT
+        sprite_index = spr_player_left
+    } else if (global.lastKeyPressed == "right"){
+        direction = directions.RIGHT
+        image_xscale = -1
+        sprite_index = spr_player_left
+    }
+    
+    /// Set speed based on our sprite
+
+    // Default speed
+    speed = 4;
+    image_speed = .1
+    
+    if (sprite_index = spr_player_stand) {
+        image_speed = 0
+        speed = 0
+    }
 }
 
 
@@ -289,9 +313,7 @@ if (count % 180 &lt; 90) {
             <kind>1</kind>
             <string>/// Wall collisions
 
-// Use uniform mask when detecting ring collisions 
-oldMask = mask_index
-mask_index = spr_player_down
+is_colliding_with_ropes = false
 
 if (direction == directions.LEFT &amp;&amp; !place_meeting(x - speed, y, obj_ring_bounds)) {
     // Left bounds
@@ -299,30 +321,80 @@ if (direction == directions.LEFT &amp;&amp; !place_meeting(x - speed, y, obj_rin
     global.overrideLastKey = true
     alarm[1] = .2 * room_speed
     wiggly_ropes(direction)
+    is_colliding_with_ropes = true
 } else if (direction == directions.RIGHT &amp;&amp; !place_meeting(x + speed, y, obj_ring_bounds)) {
     // Right bounds
     global.lastKeyPressed = "left"
     global.overrideLastKey = true
     alarm[1] = .2 * room_speed
     wiggly_ropes(direction)
+    is_colliding_with_ropes = true
 } else if (direction == directions.DOWN &amp;&amp; !place_meeting(x, y + speed, obj_ring_bounds)) {
     // Down bounds
     global.lastKeyPressed = "up"
     global.overrideLastKey = true
     alarm[1] = .2 * room_speed
     wiggly_ropes(direction)
+    is_colliding_with_ropes = true
 } else if (direction == directions.UP &amp;&amp; !place_meeting(x, y - speed, obj_ring_bounds)) {
     // Up bounds
     global.lastKeyPressed = "down"
     global.overrideLastKey = true
     alarm[1] = .2 * room_speed
     wiggly_ropes(direction)
+    is_colliding_with_ropes = true
 }
 
-mask_index = oldMask
 
-
-
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// If is colliding with ropes AND being hurt, trigger elimination
+if (is_colliding_with_ropes &amp;&amp; is_hit) {
+    speed = 4
+    image_index = 0
+    image_xscale = 1
+    is_eliminated = true
+    image_speed = .1
+    
+    if (direction == directions.UP) {
+        sprite_index = spr_player_elim_up
+    } else if (direction == directions.DOWN) {
+        sprite_index = spr_player_elim_down
+    } else if (direction == directions.LEFT) {
+        sprite_index = spr_player_elim_left
+    } else if (direction == directions.RIGHT) {
+        image_xscale = -1
+        sprite_index = spr_player_elim_up
+    }
+    
+    if (global.soundEnabled) {
+        soundToPlay = choose(sound_wrestler_7)
+        
+        audio_play_sound(soundToPlay, 50, false);
+    }
+    
+    // Go to game over
+    alarm[0] = 2 * room_speed
+    
+}
 </string>
           </argument>
         </arguments>
@@ -374,20 +446,15 @@ if (flashing) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Set speed based on our sprite
+            <string>/// Change depth based on y value
 
-// Default speed
-speed = 4;
-image_speed = .1
-
-if (sprite_index = spr_player_stand) {
-    image_speed = 0
-    speed = 0
-}
+depth = -500 - y;
 </string>
           </argument>
         </arguments>
       </action>
+    </event>
+    <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -404,9 +471,59 @@ if (sprite_index = spr_player_stand) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Change depth based on y value
+            <string>/// Get hit by enemy
 
-depth = -500 - y;
+// Move back from enemy hit
+if (!is_hit) {
+
+    is_hit = true
+    
+    image_xscale = 1
+    if (collision_direction == directions.UP) {
+        direction = directions.DOWN
+        sprite_index = spr_player_hit_down
+    } else if (collision_direction == directions.DOWN) {
+        direction = directions.UP
+        sprite_index = spr_player_hit_up
+    } else if (collision_direction == directions.LEFT) {
+        image_xscale = -1
+        direction = directions.RIGHT
+        sprite_index = spr_player_hit_left
+    } else if (collision_direction == directions.RIGHT) {
+        direction = directions.LEFT
+        sprite_index = spr_player_hit_left
+    }
+    
+    image_index = 0
+    image_speed = .05
+    
+    // Play punch sounds
+    soundToPlay = choose(sound_hit_6, sound_hit_7, sound_hit_8)
+
+    if (global.soundEnabled
+        &amp;&amp; !audio_is_playing(sound_hit_6)
+        &amp;&amp; !audio_is_playing(sound_hit_7)
+        &amp;&amp; !audio_is_playing(sound_hit_8) ) {
+        
+        audio_play_sound(soundToPlay, 50, false);
+    }
+    
+    // Call alarm to get pushed back
+    
+    moveBackDistance = 120
+    moveBackDuration = .5
+    
+    speed = (moveBackDistance / room_speed) / moveBackDuration
+    
+    // After being moved back, go to normal
+    alarm[3] = moveBackDuration * room_speed
+    
+    // Screen shake
+    shakeAmount = 10
+    alarm[11] = 1
+
+}
+
 </string>
           </argument>
         </arguments>

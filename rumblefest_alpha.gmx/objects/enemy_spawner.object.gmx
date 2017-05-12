@@ -64,6 +64,23 @@ instance_create(enemySpawnX, enemySpawnY, asset_get_index(enemyToSpawn));
 if (ds_list_size(enemyList) &gt; 0) {
     listIndex++
     alarm[0] = 1
+} else {
+    // debug, keep adding more
+    ds_list_add(enemyList, 
+        "obj_generic_walkin", 
+        "obj_generic_walkin", 
+        "obj_generic_walkin",
+        "obj_generic_walkin",
+        "obj_generic_walkin")
+        
+    ds_list_add(timingList, 
+        4,
+        4, 
+        4, 
+        4,
+        4)
+        
+    alarm[0] = 1
 }
 </string>
           </argument>

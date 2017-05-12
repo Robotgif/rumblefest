@@ -29,8 +29,8 @@ crowd_flash();
 
 // Play eliminated sound
 if (global.soundEnabled) {
-    soundToPlay = choose(sound_wrestler_1, sound_wrestler_2, sound_wrestler_3, sound_wrestler_4, 
-    sound_wrestler_5, sound_wrestler_6, sound_wrestler_7, sound_wrestler_8)
+    soundToPlay = choose(sound_wrestler_1, sound_wrestler_2, sound_wrestler_3, 
+    sound_wrestler_4, sound_wrestler_5, sound_wrestler_6, sound_wrestler_8)
     
     audio_play_sound(soundToPlay, 50, false);
 }

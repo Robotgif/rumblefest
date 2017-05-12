@@ -25,10 +25,52 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>sprite_prefix = "spr_red_en_"
+            <string>// Init red guy
+
+sprite_prefix = "spr_red_en_"
 mask_prefix = "spr_mask_en_"
 
+// Initial tired time
+alarm[1] = 3 * room_speed
+
 event_inherited()
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Set to vulnerable
+is_vulnerable = true
+is_hit = false
+
+speed = 0
+image_speed = .1
+sprite_index = spr_red_en_vulnerable
+
+// After time, wake up
+tired_time = 3
+alarm[0] = tired_time * room_speed
+
+// After more time, go back to tired
+wake_up_time = tired_time + choose(2, 3, 4, 5)
+alarm[1] = wake_up_time * room_speed
 </string>
           </argument>
         </arguments>
@@ -51,9 +93,74 @@ event_inherited()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Init defaults
+            <string>/// Go back to roaming
 speed = 4
 is_hit = false
+is_vulnerable = false
+
+// Choose new direction
+
+direction = choose(directions.RIGHT, directions.LEFT, directions.UP, directions.DOWN)
+
+
+// Conditional checks, don't change direction to go into ropes
+if (!place_meeting(x - speed, y, obj_ring_bounds)) {
+    // Left bounds
+    direction = choose(directions.RIGHT, directions.UP, directions.DOWN)
+} else if (direction == directions.RIGHT &amp;&amp; !place_meeting(x + speed, y, obj_ring_bounds)) {
+    // Right bounds
+    direction = choose(directions.UP, directions.LEFT, directions.DOWN)
+} else if (direction == directions.DOWN &amp;&amp; !place_meeting(x, y + speed, obj_ring_bounds)) {
+    // Down bounds
+    direction = choose(directions.UP, directions.LEFT, directions.RIGHT)
+} else if (direction == directions.UP &amp;&amp; !place_meeting(x, y - speed, obj_ring_bounds)) {
+    // Up bounds
+    direction = choose(directions.DOWN, directions.LEFT, directions.RIGHT)
+}
+
+// Corner checks
+if (!place_meeting(x - speed, y, obj_ring_bounds) &amp;&amp; !place_meeting(x, y - speed, obj_ring_bounds)) {
+    // Top left bounds
+    direction = choose(directions.RIGHT, directions.DOWN)
+} else if (!place_meeting(x + speed, y, obj_ring_bounds) &amp;&amp; !place_meeting(x, y - speed, obj_ring_bounds)) {
+    // Top Right bounds
+    direction = choose(directions.LEFT, directions.DOWN)
+} else if (!place_meeting(x + speed, y, obj_ring_bounds) &amp;&amp; !place_meeting(x, y + speed, obj_ring_bounds)) {
+    // Down bounds
+    direction = choose(directions.UP, directions.LEFT)
+} else if (!place_meeting(x - speed, y, obj_ring_bounds) &amp;&amp; !place_meeting(x, y + speed, obj_ring_bounds)) {
+    // Up bounds
+    direction = choose(directions.UP, directions.RIGHT)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// If we're eliminated, turn off alarms
+if (is_eliminated) {
+    alarm[0] = -1
+    alarm[1] = -1
+}
+
+event_inherited()
 </string>
           </argument>
         </arguments>
@@ -77,8 +184,11 @@ is_hit = false
           <argument>
             <kind>1</kind>
             <string>/// Colliding with enemy
-if (!is_hit) {
+if (!is_hit &amp;&amp; !is_vulnerable) {
+    // TODO: Push back player
     
+
+} else if (!is_hit &amp;&amp; is_vulnerable) {
     direction = collision_direction
     is_hit = true
     
@@ -90,13 +200,16 @@ if (!is_hit) {
     
     // Call alarm to get pushed back
     
-    moveBackDistance = 120
-    moveBackDuration = 1
+    moveBackDistance = 60
+    moveBackDuration = .5
     
-    speed = moveBackDistance / (moveBackDuration * room_speed)
+    speed = (moveBackDistance / room_speed) / moveBackDuration
     
-    alarm[0] = moveBackDuration * room_speed
-
+    show_debug_message("speed")
+    show_debug_message(speed)
+    
+    // After being moved back, go to tired
+    alarm[1] = moveBackDuration * room_speed
 }
 </string>
           </argument>
