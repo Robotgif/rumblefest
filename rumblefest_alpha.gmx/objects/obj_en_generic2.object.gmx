@@ -157,12 +157,11 @@ if (count % 180 &lt; 90) {
             <string>/// If is colliding with ropes AND being hurt, trigger elimination
 if (is_colliding_with_ropes &amp;&amp; is_hit) {
     speed = 4
+    image_speed = .1
     direction = collision_direction
     image_index = 0
     image_xscale = 1
     is_eliminated = true
-    
-    show_debug_message(collision_direction)
     
     if (direction == directions.UP) {
         sprite_index = asset_get_index(sprite_prefix + "elim_up")
@@ -248,7 +247,7 @@ if (!obj_player_2.is_eliminated) {
     }
     
     
-    if (is_colliding &amp;&amp; is_vulnerable) {
+    if (is_colliding &amp;&amp; is_vulnerable &amp;&amp; !obj_player_2.is_hit) {
         // Call function to do w/e the enemy should do on collision
         event_user(0)
         

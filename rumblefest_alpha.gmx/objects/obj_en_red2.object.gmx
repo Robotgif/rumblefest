@@ -212,6 +212,7 @@ if (!is_hit &amp;&amp; !is_vulnerable) {
     speed = (moveBackDistance / room_speed) / moveBackDuration
     
     // After being moved back, go to tired
+    alarm[0] = -1
     alarm[1] = moveBackDuration * room_speed
 }
 </string>
