@@ -113,7 +113,11 @@ if (!place_meeting(x - speed, y, obj_ring_bounds) &amp;&amp; !place_meeting(x, y
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Inherit base functions
+            <string>/// If we're eliminated, turn off alarms
+if (is_eliminated) {
+    alarm[0] = -1
+    alarm[1] = -1
+}
 
 event_inherited()
 </string>

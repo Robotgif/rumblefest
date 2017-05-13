@@ -27,7 +27,6 @@
             <kind>1</kind>
             <string>/// Define initial order of enemy spawning
 
-enemyToSpawn = "obj_en_red"
 enemySpawnX = (room_width / 2)
 enemySpawnY = 42
 

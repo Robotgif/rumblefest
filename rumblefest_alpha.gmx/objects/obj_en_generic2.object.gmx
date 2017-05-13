@@ -157,18 +157,20 @@ if (count % 180 &lt; 90) {
             <string>/// If is colliding with ropes AND being hurt, trigger elimination
 if (is_colliding_with_ropes &amp;&amp; is_hit) {
     speed = 4
-    direction = direction_before_rope_collision
+    direction = collision_direction
     image_index = 0
     image_xscale = 1
     is_eliminated = true
     
-    if (direction_before_rope_collision == directions.UP) {
+    show_debug_message(collision_direction)
+    
+    if (direction == directions.UP) {
         sprite_index = asset_get_index(sprite_prefix + "elim_up")
-    } else if (direction_before_rope_collision == directions.DOWN) {
+    } else if (direction == directions.DOWN) {
         sprite_index = asset_get_index(sprite_prefix + "elim_down")
-    } else if (direction_before_rope_collision == directions.LEFT) {
+    } else if (direction == directions.LEFT) {
         sprite_index = asset_get_index(sprite_prefix + "elim_left")
-    } else if (direction_before_rope_collision == directions.RIGHT) {
+    } else if (direction == directions.RIGHT) {
         image_xscale = -1
         sprite_index = asset_get_index(sprite_prefix + "elim_left")
     }
