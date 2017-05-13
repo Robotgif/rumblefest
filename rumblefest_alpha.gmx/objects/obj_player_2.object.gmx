@@ -480,17 +480,17 @@ if (!is_hit) {
     
     image_xscale = 1
     if (collision_direction == directions.UP) {
-        direction = directions.DOWN
-        sprite_index = spr_player_hit_down
-    } else if (collision_direction == directions.DOWN) {
         direction = directions.UP
         sprite_index = spr_player_hit_up
+    } else if (collision_direction == directions.DOWN) {
+        direction = directions.DOWN
+        sprite_index = spr_player_hit_down
     } else if (collision_direction == directions.LEFT) {
-        image_xscale = -1
-        direction = directions.RIGHT
+        direction = directions.LEFT
         sprite_index = spr_player_hit_left
     } else if (collision_direction == directions.RIGHT) {
-        direction = directions.LEFT
+        image_xscale = -1
+        direction = directions.RIGHT
         sprite_index = spr_player_hit_left
     }
     

@@ -25,58 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Init red guy
-
+            <string>/// Init jobber
 event_inherited()
 
-sprite_prefix = "spr_red_en_"
-
-// Initial tired time
-first_tired = choose(1, 2, 3)
-alarm[1] = first_tired * room_speed
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="1">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Set to vulnerable
-
-// Only do these if we're not eliminated
-if (!is_eliminated) {
-    is_vulnerable = true
-    is_hit = false
-    
-    speed = 0
-    image_speed = .1
-    sprite_index = spr_red_en_vulnerable
-    
-    // After time, wake up
-    tired_time = 3
-    alarm[0] = tired_time * room_speed
-    
-    // After more time, go back to tired
-    wake_up_time = tired_time + choose(2, 3, 4, 5)
-    alarm[1] = wake_up_time * room_speed
-
-}
+sprite_prefix = "jobber_1_"
+is_vulnerable = true
 </string>
           </argument>
         </arguments>
@@ -102,7 +55,7 @@ if (!is_eliminated) {
             <string>/// Go back to roaming
 speed = 4
 is_hit = false
-is_vulnerable = false
+is_vulnerable = true
 
 // Choose new direction
 
@@ -160,13 +113,44 @@ if (!place_meeting(x - speed, y, obj_ring_bounds) &amp;&amp; !place_meeting(x, y
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// If we're eliminated, turn off alarms
-if (is_eliminated) {
-    alarm[0] = -1
-    alarm[1] = -1
-}
+            <string>/// Inherit base functions
 
 event_inherited()
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Override normal logic for vulnerable/not vulnerable
+
+// Normally when we're roaming we're NOT vulnerable, but the reverse is true for jobbers
+if (is_vulnerable &amp;&amp; !is_eliminated &amp;&amp; !is_hit) {
+    if (direction == directions.UP) {
+        sprite_index = asset_get_index(sprite_prefix + "up")
+    } else if (direction == directions.DOWN) {
+        sprite_index = asset_get_index(sprite_prefix + "down")
+    } else if (direction == directions.LEFT) {
+        sprite_index = asset_get_index(sprite_prefix + "left")
+    } else if (direction == directions.RIGHT) {
+        sprite_index = asset_get_index(sprite_prefix + "right")
+    }
+
+}
 </string>
           </argument>
         </arguments>
@@ -194,25 +178,25 @@ if (!is_hit &amp;&amp; !is_vulnerable) {
     // TODO: Push back player
     
 
-} else if (!is_hit &amp;&amp; is_vulnerable &amp;&amp; !is_eliminated) {
+} else if (!is_hit &amp;&amp; is_vulnerable) {
     direction = collision_direction
     is_hit = true
     
     if (direction == directions.DOWN) {
-        sprite_index = spr_red_en_hit_down
+        sprite_index = asset_get_index(sprite_prefix + "hit_down")
     } else {
-        sprite_index = spr_red_en_hit_up
+        sprite_index = asset_get_index(sprite_prefix + "hit_up")
     }
     
     // Call alarm to get pushed back
     
-    moveBackDistance = 60
+    moveBackDistance = 100
     moveBackDuration = .5
     
     speed = (moveBackDistance / room_speed) / moveBackDuration
     
-    // After being moved back, go to tired
-    alarm[1] = moveBackDuration * room_speed
+    // After being hit go back to moving
+    alarm[0] = moveBackDuration * room_speed
 }
 </string>
           </argument>

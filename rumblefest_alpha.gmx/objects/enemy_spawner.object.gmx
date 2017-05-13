@@ -35,6 +35,10 @@ enemySpawnY = 42
 // Have to use two arrays since key/value pairs are a PITA in game maker
 // Also why can't I just have an array I can .pop() on...
 listIndex = 0
+
+// DEBUG start with enemeies
+instance_create(room_width / 2, room_height / 2, obj_en_red2);
+instance_create(room_width / 3, room_height / 3, obj_en_jobber2);
 </string>
           </argument>
         </arguments>
