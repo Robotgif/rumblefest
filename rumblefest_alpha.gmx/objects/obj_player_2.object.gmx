@@ -552,8 +552,8 @@ if (!is_hit) {
     
     // Call alarm to get pushed back
     
-    moveBackDistance = 110
-    moveBackDuration = .4
+    moveBackDistance = 100
+    moveBackDuration = .3
     
     speed = (moveBackDistance / room_speed) / moveBackDuration
     

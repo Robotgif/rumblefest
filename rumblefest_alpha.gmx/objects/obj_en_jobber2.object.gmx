@@ -32,6 +32,10 @@ sprite_prefix = "jobber_1_"
 is_vulnerable = true
 is_punching = false
 
+// Timing for punch
+punch_distance = 100
+punch_duration = 1
+
 time_to_punch = choose(1, 2, 3, 4)
 alarm[1] = time_to_punch * room_speed
 </string>
@@ -62,13 +66,10 @@ is_vulnerable = false
 /// Start punch
 image_index = 1
 
-distance = 100
-duration = 1
-
-speed = (distance / room_speed) / duration
+speed = (punch_distance / room_speed) / punch_duration
 
 // After punching, go back to roaming
-alarm[0] = duration * room_speed
+alarm[0] = punch_duration * room_speed
 alarm[1] = -1
 alarm[2] = -1
 </string>
@@ -95,12 +96,23 @@ alarm[2] = -1
             <kind>1</kind>
             <string>/// Start punch
 
-is_punching = true
-image_index = 0
-image_speed = 0
-speed = 0
+// Calculate if our punch would take us out of the ring. If so, try again in 2 seconds
 
-alarm[2] = 1 * room_speed
+if (direction == directions.UP &amp;&amp; !place_meeting(x, y - punch_distance, obj_ring_bounds)
+|| direction == directions.DOWN &amp;&amp; !place_meeting(x, y + punch_distance, obj_ring_bounds)
+|| direction == directions.LEFT &amp;&amp; !place_meeting(x - punch_distance, y, obj_ring_bounds)
+|| direction == directions.RIGHT &amp;&amp; !place_meeting(x + punch_distance, y, obj_ring_bounds)
+) { 
+    alarm[2] = 2 * room_speed
+} else {
+    is_punching = true
+    image_index = 0
+    image_speed = 0
+    speed = 0
+    
+    alarm[2] = 1 * room_speed
+}
+
 </string>
           </argument>
         </arguments>
