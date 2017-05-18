@@ -27,7 +27,6 @@
             <kind>1</kind>
             <string>/// Define initial order of enemy spawning
 
-enemyToSpawn = "obj_en_red"
 enemySpawnX = (room_width / 2)
 enemySpawnY = 42
 
@@ -35,6 +34,10 @@ enemySpawnY = 42
 // Have to use two arrays since key/value pairs are a PITA in game maker
 // Also why can't I just have an array I can .pop() on...
 listIndex = 0
+
+// DEBUG start with enemeies
+instance_create(room_width / 2, room_height / 2, obj_en_red2);
+instance_create(room_width / 3, room_height / 3, obj_en_jobber2);
 </string>
           </argument>
         </arguments>
@@ -58,7 +61,11 @@ listIndex = 0
           <argument>
             <kind>1</kind>
             <string>/// Actually spawn the enemy
-instance_create(enemySpawnX, enemySpawnY, asset_get_index(enemyToSpawn));
+spawned_enemy = instance_create(enemySpawnX, enemySpawnY, obj_generic_walkin);
+
+with (spawned_enemy) {
+    enemy_type = enemy_spawner.enemyToSpawn
+}
 
 // Call alarm[0] again if we still have enemies 
 if (ds_list_size(enemyList) &gt; 0) {
@@ -67,11 +74,11 @@ if (ds_list_size(enemyList) &gt; 0) {
 } else {
     // debug, keep adding more
     ds_list_add(enemyList, 
-        "obj_generic_walkin", 
-        "obj_generic_walkin", 
-        "obj_generic_walkin",
-        "obj_generic_walkin",
-        "obj_generic_walkin")
+        "jobber", 
+        "red", 
+        "jobber",
+        "jobber",
+        "red")
         
     ds_list_add(timingList, 
         4,
@@ -140,11 +147,11 @@ enemyList = ds_list_create()
 timingList = ds_list_create()
 
 ds_list_add(enemyList, 
-    "obj_generic_walkin", 
-    "obj_generic_walkin", 
-    "obj_generic_walkin",
-    "obj_generic_walkin",
-    "obj_generic_walkin")
+    "jobber", 
+    "red", 
+    "jobber",
+    "jobber",
+    "red")
     
 ds_list_add(timingList, 
     .1,

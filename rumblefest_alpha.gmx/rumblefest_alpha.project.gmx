@@ -155,12 +155,12 @@
     <sprites name="red_enemy">
       <sprite>sprites\spr_red_en_stand</sprite>
       <sprite>sprites\spr_red_en_hit_up</sprite>
+      <sprite>sprites\spr_red_en_hit_down</sprite>
       <sprite>sprites\spr_red_en_vulnerable</sprite>
       <sprite>sprites\spr_red_en_down</sprite>
       <sprite>sprites\spr_red_en_up</sprite>
       <sprite>sprites\spr_red_en_left</sprite>
       <sprite>sprites\spr_red_en_right</sprite>
-      <sprite>sprites\spr_red_en_hit_down</sprite>
       <sprites name="ring_entrance">
         <sprite>sprites\spr_red_en_entrance</sprite>
         <sprite>sprites\spr_red_en_walkin</sprite>
@@ -291,9 +291,9 @@
       <sprites name="jobber_1">
         <sprite>sprites\jobber_1_punch_down</sprite>
         <sprite>sprites\jobber_1_punch_up</sprite>
-        <sprite>sprites\jobber_1_punch_lr</sprite>
-        <sprite>sprites\jobber_1_being_hit</sprite>
-        <sprite>sprites\jobber_1_being_hit_d</sprite>
+        <sprite>sprites\jobber_1_punch_right</sprite>
+        <sprite>sprites\jobber_1_hit_up</sprite>
+        <sprite>sprites\jobber_1_hit_down</sprite>
         <sprite>sprites\jobber_1_chair_l_and_r</sprite>
         <sprite>sprites\jobber_1_chair_up</sprite>
         <sprite>sprites\jobber_1_chair_down</sprite>
@@ -307,9 +307,9 @@
         <sprite>sprites\jobber_1_left</sprite>
         <sprite>sprites\jobber_1_vulnerable</sprite>
         <sprite>sprites\jobber_1_wakeup</sprite>
-        <sprite>sprites\jobber_1_back_out</sprite>
-        <sprite>sprites\jobber_1_l_out</sprite>
-        <sprite>sprites\jobber_1_front_out</sprite>
+        <sprite>sprites\jobber_1_elim_up</sprite>
+        <sprite>sprites\jobber_1_elim_left</sprite>
+        <sprite>sprites\jobber_1_elim_down</sprite>
       </sprites>
     </sprites>
   </sprites>
@@ -340,6 +340,7 @@
       <object>objects\obj_en_green</object>
       <object>objects\obj_en_generic2</object>
       <object>objects\obj_en_red2</object>
+      <object>objects\obj_en_jobber2</object>
       <object>objects\obj_generic_walkin</object>
     </objects>
     <objects name="invisible_objects">

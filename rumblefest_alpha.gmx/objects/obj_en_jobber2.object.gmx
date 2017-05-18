@@ -25,16 +25,53 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Init red guy
-
+            <string>/// Init jobber
 event_inherited()
 
-sprite_prefix = "spr_red_en_"
+sprite_prefix = "jobber_1_"
+is_vulnerable = true
+is_punching = false
 
-// Initial tired time
-first_tired = choose(1, 2, 3)
-alarm[1] = first_tired * room_speed
+// Timing for punch
+punch_distance = 100
+punch_duration = 1
 
+time_to_punch = choose(1, 2, 3, 4)
+alarm[1] = time_to_punch * room_speed
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Follow through on punch
+is_vulnerable = false
+
+/// Start punch
+image_index = 1
+
+speed = (punch_distance / room_speed) / punch_duration
+
+// After punching, go back to roaming
+alarm[0] = punch_duration * room_speed
+alarm[1] = -1
+alarm[2] = -1
 </string>
           </argument>
         </arguments>
@@ -57,26 +94,25 @@ alarm[1] = first_tired * room_speed
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Set to vulnerable
+            <string>/// Start punch
 
-// Only do these if we're not eliminated
-if (!is_eliminated) {
-    is_vulnerable = true
-    is_hit = false
-    
+// Calculate if our punch would take us out of the ring. If so, try again in 2 seconds
+
+if (direction == directions.UP &amp;&amp; !place_meeting(x, y - punch_distance, obj_ring_bounds)
+|| direction == directions.DOWN &amp;&amp; !place_meeting(x, y + punch_distance, obj_ring_bounds)
+|| direction == directions.LEFT &amp;&amp; !place_meeting(x - punch_distance, y, obj_ring_bounds)
+|| direction == directions.RIGHT &amp;&amp; !place_meeting(x + punch_distance, y, obj_ring_bounds)
+) { 
+    alarm[2] = 2 * room_speed
+} else {
+    is_punching = true
+    image_index = 0
+    image_speed = 0
     speed = 0
-    image_speed = .1
-    sprite_index = spr_red_en_vulnerable
     
-    // After time, wake up
-    tired_time = 3
-    alarm[0] = tired_time * room_speed
-    
-    // After more time, go back to tired
-    wake_up_time = tired_time + choose(2, 3, 4, 5)
-    alarm[1] = wake_up_time * room_speed
-
+    alarm[2] = 1 * room_speed
 }
+
 </string>
           </argument>
         </arguments>
@@ -101,8 +137,15 @@ if (!is_eliminated) {
             <kind>1</kind>
             <string>/// Go back to roaming
 speed = 4
+image_speed = .1
+
+is_punching = false
 is_hit = false
-is_vulnerable = false
+is_vulnerable = true
+
+// Set punch alarm
+time_to_punch = choose(1, 2, 3, 4)
+alarm[1] = time_to_punch * room_speed
 
 // Choose new direction
 
@@ -171,6 +214,58 @@ event_inherited()
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Override normal logic for vulnerable/not vulnerable and set punch sprites
+
+// Normally when we're roaming we're NOT vulnerable, but the reverse is true for jobbers
+if (is_vulnerable &amp;&amp; !is_eliminated &amp;&amp; !is_hit) {
+    image_xscale = 1
+
+    if (direction == directions.UP) {
+        sprite_index = asset_get_index(sprite_prefix + "up")
+    } else if (direction == directions.DOWN) {
+        sprite_index = asset_get_index(sprite_prefix + "down")
+    } else if (direction == directions.LEFT) {
+        sprite_index = asset_get_index(sprite_prefix + "left")
+    } else if (direction == directions.RIGHT) {
+        sprite_index = asset_get_index(sprite_prefix + "right")
+    }
+}
+
+// Punching sprites
+if (is_punching) {
+    image_xscale = 1
+    
+    if (direction == directions.UP) {
+        sprite_index = jobber_1_punch_up
+    } else if (direction == directions.DOWN) { 
+        sprite_index = jobber_1_punch_down
+    } else if (direction == directions.LEFT) { 
+        image_xscale = -1
+        sprite_index = jobber_1_punch_right
+    } else if (direction == directions.RIGHT) { 
+        sprite_index = jobber_1_punch_right
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="7" enumb="10">
       <action>
@@ -194,26 +289,28 @@ if (!is_hit &amp;&amp; !is_vulnerable) {
     // TODO: Push back player
     
 
-} else if (!is_hit &amp;&amp; is_vulnerable &amp;&amp; !is_eliminated) {
+} else if (!is_hit &amp;&amp; is_vulnerable) {
     direction = collision_direction
     is_hit = true
+    is_punching = false
     
     if (direction == directions.DOWN) {
-        sprite_index = spr_red_en_hit_down
+        sprite_index = asset_get_index(sprite_prefix + "hit_down")
     } else {
-        sprite_index = spr_red_en_hit_up
+        sprite_index = asset_get_index(sprite_prefix + "hit_up")
     }
     
     // Call alarm to get pushed back
     
-    moveBackDistance = 60
+    moveBackDistance = 180
     moveBackDuration = .5
     
     speed = (moveBackDistance / room_speed) / moveBackDuration
     
-    // After being moved back, go to tired
-    alarm[0] = -1
-    alarm[1] = moveBackDuration * room_speed
+    // After being hit go back to moving
+    alarm[0] = moveBackDuration * room_speed
+    alarm[1] = -1
+    alarm[2] = -1
 }
 </string>
           </argument>

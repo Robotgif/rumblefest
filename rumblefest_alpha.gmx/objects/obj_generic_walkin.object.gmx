@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>/// Init walk into ring
 
-sprite_index = spr_red_en_walkin
+enemy_type = "red"
 
 speed = 4
 image_speed = .1
@@ -58,12 +58,43 @@ climb_y = 390
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Set prefix based on enemy type
+switch (enemy_type) {
+    case "red":
+        spr_prefix = "spr_red_en_"
+        break
+    case "jobber":
+        spr_prefix = "jobber_1_"
+        break
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Start climb in
 if (!is_climbing &amp;&amp; y &gt;= climb_y) {
     is_climbing = true
     image_index = 0
     speed = 0
-    sprite_index = spr_red_en_entrance
+    sprite_index = asset_get_index(spr_prefix + "entrance")
+} else if (!is_climbing) {
+    sprite_index = asset_get_index(spr_prefix + "walkin")
 }
 
 // Change depth only on certain frames
@@ -95,9 +126,19 @@ if (is_climbing &amp;&amp; image_index &gt;= 6) {
           <argument>
             <kind>1</kind>
             <string>/// Spawn real enemy, destroy this entrance object
-if (sprite_index == spr_red_en_entrance) {
+if (sprite_index == asset_get_index(spr_prefix + "entrance")) {
     yToSpawn = 430
-    instance_create(x, yToSpawn, obj_en_red2)
+    
+    switch (enemy_type) {
+        case "red":
+            obj_to_spawn = obj_en_red2
+            break
+        case "jobber":
+            obj_to_spawn = obj_en_jobber2
+            break
+    }
+    
+    instance_create(x, yToSpawn, obj_to_spawn)
     instance_destroy()
 }
 

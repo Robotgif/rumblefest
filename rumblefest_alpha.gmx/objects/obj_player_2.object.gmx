@@ -415,6 +415,48 @@ if (is_colliding_with_ropes &amp;&amp; is_hit) {
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Bug fix so we don't get stuck on ropes
+
+// Wall collisions can get f'ed up, so if we're colliding and NOT hit, try to
+// go to middle of ring until we're in safe area
+if (is_colliding_with_ropes &amp;&amp; !is_hit) {
+    centerX = room_width / 2
+    centerY = room_height / 2
+    
+    while (!place_meeting(x, y, obj_ring_bounds)) {
+        if (x &gt; centerX) {
+            x-= 1
+        } else if (x &lt; centerX) {
+            x += 1
+        }
+        
+        if (y &gt; centerY) {
+            y-= 1
+        } else if (y &lt; centerY) {
+            y += 1
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Flashing animation
 if (flashing) {
     flashingCount++
@@ -480,17 +522,17 @@ if (!is_hit) {
     
     image_xscale = 1
     if (collision_direction == directions.UP) {
-        direction = directions.DOWN
-        sprite_index = spr_player_hit_down
-    } else if (collision_direction == directions.DOWN) {
         direction = directions.UP
         sprite_index = spr_player_hit_up
+    } else if (collision_direction == directions.DOWN) {
+        direction = directions.DOWN
+        sprite_index = spr_player_hit_down
     } else if (collision_direction == directions.LEFT) {
-        image_xscale = -1
-        direction = directions.RIGHT
+        direction = directions.LEFT
         sprite_index = spr_player_hit_left
     } else if (collision_direction == directions.RIGHT) {
-        direction = directions.LEFT
+        image_xscale = -1
+        direction = directions.RIGHT
         sprite_index = spr_player_hit_left
     }
     
@@ -510,8 +552,8 @@ if (!is_hit) {
     
     // Call alarm to get pushed back
     
-    moveBackDistance = 120
-    moveBackDuration = .5
+    moveBackDistance = 100
+    moveBackDuration = .3
     
     speed = (moveBackDistance / room_speed) / moveBackDuration
     

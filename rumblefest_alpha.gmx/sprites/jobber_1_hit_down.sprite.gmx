@@ -7,8 +7,8 @@
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>54</bbox_left>
-  <bbox_right>137</bbox_right>
+  <bbox_left>48</bbox_left>
+  <bbox_right>143</bbox_right>
   <bbox_top>48</bbox_top>
   <bbox_bottom>137</bbox_bottom>
   <HTile>0</HTile>
@@ -20,7 +20,7 @@
   <width>192</width>
   <height>192</height>
   <frames>
-    <frame index="0">images\jobber_1_punch_lr_0.png</frame>
-    <frame index="1">images\jobber_1_punch_lr_1.png</frame>
+    <frame index="0">images\jobber_1_hit_down_0.png</frame>
+    <frame index="1">images\jobber_1_hit_down_1.png</frame>
   </frames>
 </sprite>
