@@ -209,6 +209,7 @@ if (!is_hit &amp;&amp; !is_vulnerable) {
     show_debug_message(speed)
     
     // After being moved back, go to tired
+    alarm[0] = -1
     alarm[1] = moveBackDuration * room_speed
 }
 </string>
