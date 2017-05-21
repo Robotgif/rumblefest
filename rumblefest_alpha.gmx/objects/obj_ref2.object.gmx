@@ -35,6 +35,8 @@ speed = 8
 is_counting = false
 is_hurt = false
 
+count_sound = -1
+
 should_save_previous_state = true
 
 previous_speed = 8
@@ -92,6 +94,7 @@ if (knockdown_stage == 0) {
     alarm[2] = 4 * room_speed
 } else if (knockdown_stage == 2) {
     sprite_index = spr_ref_wakeup
+    image_speed = 6 / room_speed
     knockdown_stage++
     alarm[2] = 2 * room_speed
 } else if (knockdown_stage == 3) {
@@ -132,13 +135,26 @@ if (knockdown_stage == 0) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Alarm to run when enemy is eliminated
-
-enemies_to_count_remaining--
+            <string>/// Alarm when counting
 
 if (enemies_to_count_remaining &gt; 0) {
     should_save_previous_state = false
     alarm[1] = 1 * room_speed
+    enemies_to_count_remaining--
+    
+    // Play some counting sounds
+    sound_count = enemies_to_count_total - enemies_to_count_remaining
+   
+    if (sound_count &lt; 11) {
+        sound_to_play = asset_get_index("counting_" + string(sound_count))
+        
+        if (count_sound &gt; -1) {
+            audio_stop_sound(count_sound)
+        }
+        
+        count_sound = audio_play_sound(sound_to_play, 10, false)
+    }
+    
 } else {
     should_save_previous_state = true
     
@@ -464,8 +480,8 @@ depth = -500 - y
           <argument>
             <kind>1</kind>
             <string>/// Function to call when enemy is eliminated
-alarm[1] = 1
 
+// Only run these if we're not actively counting
 if (should_save_previous_state == true) { 
     previous_speed = speed
     previous_alarm_0 = alarm[0]
@@ -473,25 +489,27 @@ if (should_save_previous_state == true) {
     previous_image_speed = image_speed
     previous_move_left = amount_to_move_left
     previous_move_right = amount_to_move_right
+    
+    is_counting = true
+
+    enemies_to_count_total++
+    enemies_to_count_remaining = enemies_to_count_total
+    
+    speed = 0
+    alarm[0] = -1
+    alarm[1] = 1
+    
+    if (y &gt; ring_center_y) {
+        sprite_index = spr_ref_count_up
+        image_index = 1
+        image_speed = 2 / room_speed
+    } else {
+        sprite_index = spr_ref_count_down
+        image_index = 1
+        image_speed = 2 / room_speed
+    }
 }
 
-is_counting = true
-
-enemies_to_count_total++
-enemies_to_count_remaining = enemies_to_count_total
-
-speed = 0
-alarm[0] = -1
-
-if (y &gt; ring_center_y) {
-    sprite_index = spr_ref_count_up
-    image_index = 0
-    image_speed = .1
-} else {
-    sprite_index = spr_ref_count_down
-    image_index = 0
-    image_speed = .1
-}
 </string>
           </argument>
         </arguments>

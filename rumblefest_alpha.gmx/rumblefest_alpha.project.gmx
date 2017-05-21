@@ -33,15 +33,15 @@
     </sounds>
     <sounds name="counting">
       <sound>sound\counting_1</sound>
-      <sound>sound\counting_7</sound>
-      <sound>sound\counting_6</sound>
-      <sound>sound\counting_10</sound>
-      <sound>sound\counting_3</sound>
       <sound>sound\counting_2</sound>
-      <sound>sound\counting_8</sound>
-      <sound>sound\counting_5</sound>
+      <sound>sound\counting_3</sound>
       <sound>sound\counting_4</sound>
+      <sound>sound\counting_5</sound>
+      <sound>sound\counting_6</sound>
+      <sound>sound\counting_7</sound>
+      <sound>sound\counting_8</sound>
       <sound>sound\counting_9</sound>
+      <sound>sound\counting_10</sound>
     </sounds>
   </sounds>
   <sprites name="sprites">
