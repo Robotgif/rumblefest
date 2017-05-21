@@ -32,14 +32,127 @@ direction = point_direction(obj_player_2.x, obj_player_2.y, x, y)
 image_speed = .2
 speed = 8
 
-is_in_corner = false
+is_counting = false
+is_hurt = false
+
+should_save_previous_state = true
+
+previous_speed = 8
+previous_image_speed = .2
+previous_alarm_0 = -1
+previous_sprite_index = sprite_index
+previous_amount_to_move_right = 0
+previous_amount_to_move_left = 0
+
+enemies_to_count_remaining = 0
+enemies_to_count_total = 0
 
 amount_to_move_left = 0
 amount_to_move_right = 0
 
+knockdown_stage = 0
+
 // Dimensions for ring, use whole screen since calcuating off ring bounds fucked up
 ring_center_y = room_height / 2
 ring_center_x = room_width / 2
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Knocked down by player
+
+// Note that instead of having multiple alarms, we have multiple 'stages'
+// of being knocked down, so we'll call this same alarm in series 
+
+if (knockdown_stage == 0) {
+    sprite_index = spr_ref_hit
+    knockdown_stage++
+    alarm[2] = 1 * room_speed
+} else if (knockdown_stage == 1) {
+    sprite_index = spr_ref_hurt
+    knockdown_stage++
+    alarm[2] = 4 * room_speed
+} else if (knockdown_stage == 2) {
+    sprite_index = spr_ref_wakeup
+    knockdown_stage++
+    alarm[2] = 2 * room_speed
+} else if (knockdown_stage == 3) {
+    should_save_previous_state = true
+    
+    speed = previous_speed
+    image_speed = previous_image_speed
+    sprite_index = previous_sprite_index
+    alarm[0] = previous_alarm_0
+    amount_to_move_left = previous_amount_to_move_left
+    amount_to_move_right = previous_amount_to_move_right
+    
+    enemies_to_count_total = 0
+    
+    is_counting = false
+    is_hurt = false
+    
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Alarm to run when enemy is eliminated
+
+enemies_to_count_remaining--
+
+if (enemies_to_count_remaining &gt; 0) {
+    should_save_previous_state = false
+    alarm[1] = 1 * room_speed
+} else {
+    should_save_previous_state = true
+    
+    speed = previous_speed
+    image_speed = previous_image_speed
+    sprite_index = previous_sprite_index
+    alarm[0] = previous_alarm_0
+    amount_to_move_left = previous_amount_to_move_left
+    amount_to_move_right = previous_amount_to_move_right
+    
+    is_counting = false
+    
+}
+
 </string>
           </argument>
         </arguments>
@@ -65,9 +178,9 @@ ring_center_x = room_width / 2
             <string>/// Set amount to move left or right based on position
 
 if (x &gt; ring_center_x) {
-    amount_to_move_left = 100
+    amount_to_move_left = 200
 } else {
-    amount_to_move_right = 100
+    amount_to_move_right = 200
 }
 </string>
           </argument>
@@ -95,7 +208,7 @@ if (x &gt; ring_center_x) {
 
 image_xscale = 1;
 
-if (speed &gt; 0) {
+if (speed &gt; 0 &amp;&amp; !is_counting &amp;&amp; !is_hurt) {
     if (direction &gt;= 315 || direction &lt; 45) {
         sprite_index = spr_ref_right
     } else if (direction &gt;= 45 &amp;&amp; direction &lt; 135) {
@@ -129,6 +242,7 @@ if (speed &gt; 0) {
             <kind>1</kind>
             <string>/// If hitting out of bounds, change direction to go to a corner
 
+if (!is_counting &amp;&amp; !is_hurt) {
 
 if (!place_meeting(x + speed, y, obj_ring_bounds)) {
     // Right rope
@@ -191,6 +305,8 @@ if (!place_meeting(x + speed, y, obj_ring_bounds)
     sprite_index = spr_ref_standing_up
     alarm[0] = 3 * room_speed
 }
+
+}
 </string>
           </argument>
         </arguments>
@@ -213,6 +329,8 @@ if (!place_meeting(x + speed, y, obj_ring_bounds)
             <kind>1</kind>
             <string>/// If we have an amount to move, subtract from it and move that direction
 
+if (!is_counting &amp;&amp; !is_hurt) {
+
 if (amount_to_move_right &gt; 0) {
     speed = 8
     direction = directions.RIGHT
@@ -234,6 +352,71 @@ if (amount_to_move_right &gt; 0) {
     if (amount_to_move_left &lt;= 0) {
         direction = directions.RIGHT
     }
+}
+
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// If player gets close, change direction and speed to go to center of ring
+distance = distance_to_object(obj_player_2)
+
+// Move to center if distance threshold is reached and we're not already moving there
+if (distance &lt; 100 &amp;&amp; !is_counting &amp;&amp; !is_hurt &amp;&amp;
+    (y &gt; ring_center_y + 100 || y &lt; ring_center_y - 100)) {
+    speed = 8
+    direction = point_direction(x, y, ring_center_x, ring_center_y)
+    
+    amount_to_move_left = 0
+    amount_to_move_right = 0
+    alarm[0] = -1
+    
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Collisions with player
+
+if (place_meeting(x, y, obj_player_2) &amp;&amp; is_counting) {
+    is_counting = false
+    is_hurt = true
+    
+    alarm[1] = 0
+    alarm[2] = 1
 }
 </string>
           </argument>
@@ -258,6 +441,57 @@ if (amount_to_move_right &gt; 0) {
             <string>/// Change depth based on position
 
 depth = -500 - y
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Function to call when enemy is eliminated
+alarm[1] = 1
+
+if (should_save_previous_state == true) { 
+    previous_speed = speed
+    previous_alarm_0 = alarm[0]
+    previous_sprite_index = sprite_index
+    previous_image_speed = image_speed
+    previous_move_left = amount_to_move_left
+    previous_move_right = amount_to_move_right
+}
+
+is_counting = true
+
+enemies_to_count_total++
+enemies_to_count_remaining = enemies_to_count_total
+
+speed = 0
+alarm[0] = -1
+
+if (y &gt; ring_center_y) {
+    sprite_index = spr_ref_count_up
+    image_index = 0
+    image_speed = .1
+} else {
+    sprite_index = spr_ref_count_down
+    image_index = 0
+    image_speed = .1
+}
 </string>
           </argument>
         </arguments>

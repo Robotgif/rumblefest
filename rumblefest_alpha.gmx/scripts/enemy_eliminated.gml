@@ -10,8 +10,13 @@ if (eliminatedType == "jobber_1_") {
     scoreToAdd = 5
 }
 
+// Add to score
 score += scoreToAdd
 
+// Tell ref to start counting
+with (obj_ref2) {
+    event_user(0)
+}
 
 // Save to total enemies eliminated
 global.statsEnemiesEliminated = global.statsEnemiesEliminated + 1;
