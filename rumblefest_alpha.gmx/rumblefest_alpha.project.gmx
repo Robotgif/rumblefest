@@ -36,7 +36,7 @@
     <sprites name="ref">
       <sprite>sprites\spr_ref_up</sprite>
       <sprite>sprites\spr_ref_down</sprite>
-      <sprite>sprites\spr_ref_left_right</sprite>
+      <sprite>sprites\spr_ref_right</sprite>
       <sprite>sprites\spr_ref_count_up</sprite>
       <sprite>sprites\spr_ref_count_down</sprite>
       <sprite>sprites\spr_ref_get_up</sprite>
@@ -443,6 +443,7 @@
     <object>objects\game_controller</object>
     <objects name="ref">
       <object>objects\obj_ref</object>
+      <object>objects\obj_ref2</object>
     </objects>
     <objects name="weapons">
       <object>objects\obj_chair</object>
